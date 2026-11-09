@@ -1,0 +1,6 @@
+/target
+/benchmarks/results/*.json
+/benchmarks/results/*.log
+/benchmarks/tmp-*
+*.profraw
+.DS_Store
