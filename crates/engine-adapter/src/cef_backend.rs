@@ -10,15 +10,18 @@
 //! workspace (`slate-core`, `slate-blocking`, `slate-ui-bridge`, `slate-spike-cef`,
 //! `slate-spike-webkit`) enforces `#![forbid(unsafe_code)]`.
 
+use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
+use base64::Engine as _;
 use cef::{args::Args, *};
 use serde::Serialize;
-use slate_blocking::BlockingPipeline;
+use slate_blocking::{default_filter_cache_path, BlockingPipeline};
 use slate_core::{bench_server::BenchServer, ScrollPosition, TabManager};
 use std::collections::{HashMap, HashSet};
 use std::env;
 use std::fs;
 use std::io::{Read, Write};
 use std::net::TcpListener;
+use std::path::PathBuf;
 use std::ptr;
 use std::sync::{
     atomic::{AtomicBool, AtomicUsize, Ordering},
@@ -28,10 +31,11 @@ use std::thread;
 use std::time::{Duration, Instant};
 
 /// 10 real-world sites representing diverse daily-driver workloads:
-/// video streaming, office suite, tech news, encyclopedia, social feed,
-/// heavy media news, webmail, developer code hosting, banking, and newspaper.
+/// video streaming (direct video watch page so autoplay/video playback is tested symmetrically),
+/// office suite, tech news, encyclopedia, social feed, heavy media news, webmail,
+/// developer code hosting, banking, and newspaper.
 pub const REAL_WORLD_SITES: [&str; 10] = [
-    "https://www.youtube.com",
+    "https://www.youtube.com/watch?v=jNQXAC9IVRw",
     "https://docs.google.com",
     "https://news.ycombinator.com",
     "https://en.wikipedia.org/wiki/Rust_(programming_language)",
@@ -41,6 +45,19 @@ pub const REAL_WORLD_SITES: [&str; 10] = [
     "https://github.com/rust-lang/rust",
     "https://www.chase.com",
     "https://www.nytimes.com",
+];
+
+pub const REAL_WORLD_SITE_SLUGS: [&str; 10] = [
+    "01_youtube",
+    "02_google_docs",
+    "03_hacker_news",
+    "04_wikipedia",
+    "05_reddit",
+    "06_bbc_news",
+    "07_proton_mail",
+    "08_github",
+    "09_chase",
+    "10_nytimes",
 ];
 
 /// Progressive Chromium/CEF command-line optimization levels for bloat reduction.
@@ -83,6 +100,12 @@ pub struct CefRunnerOptions {
     pub test_service_worker: bool,
     pub opt_level: CefOptimizationLevel,
     pub widevine_cdm_path: Option<String>,
+    pub bootstrap_filters: bool,
+    pub screenshot_dir: Option<String>,
+    pub renderer_process_limit: Option<usize>,
+    pub allow_autoplay: bool,
+    pub enable_security_updaters: bool,
+    pub test_site_isolation: bool,
 }
 
 impl CefRunnerOptions {
@@ -99,6 +122,12 @@ impl CefRunnerOptions {
         let mut test_service_worker = false;
         let mut opt_level = CefOptimizationLevel::Level3MemoryAndV8Tuning;
         let mut widevine_cdm_path = None;
+        let mut bootstrap_filters = false;
+        let mut screenshot_dir = None;
+        let mut renderer_process_limit = None;
+        let mut allow_autoplay = false;
+        let mut enable_security_updaters = true;
+        let mut test_site_isolation = false;
 
         let mut args = env::args().skip(1);
         while let Some(arg) = args.next() {
@@ -154,6 +183,32 @@ impl CefRunnerOptions {
                         widevine_cdm_path = Some(val);
                     }
                 }
+                "--bootstrap-filters" => {
+                    bootstrap_filters = true;
+                }
+                "--screenshot-dir" => {
+                    if let Some(val) = args.next() {
+                        screenshot_dir = Some(val);
+                    }
+                }
+                "--renderer-process-limit" => {
+                    if let Some(val) = args.next() {
+                        let n = val.parse::<usize>().unwrap_or(0);
+                        renderer_process_limit = if n == 0 { None } else { Some(n) };
+                    }
+                }
+                "--allow-autoplay" => {
+                    allow_autoplay = true;
+                }
+                "--disable-security-updaters" => {
+                    enable_security_updaters = false;
+                }
+                "--enable-security-updaters" => {
+                    enable_security_updaters = true;
+                }
+                "--test-site-isolation" => {
+                    test_site_isolation = true;
+                }
                 _ => {}
             }
         }
@@ -175,8 +230,22 @@ impl CefRunnerOptions {
             test_service_worker,
             opt_level,
             widevine_cdm_path,
+            bootstrap_filters,
+            screenshot_dir,
+            renderer_process_limit,
+            allow_autoplay,
+            enable_security_updaters,
+            test_site_isolation,
         }
     }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct ProcessMemoryEntry {
+    pub pid: u32,
+    pub kind: String,
+    pub pss_kb: u64,
+    pub rss_kb: u64,
 }
 
 #[derive(Debug, Serialize)]
@@ -185,6 +254,7 @@ pub struct BenchmarkOutput {
     pub opt_level: u8,
     pub tabs: usize,
     pub real_sites: bool,
+    pub filter_cache_warm: bool,
     pub cold_start_ms: u128,
     pub rss_tree_kb: u64,
     pub pss_tree_kb: u64,
@@ -194,11 +264,15 @@ pub struct BenchmarkOutput {
     pub service_worker_blocked_requests: usize,
     pub document_start_injected: bool,
     pub third_party_cookies_blocked: bool,
+    pub youtube_video_playing: bool,
+    pub screenshots_captured: usize,
     pub tab_suspended_and_restored: bool,
     pub suspended_tabs_count: usize,
     pub rss_after_suspend_kb: Option<u64>,
     pub pss_after_suspend_kb: Option<u64>,
     pub process_count_after_suspend: Option<usize>,
+    pub process_breakdown: Vec<ProcessMemoryEntry>,
+    pub process_breakdown_after_suspend: Option<Vec<ProcessMemoryEntry>>,
 }
 
 /// Local HTTP server specifically for proving Service Worker request interception via
@@ -343,6 +417,13 @@ impl Drop for ServiceWorkerTestServer {
 }
 
 pub fn measure_process_tree_memory(root_pid: u32) -> (u64, u64, usize) {
+    let (rss, pss, count, _) = measure_process_tree_detailed(root_pid);
+    (rss, pss, count)
+}
+
+pub fn measure_process_tree_detailed(
+    root_pid: u32,
+) -> (u64, u64, usize, Vec<ProcessMemoryEntry>) {
     let mut children_map: HashMap<u32, Vec<u32>> = HashMap::new();
     if let Ok(entries) = fs::read_dir("/proc") {
         for entry in entries.flatten() {
@@ -374,18 +455,24 @@ pub fn measure_process_tree_memory(root_pid: u32) -> (u64, u64, usize) {
 
     let mut total_rss_kb = 0u64;
     let mut total_pss_kb = 0u64;
+    let mut breakdown = Vec::with_capacity(visited.len());
 
-    for &pid in &visited {
+    let mut sorted_pids: Vec<u32> = visited.iter().copied().collect();
+    sorted_pids.sort_unstable();
+
+    for pid in sorted_pids {
+        let mut rss_kb = 0u64;
+        let mut pss_kb = 0u64;
         let status_path = format!("/proc/{pid}/status");
         if let Ok(status) = fs::read_to_string(status_path) {
             for line in status.lines() {
                 if let Some(rss_str) = line.strip_prefix("VmRSS:") {
-                    let num = rss_str
+                    rss_kb = rss_str
                         .split_whitespace()
                         .next()
                         .and_then(|s| s.parse::<u64>().ok())
                         .unwrap_or(0);
-                    total_rss_kb += num;
+                    total_rss_kb += rss_kb;
                     break;
                 }
             }
@@ -394,23 +481,61 @@ pub fn measure_process_tree_memory(root_pid: u32) -> (u64, u64, usize) {
         if let Ok(smaps) = fs::read_to_string(smaps_path) {
             for line in smaps.lines() {
                 if let Some(pss_str) = line.strip_prefix("Pss:") {
-                    let num = pss_str
+                    pss_kb = pss_str
                         .split_whitespace()
                         .next()
                         .and_then(|s| s.parse::<u64>().ok())
                         .unwrap_or(0);
-                    total_pss_kb += num;
+                    total_pss_kb += pss_kb;
                     break;
                 }
             }
         }
+        let cmdline = fs::read(format!("/proc/{pid}/cmdline"))
+            .map(|b| {
+                b.into_iter()
+                    .map(|c| if c == 0 { b' ' } else { c })
+                    .collect::<Vec<u8>>()
+            })
+            .ok()
+            .and_then(|b| String::from_utf8(b).ok())
+            .unwrap_or_default();
+
+        let kind = if pid == root_pid {
+            "browser".to_string()
+        } else if cmdline.contains("--type=renderer") {
+            "renderer".to_string()
+        } else if cmdline.contains("--type=gpu-process") {
+            "gpu-process".to_string()
+        } else if cmdline.contains("--type=utility") {
+            if cmdline.contains("network.mojom.NetworkService") {
+                "utility:network".to_string()
+            } else if cmdline.contains("storage.mojom.StorageService") {
+                "utility:storage".to_string()
+            } else if cmdline.contains("audio.mojom.AudioService") {
+                "utility:audio".to_string()
+            } else {
+                "utility".to_string()
+            }
+        } else if cmdline.contains("--type=zygote") {
+            "zygote".to_string()
+        } else {
+            "helper".to_string()
+        };
+
+        breakdown.push(ProcessMemoryEntry {
+            pid,
+            kind,
+            pss_kb,
+            rss_kb,
+        });
     }
 
     if total_pss_kb == 0 {
         total_pss_kb = total_rss_kb;
     }
 
-    (total_rss_kb, total_pss_kb, visited.len())
+    (total_rss_kb, total_pss_kb, visited.len(), breakdown)
 }
 
 fn cef_resource_type_str(rt: ResourceType) -> &'static str {
@@ -452,6 +577,9 @@ struct SharedSpikeState {
     service_worker_blocked_requests: AtomicUsize,
     third_party_cookies_filtered: AtomicBool,
     document_start_injected: AtomicBool,
+    youtube_video_playing: AtomicBool,
+    screenshots_captured: AtomicUsize,
+    devtools_registrations: Mutex<Vec<Registration>>,
     cold_start_ms: Mutex<Option<u128>>,
     browsers: Mutex<Vec<Browser>>,
     windows: Mutex<Vec<Window>>,
@@ -463,6 +591,7 @@ struct SharedSpikeState {
 impl SharedSpikeState {
     fn close_all_and_quit(&self) {
         self.shutting_down.store(true, Ordering::SeqCst);
+        self.devtools_registrations.lock().unwrap().clear();
         self.browsers.lock().unwrap().clear();
         if let Ok(mut wins) = self.windows.lock() {
             if wins.is_empty() {
@@ -470,6 +599,42 @@ impl SharedSpikeState {
             } else {
                 for win in wins.drain(..) {
                     win.close();
+                }
+            }
+        }
+    }
+}
+
+wrap_dev_tools_message_observer! {
+    struct SlateScreenshotObserver {
+        state: Arc<SharedSpikeState>,
+        tab_index: usize,
+        out_path: PathBuf,
+    }
+
+    impl DevToolsMessageObserver {
+        fn on_dev_tools_method_result(
+            &self,
+            _browser: Option<&mut Browser>,
+            message_id: ::std::os::raw::c_int,
+            success: ::std::os::raw::c_int,
+            result: Option<&[u8]>,
+        ) {
+            if success == 0 || message_id != (1000 + self.tab_index as i32) {
+                return;
+            }
+            if let Some(bytes) = result {
+                if let Ok(val) = serde_json::from_slice::<serde_json::Value>(bytes) {
+                    if let Some(b64) = val.get("data").and_then(|d| d.as_str()) {
+                        if let Ok(png) = BASE64_STANDARD.decode(b64) {
+                            if let Some(parent) = self.out_path.parent() {
+                                let _ = fs::create_dir_all(parent);
+                            }
+                            if fs::write(&self.out_path, png).is_ok() {
+                                self.state.screenshots_captured.fetch_add(1, Ordering::Relaxed);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -721,6 +886,12 @@ wrap_display_handler! {
                     }
                     return 1;
                 }
+                if text.starts_with("SLATE_YT_PLAYING:true") {
+                    self.state
+                        .youtube_video_playing
+                        .store(true, Ordering::Relaxed);
+                    return 1;
+                }
                 if let Some(sw_payload) = text.strip_prefix("SLATE_SW_RESULT:") {
                     if !self.state.probe_printed.swap(true, Ordering::SeqCst) {
                         let mut val: serde_json::Value =
@@ -757,19 +928,21 @@ wrap_task! {
         rss_before: u64,
         pss_before: u64,
         procs_before: usize,
+        breakdown_before: Vec<ProcessMemoryEntry>,
         suspended_ok: bool,
         suspended_count: usize,
     }
 
     impl Task {
         fn execute(&self) {
-            let (rss_after, pss_after, procs_after) =
-                measure_process_tree_memory(std::process::id());
+            let (rss_after, pss_after, procs_after, breakdown_after) =
+                measure_process_tree_detailed(std::process::id());
             let out = BenchmarkOutput {
                 engine: "cef-156",
                 opt_level: self.state.opts.opt_level as u8,
                 tabs: self.state.opts.tabs,
                 real_sites: self.state.opts.real_sites,
+                filter_cache_warm: self.state.pipeline.is_loaded_from_dat_cache(),
                 cold_start_ms: self.cold_ms,
                 rss_tree_kb: self.rss_before,
                 pss_tree_kb: self.pss_before,
@@ -785,14 +958,54 @@ wrap_task! {
                     .load(Ordering::Relaxed),
                 document_start_injected: self.state.document_start_injected.load(Ordering::Relaxed),
                 third_party_cookies_blocked: true,
+                youtube_video_playing: self.state.youtube_video_playing.load(Ordering::Relaxed),
+                screenshots_captured: self.state.screenshots_captured.load(Ordering::Relaxed),
                 tab_suspended_and_restored: self.suspended_ok,
                 suspended_tabs_count: self.suspended_count,
                 rss_after_suspend_kb: Some(rss_after),
                 pss_after_suspend_kb: Some(pss_after),
                 process_count_after_suspend: Some(procs_after),
+                process_breakdown: self.breakdown_before.clone(),
+                process_breakdown_after_suspend: Some(breakdown_after),
             };
             println!("{}", serde_json::to_string(&out).unwrap());
             self.state.close_all_and_quit();
+        }
+    }
+}
+
+wrap_task! {
+    struct CaptureScreenshotsTask {
+        state: Arc<SharedSpikeState>,
+        dir: String,
+    }
+
+    impl Task {
+        fn execute(&self) {
+            let _ = fs::create_dir_all(&self.dir);
+            let browsers = self.state.browsers.lock().unwrap().clone();
+            for (idx, b) in browsers.iter().enumerate() {
+                if let Some(host) = b.host() {
+                    let slug = REAL_WORLD_SITE_SLUGS
+                        .get(idx)
+                        .copied()
+                        .unwrap_or("tab");
+                    let out_path = PathBuf::from(&self.dir).join(format!("{slug}.png"));
+                    let mut obs = SlateScreenshotObserver::new(
+                        Arc::clone(&self.state),
+                        idx,
+                        out_path,
+                    );
+                    if let Some(reg) = host.add_dev_tools_message_observer(Some(&mut obs)) {
+                        self.state.devtools_registrations.lock().unwrap().push(reg);
+                    }
+                    let msg_id = 1000 + idx as i32;
+                    let msg = format!(
+                        r#"{{"id":{msg_id},"method":"Page.captureScreenshot","params":{{"format":"png"}}}}"#
+                    );
+                    host.send_dev_tools_message(Some(msg.as_bytes()));
+                }
+            }
         }
     }
 }
@@ -804,14 +1017,36 @@ wrap_task! {
 
     impl Task {
         fn execute(&self) {
+            if self.state.opts.test_site_isolation {
+                let (_, pss_kb, procs, breakdown) =
+                    measure_process_tree_detailed(std::process::id());
+                let renderer_pids: Vec<u32> = breakdown
+                    .iter()
+                    .filter(|e| e.kind == "renderer")
+                    .map(|e| e.pid)
+                    .collect();
+                let report = serde_json::json!({
+                    "tabs_opened": self.state.opts.tabs,
+                    "renderer_process_limit": self.state.opts.renderer_process_limit,
+                    "total_process_count": procs,
+                    "renderer_process_count": renderer_pids.len(),
+                    "renderer_pids": renderer_pids,
+                    "strict_one_process_per_site_preserved": renderer_pids.len() >= self.state.opts.tabs,
+                    "pss_tree_kb": pss_kb,
+                });
+                println!("{}", serde_json::to_string(&report).unwrap());
+                self.state.close_all_and_quit();
+                return;
+            }
+
             let cold_ms = self
                 .state
                 .cold_start_ms
                 .lock()
                 .unwrap()
                 .unwrap_or_else(|| self.state.start_instant.elapsed().as_millis());
-            let (rss_before, pss_before, procs_before) =
-                measure_process_tree_memory(std::process::id());
+            let (rss_before, pss_before, procs_before, breakdown_before) =
+                measure_process_tree_detailed(std::process::id());
 
             if self.state.opts.verify_capabilities || self.state.opts.sleep_background_tabs {
                 let total_tabs = self.state.opts.tabs;
@@ -829,6 +1064,7 @@ wrap_task! {
                     }
                 }
 
+                self.state.devtools_registrations.lock().unwrap().clear();
                 if let Ok(mut browsers) = self.state.browsers.lock() {
                     while browsers.len() > 1 {
                         let _ = browsers.pop();
@@ -849,7 +1085,7 @@ wrap_task! {
                 };
 
                 let wait_ms = if self.state.opts.sleep_background_tabs {
-                    900
+                    1200
                 } else {
                     400
                 };
@@ -859,6 +1095,7 @@ wrap_task! {
                     rss_before,
                     pss_before,
                     procs_before,
+                    breakdown_before,
                     suspended_ok,
                     suspended_count,
                 );
@@ -871,7 +1108,8 @@ wrap_task! {
                 opt_level: self.state.opts.opt_level as u8,
                 tabs: self.state.opts.tabs,
                 real_sites: self.state.opts.real_sites,
-                cold_start_ms: cold_ms,
+                filter_cache_warm: self.state.pipeline.is_loaded_from_dat_cache(),
+                cold_start_ms: self.cold_ms_or(cold_ms),
                 rss_tree_kb: rss_before,
                 pss_tree_kb: pss_before,
                 process_count: procs_before,
@@ -886,15 +1124,25 @@ wrap_task! {
                     .load(Ordering::Relaxed),
                 document_start_injected: self.state.document_start_injected.load(Ordering::Relaxed),
                 third_party_cookies_blocked: true,
+                youtube_video_playing: self.state.youtube_video_playing.load(Ordering::Relaxed),
+                screenshots_captured: self.state.screenshots_captured.load(Ordering::Relaxed),
                 tab_suspended_and_restored: false,
                 suspended_tabs_count: 0,
                 rss_after_suspend_kb: None,
                 pss_after_suspend_kb: None,
                 process_count_after_suspend: None,
+                process_breakdown: breakdown_before,
+                process_breakdown_after_suspend: None,
             };
             println!("{}", serde_json::to_string(&out).unwrap());
             self.state.close_all_and_quit();
         }
+    }
+}
+
+impl QuitAndReportTask {
+    fn cold_ms_or(&self, val: u128) -> u128 {
+        val
     }
 }
 
@@ -1215,6 +1463,48 @@ wrap_load_handler! {
                     let mut task = QuitAndReportTask::new(Arc::clone(&self.state));
                     post_delayed_task(ThreadId::UI, Some(&mut task), 10);
                 }
+
+                if self.state.opts.real_sites {
+                    if let Some(f) = frame {
+                        if f.is_main() != 0 {
+                            let f_url = CefString::from(&f.url()).to_string();
+                            if f_url.contains("youtube.com") {
+                                let yt_script = r#"
+(function() {
+    let attempts = 0;
+    const check = () => {
+        attempts++;
+        const v = document.querySelector('video');
+        if (v) {
+            if (v.paused && ${ALLOW_AUTOPLAY}) {
+                v.muted = true;
+                v.play().catch(() => {});
+            }
+            if (!v.paused && v.readyState >= 2 && v.currentTime > 0) {
+                console.log('SLATE_YT_PLAYING:true');
+                return;
+            }
+        }
+        if (attempts < 20) setTimeout(check, 250);
+    };
+    setTimeout(check, 300);
+})();
+"#
+                                .replace(
+                                    "${ALLOW_AUTOPLAY}",
+                                    if self.state.opts.allow_autoplay {
+                                        "true"
+                                    } else {
+                                        "false"
+                                    },
+                                );
+                                let code = CefString::from(yt_script.as_str());
+                                let script_url = CefString::from("slate://bench/yt_probe.js");
+                                f.execute_java_script(Some(&code), Some(&script_url), 1);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -1287,14 +1577,23 @@ wrap_window_delegate! {
 
             if !self.state.timer_scheduled.swap(true, Ordering::SeqCst) {
                 if let Some(hold_ms) = self.state.opts.hold_ms {
+                    if let Some(ref sdir) = self.state.opts.screenshot_dir {
+                        let cap_delay = hold_ms.saturating_sub(2500).max(1000);
+                        let mut cap_task = CaptureScreenshotsTask::new(
+                            Arc::clone(&self.state),
+                            sdir.clone(),
+                        );
+                        post_delayed_task(ThreadId::UI, Some(&mut cap_task), cap_delay as i64);
+                    }
                     let mut task = QuitAndReportTask::new(Arc::clone(&self.state));
                     post_delayed_task(ThreadId::UI, Some(&mut task), hold_ms as i64);
                 } else if self.state.opts.compat_probe.is_some()
                     || self.state.opts.deep_compat.is_some()
                     || self.state.opts.test_service_worker
+                    || self.state.opts.test_site_isolation
                 {
                     let mut task = QuitAndReportTask::new(Arc::clone(&self.state));
-                    post_delayed_task(ThreadId::UI, Some(&mut task), 9000);
+                    post_delayed_task(ThreadId::UI, Some(&mut task), 6000);
                 }
             }
         }
@@ -1477,12 +1776,14 @@ wrap_app! {
             }
 
             if lvl >= 1 {
-                // Level 1: Disable background networking, component updater, domain reliability,
-                // phishing telemetry, sync, metrics, and Hyperlink Auditing pings.
+                // Level 1: Disable background networking, domain reliability, sync, metrics, and Hyperlink Auditing pings.
+                // Security audit (Task 3): Do NOT disable component updater or client-side phishing detection by default.
                 add_switch(cmd, "disable-background-networking");
-                add_switch(cmd, "disable-component-update");
+                if !self.state.opts.enable_security_updaters {
+                    add_switch(cmd, "disable-component-update");
+                    add_switch(cmd, "disable-client-side-phishing-detection");
+                }
                 add_switch(cmd, "disable-domain-reliability");
-                add_switch(cmd, "disable-client-side-phishing-detection");
                 add_switch(cmd, "disable-sync");
                 add_switch(cmd, "metrics-recording-only");
                 add_switch(cmd, "no-pings");
@@ -1502,16 +1803,17 @@ wrap_app! {
                      BrowsingTopics,Fledge,PrivacySandboxSettings4,LiveCaption,\
                      AudioServiceOutOfProcess,SpareRendererForSitePerProcess",
                 );
-                add_switch_val(
-                    cmd,
-                    "autoplay-policy",
-                    "document-user-activation-required",
-                );
+                if self.state.opts.allow_autoplay {
+                    add_switch_val(cmd, "autoplay-policy", "no-user-gesture-required");
+                }
             }
 
             if lvl >= 3 {
-                // Level 3: Cap renderer process count, cache sizes, and enable V8 / BackForwardCache memory savings.
-                add_switch_val(cmd, "renderer-process-limit", "6");
+                // Level 3: Cache sizes and V8 / BackForwardCache memory savings.
+                // Security audit (Task 3): Do NOT cap --renderer-process-limit by default so Site Isolation is never weakened.
+                if let Some(limit) = self.state.opts.renderer_process_limit {
+                    add_switch_val(cmd, "renderer-process-limit", &limit.to_string());
+                }
                 add_switch_val(cmd, "disk-cache-size", "33554432");
                 add_switch_val(cmd, "media-cache-size", "16777216");
                 add_switch(cmd, "disable-gpu-shader-disk-cache");
@@ -1544,10 +1846,43 @@ pub fn run_from_cli() {
 
     let opts = CefRunnerOptions::parse_from_env();
 
+    if opts.bootstrap_filters {
+        let cache_path = default_filter_cache_path();
+        let t0 = Instant::now();
+        let pipeline = BlockingPipeline::new_with_default_lists();
+        match pipeline.refresh_remote_lists_and_save_cache(&cache_path) {
+            Ok(bytes_downloaded) => {
+                let compile_ms = t0.elapsed().as_millis();
+                let dat_size = fs::metadata(&cache_path).map(|m| m.len()).unwrap_or(0);
+                let t_warm = Instant::now();
+                let warm_pipeline =
+                    BlockingPipeline::new_with_cache_and_background_refresh(Some(cache_path.clone()));
+                let warm_start_ms = t_warm.elapsed().as_millis();
+                println!(
+                    "{}",
+                    serde_json::json!({
+                        "status": "ok",
+                        "cache_path": cache_path.to_string_lossy(),
+                        "remote_bytes_downloaded": bytes_downloaded,
+                        "dat_cache_bytes": dat_size,
+                        "cold_download_and_compile_ms": compile_ms,
+                        "warm_deserialize_ms": warm_start_ms,
+                        "warm_loaded": warm_pipeline.is_loaded_from_dat_cache(),
+                    })
+                );
+                return;
+            }
+            Err(e) => {
+                eprintln!("Failed to bootstrap filter lists: {e}");
+                std::process::exit(1);
+            }
+        }
+    }
+
     let state = Arc::new(SharedSpikeState {
         start_instant,
         opts,
-        pipeline: BlockingPipeline::new_with_default_lists(),
+        pipeline: BlockingPipeline::new_with_cache_and_background_refresh(None),
         bench_server: Mutex::new(None),
         sw_server: Mutex::new(None),
         blocked_requests: AtomicUsize::new(0),
@@ -1555,6 +1890,9 @@ pub fn run_from_cli() {
         service_worker_blocked_requests: AtomicUsize::new(0),
         third_party_cookies_filtered: AtomicBool::new(false),
         document_start_injected: AtomicBool::new(false),
+        youtube_video_playing: AtomicBool::new(false),
+        screenshots_captured: AtomicUsize::new(0),
+        devtools_registrations: Mutex::new(Vec::new()),
         cold_start_ms: Mutex::new(None),
         browsers: Mutex::new(Vec::new()),
         windows: Mutex::new(Vec::new()),

@@ -1694,6 +1694,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror 2.0.21",
+ "ureq",
  "url",
 ]
 
@@ -1711,6 +1712,7 @@ dependencies = [
 name = "slate-engine-adapter"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "cef",
  "serde",
  "serde_json",

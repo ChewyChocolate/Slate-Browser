@@ -20,11 +20,40 @@ use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
 use base64::Engine as _;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
+use std::env;
 use std::fs;
-use std::path::Path;
-use std::sync::{Arc, RwLock};
+use std::path::{Path, PathBuf};
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc, RwLock,
+};
 use thiserror::Error;
 use url::Url;
+
+/// Official upstream filter list URLs downloaded in the background and compiled into `filters.dat`.
+pub const REMOTE_FILTER_LIST_URLS: &[(&str, &str)] = &[
+    ("EasyList", "https://easylist.to/easylist/easylist.txt"),
+    ("EasyPrivacy", "https://easylist.to/easylist/easyprivacy.txt"),
+];
+
+/// Returns the default path for the compiled FlatBuffer filter cache (`~/.local/share/slate/filters.dat`).
+pub fn default_filter_cache_path() -> PathBuf {
+    if let Ok(xdg) = env::var("XDG_DATA_HOME") {
+        if !xdg.trim().is_empty() {
+            return PathBuf::from(xdg).join("slate").join("filters.dat");
+        }
+    }
+    if let Ok(home) = env::var("HOME") {
+        if !home.trim().is_empty() {
+            return PathBuf::from(home)
+                .join(".local")
+                .join("share")
+                .join("slate")
+                .join("filters.dat");
+        }
+    }
+    env::temp_dir().join("slate").join("filters.dat")
+}
 
 /// Errors produced by the blocking pipeline.
 #[derive(Debug, Error)]
@@ -307,6 +336,7 @@ pub struct BlockingPipeline {
     engine: Arc<RwLock<Engine>>,
     custom_lists: Arc<RwLock<Vec<CustomFilterSource>>>,
     https_fallback_hosts: Arc<RwLock<HashSet<String>>>,
+    loaded_from_dat_cache: Arc<AtomicBool>,
     https_upgrades_enabled: bool,
     block_third_party_cookies: bool,
 }
@@ -326,9 +356,123 @@ impl BlockingPipeline {
             engine: Arc::new(RwLock::new(engine)),
             custom_lists: Arc::new(RwLock::new(Vec::new())),
             https_fallback_hosts: Arc::new(RwLock::new(HashSet::new())),
+            loaded_from_dat_cache: Arc::new(AtomicBool::new(false)),
             https_upgrades_enabled: true,
             block_third_party_cookies: true,
         }
+    }
+
+    /// Creates a pipeline using the `.dat` FlatBuffer cache (`~/.local/share/slate/filters.dat` by default)
+    /// for a fast warm start (`~10–30 ms`), or falls back to `DEFAULT_FILTER_LIST` on cold start
+    /// while spawning a background thread to download EasyList + EasyPrivacy and persist `filters.dat`.
+    pub fn new_with_cache_and_background_refresh(cache_path: Option<PathBuf>) -> Self {
+        let path = cache_path.unwrap_or_else(default_filter_cache_path);
+        let pipeline = Self::new_with_default_lists();
+
+        let mut cache_hit = false;
+        if path.exists() {
+            if let Ok(bytes) = fs::read(&path) {
+                if !bytes.is_empty() && pipeline.deserialize_cache(&bytes).is_ok() {
+                    pipeline
+                        .loaded_from_dat_cache
+                        .store(true, Ordering::Relaxed);
+                    cache_hit = true;
+                }
+            }
+        }
+
+        // Only spawn background network refresh if cache is missing or older than 24 hours.
+        let needs_refresh = if !cache_hit {
+            true
+        } else {
+            fs::metadata(&path)
+                .and_then(|m| m.modified())
+                .ok()
+                .and_then(|mtime| mtime.elapsed().ok())
+                .map(|age| age > std::time::Duration::from_secs(24 * 3600))
+                .unwrap_or(true)
+        };
+
+        if needs_refresh {
+            let bg_pipeline = pipeline.clone();
+            let bg_path = path;
+            std::thread::spawn(move || {
+                let _ = bg_pipeline.refresh_remote_lists_and_save_cache(&bg_path);
+            });
+        }
+
+        pipeline
+    }
+
+    /// Returns `true` if the active `adblock-rust` engine was loaded from or updated to
+    /// the compiled `.dat` FlatBuffer snapshot.
+    pub fn is_loaded_from_dat_cache(&self) -> bool {
+        self.loaded_from_dat_cache.load(Ordering::Relaxed)
+    }
+
+    /// Synchronously downloads EasyList + EasyPrivacy, compiles them with `DEFAULT_FILTER_LIST`
+    /// and any custom lists, atomically swaps the live `Engine`, and writes the `.dat` cache
+    /// atomically to `cache_path`.
+    pub fn refresh_remote_lists_and_save_cache(
+        &self,
+        cache_path: &Path,
+    ) -> Result<usize, BlockingError> {
+        let mut downloaded_sources = Vec::with_capacity(REMOTE_FILTER_LIST_URLS.len());
+        let mut total_bytes = 0usize;
+
+        let agent = ureq::Agent::config_builder()
+            .timeout_global(Some(std::time::Duration::from_secs(30)))
+            .build()
+            .new_agent();
+
+        for &(_name, url) in REMOTE_FILTER_LIST_URLS {
+            let mut resp = agent
+                .get(url)
+                .header("User-Agent", "Slate-Browser/0.1 (+https://slate.browser)")
+                .call()
+                .map_err(|e| BlockingError::RemoteFetch(format!("{url}: {e}")))?;
+            let body = resp
+                .body_mut()
+                .with_config()
+                .limit(64 * 1024 * 1024)
+                .read_to_string()
+                .map_err(|e| BlockingError::RemoteFetch(format!("{url} read: {e}")))?;
+            total_bytes += body.len();
+            downloaded_sources.push(CustomFilterSource::RemoteUrl {
+                url: url.to_string(),
+                cached_rules: body,
+            });
+        }
+
+        let combined = {
+            let mut guard = self.custom_lists.write().unwrap();
+            // Replace any previous entries for the same remote URLs:
+            guard.retain(|src| {
+                !matches!(src, CustomFilterSource::RemoteUrl { url, .. }
+                    if REMOTE_FILTER_LIST_URLS.iter().any(|&(_, u)| u == url))
+            });
+            for src in downloaded_sources {
+                guard.push(src);
+            }
+            guard.clone()
+        };
+
+        let new_engine = Self::build_engine(&[DEFAULT_FILTER_LIST], &combined);
+        let serialized = new_engine.serialize();
+
+        if let Some(parent) = cache_path.parent() {
+            fs::create_dir_all(parent)?;
+        }
+        let tmp_path = cache_path.with_extension("dat.tmp");
+        fs::write(&tmp_path, &serialized)?;
+        fs::rename(&tmp_path, cache_path)?;
+
+        if let Ok(mut guard) = self.engine.write() {
+            *guard = new_engine;
+        }
+        self.loaded_from_dat_cache.store(true, Ordering::Relaxed);
+
+        Ok(total_bytes)
     }
 
     fn build_engine(base_lists: &[&str], custom_lists: &[CustomFilterSource]) -> Engine {
@@ -1003,5 +1147,23 @@ mod tests {
                 )
                 .should_block
         );
+
+        // 4. Verify warm start from on-disk .dat file:
+        let dat_path = std::env::temp_dir().join("slate_test_filters_warm.dat");
+        fs::write(&dat_path, &serialized).unwrap();
+        let warm_pipeline =
+            BlockingPipeline::new_with_cache_and_background_refresh(Some(dat_path.clone()));
+        assert!(warm_pipeline.is_loaded_from_dat_cache());
+        assert!(
+            warm_pipeline
+                .evaluate_network_request(
+                    "https://file-tracker.example.net/pixel.gif",
+                    "https://site.example/",
+                    "image",
+                    "GET"
+                )
+                .should_block
+        );
+        let _ = fs::remove_file(&dat_path);
     }
 }
