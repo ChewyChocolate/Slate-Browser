@@ -1,0 +1,16 @@
+[package]
+name = "slate-blocking"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+adblock.workspace = true
+base64.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true
