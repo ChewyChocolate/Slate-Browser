@@ -85,3 +85,23 @@ This log records major technical decisions, options considered, tradeoffs, and v
 - **Decision**:
   - Place all CEF `wrap_*!` macro invocations inside `crates/engine-adapter/src/cef_backend.rs` behind the `cef-engine` Cargo feature.
   - Enforce `#![forbid(unsafe_code)]` on `crates/core`, `crates/blocking`, `crates/ui-bridge`, `spikes/spike-cef`, `spikes/spike-webkit`, and the non-`cef-engine` surface of `crates/engine-adapter`, verified by the automated test `unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter`.
+
+---
+
+## ADR-008: C/ASM Native Dependency Conflict (`ureq` / `ring`) & Filter List Fetcher Strategy
+- **Date**: 2026-11-10
+- **Status**: Accepted
+- **Context**:
+  - When adding remote EasyList/EasyPrivacy downloading to `slate-blocking`, adding `ureq = "3.5"` (which pulls in `rustls` and `ring 0.17.14`) caused `slate-spike-cef` to abort immediately at `cef::initialize` with `close symbol missing` (`SIGTRAP`, exit code `133`).
+  - **How we bisected it**:
+    1. Created a clean git worktree at the last known-good commit (`42764dd`), built `slate-spike-cef`, and verified it exited `0` with valid JSON output.
+    2. Applied only the `slate-blocking` + `Cargo.toml` edit (`ureq = "3.5"`) on top of `42764dd`: the crash (`close symbol missing`, exit code `133`) immediately reproduced.
+    3. Removed `ureq` from `slate-blocking` and applied all `crates/engine-adapter` changes: `slate-spike-cef` built and exited `0` cleanly.
+  - **Root-cause hypothesis (unverified internally)**: Linking `ring`'s static C/assembly archive into the main executable appears to alter dynamic linker symbol resolution/visibility in the host binary, interfering with Chromium/CEF's startup `close` syscall interposition check (`close symbol missing`).
+- **Decision**:
+  1. **Mandatory Live CEF Launch Smoke Test in `scripts/check.sh`**: Added step `[5/5]` to `./scripts/check.sh` that runs `slate-spike-cef --tabs 1 --exit-after-load` and asserts exit code `0` and valid JSON output on every check run.
+  2. **Rule for New Native/C/ASM Dependencies**: Before adding any dependency that compiles or links C/assembly code (`ring`, `aws-lc-rs`, OpenSSL, compression, or TLS crates) into the browser binary, run `./scripts/check.sh` (including the live CEF launch smoke test) immediately.
+  3. **Known Tech Debt (`curl` CLI for background filter downloads)**:
+     - Currently, `slate-blocking::fetch_https_filter_list` invokes `/usr/bin/curl` with `--fail --proto =https --tlsv1.2` (full TLS certificate verification) and validates payloads via `validate_filter_list_payload` so failed, empty, or HTML error responses never overwrite a good `filters.dat`.
+     - If `curl` is missing or offline, `BlockingPipeline::new_with_cache_and_background_refresh` still starts and runs from the cached `~/.local/share/slate/filters.dat` (or `DEFAULT_FILTER_LIST` on first run), logs a clear message (`[slate-blocking] Background filter update skipped (...)`), and never crashes.
+     - **Proposed Long-Term Replacement (not yet built)**: Either fetch filter lists through CEF's own network stack (`CefURLRequest` / `BrowserHost` inside `slate-engine-adapter`, which uses Chromium's BoringSSL without linking a second TLS stack into the main binary) or use a tiny standalone updater helper binary (`slate-filter-updater`) that writes `filters.dat` out-of-process.

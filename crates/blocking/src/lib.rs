@@ -400,7 +400,11 @@ impl BlockingPipeline {
             let bg_pipeline = pipeline.clone();
             let bg_path = path;
             std::thread::spawn(move || {
-                let _ = bg_pipeline.refresh_remote_lists_and_save_cache(&bg_path);
+                if let Err(err) = bg_pipeline.refresh_remote_lists_and_save_cache(&bg_path) {
+                    eprintln!(
+                        "[slate-blocking] Background filter update skipped ({err}); continuing with cached/built-in filters."
+                    );
+                }
             });
         }
 
