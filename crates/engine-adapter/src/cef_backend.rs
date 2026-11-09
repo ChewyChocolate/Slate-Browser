@@ -421,9 +421,7 @@ pub fn measure_process_tree_memory(root_pid: u32) -> (u64, u64, usize) {
     (rss, pss, count)
 }
 
-pub fn measure_process_tree_detailed(
-    root_pid: u32,
-) -> (u64, u64, usize, Vec<ProcessMemoryEntry>) {
+pub fn measure_process_tree_detailed(root_pid: u32) -> (u64, u64, usize, Vec<ProcessMemoryEntry>) {
     let mut children_map: HashMap<u32, Vec<u32>> = HashMap::new();
     if let Ok(entries) = fs::read_dir("/proc") {
         for entry in entries.flatten() {
@@ -921,14 +919,19 @@ wrap_display_handler! {
     }
 }
 
+#[derive(Clone)]
+struct PreSuspendSnapshot {
+    cold_ms: u128,
+    rss_before: u64,
+    pss_before: u64,
+    procs_before: usize,
+    breakdown_before: Vec<ProcessMemoryEntry>,
+}
+
 wrap_task! {
     struct FinishSuspendReportTask {
         state: Arc<SharedSpikeState>,
-        cold_ms: u128,
-        rss_before: u64,
-        pss_before: u64,
-        procs_before: usize,
-        breakdown_before: Vec<ProcessMemoryEntry>,
+        snapshot: PreSuspendSnapshot,
         suspended_ok: bool,
         suspended_count: usize,
     }
@@ -943,10 +946,10 @@ wrap_task! {
                 tabs: self.state.opts.tabs,
                 real_sites: self.state.opts.real_sites,
                 filter_cache_warm: self.state.pipeline.is_loaded_from_dat_cache(),
-                cold_start_ms: self.cold_ms,
-                rss_tree_kb: self.rss_before,
-                pss_tree_kb: self.pss_before,
-                process_count: self.procs_before,
+                cold_start_ms: self.snapshot.cold_ms,
+                rss_tree_kb: self.snapshot.rss_before,
+                pss_tree_kb: self.snapshot.pss_before,
+                process_count: self.snapshot.procs_before,
                 blocked_requests: self.state.blocked_requests.load(Ordering::Relaxed),
                 request_context_intercepts: self
                     .state
@@ -965,7 +968,7 @@ wrap_task! {
                 rss_after_suspend_kb: Some(rss_after),
                 pss_after_suspend_kb: Some(pss_after),
                 process_count_after_suspend: Some(procs_after),
-                process_breakdown: self.breakdown_before.clone(),
+                process_breakdown: self.snapshot.breakdown_before.clone(),
                 process_breakdown_after_suspend: Some(breakdown_after),
             };
             println!("{}", serde_json::to_string(&out).unwrap());
@@ -1091,11 +1094,13 @@ wrap_task! {
                 };
                 let mut next_task = FinishSuspendReportTask::new(
                     Arc::clone(&self.state),
-                    cold_ms,
-                    rss_before,
-                    pss_before,
-                    procs_before,
-                    breakdown_before,
+                    PreSuspendSnapshot {
+                        cold_ms,
+                        rss_before,
+                        pss_before,
+                        procs_before,
+                        breakdown_before,
+                    },
                     suspended_ok,
                     suspended_count,
                 );
@@ -1855,8 +1860,9 @@ pub fn run_from_cli() {
                 let compile_ms = t0.elapsed().as_millis();
                 let dat_size = fs::metadata(&cache_path).map(|m| m.len()).unwrap_or(0);
                 let t_warm = Instant::now();
-                let warm_pipeline =
-                    BlockingPipeline::new_with_cache_and_background_refresh(Some(cache_path.clone()));
+                let warm_pipeline = BlockingPipeline::new_with_cache_and_background_refresh(Some(
+                    cache_path.clone(),
+                ));
                 let warm_start_ms = t_warm.elapsed().as_millis();
                 println!(
                     "{}",

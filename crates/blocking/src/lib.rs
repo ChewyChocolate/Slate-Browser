@@ -33,7 +33,10 @@ use url::Url;
 /// Official upstream filter list URLs downloaded in the background and compiled into `filters.dat`.
 pub const REMOTE_FILTER_LIST_URLS: &[(&str, &str)] = &[
     ("EasyList", "https://easylist.to/easylist/easylist.txt"),
-    ("EasyPrivacy", "https://easylist.to/easylist/easyprivacy.txt"),
+    (
+        "EasyPrivacy",
+        "https://easylist.to/easylist/easyprivacy.txt",
+    ),
 ];
 
 /// Returns the default path for the compiled FlatBuffer filter cache (`~/.local/share/slate/filters.dat`).
@@ -410,33 +413,50 @@ impl BlockingPipeline {
         self.loaded_from_dat_cache.load(Ordering::Relaxed)
     }
 
-    /// Synchronously downloads EasyList + EasyPrivacy, compiles them with `DEFAULT_FILTER_LIST`
-    /// and any custom lists, atomically swaps the live `Engine`, and writes the `.dat` cache
-    /// atomically to `cache_path`.
+    /// Synchronously downloads EasyList + EasyPrivacy over HTTPS (with TLS certificate verification),
+    /// validates that each downloaded list is non-empty and well-formed, compiles them with
+    /// `DEFAULT_FILTER_LIST` and any custom lists, atomically swaps the live `Engine`, and writes
+    /// the `.dat` cache atomically to `cache_path`.
     pub fn refresh_remote_lists_and_save_cache(
         &self,
         cache_path: &Path,
     ) -> Result<usize, BlockingError> {
-        let mut downloaded_sources = Vec::with_capacity(REMOTE_FILTER_LIST_URLS.len());
+        let urls: Vec<(&str, &str)> = REMOTE_FILTER_LIST_URLS.to_vec();
+        self.refresh_from_urls_with_fetcher(cache_path, &urls, fetch_https_filter_list)
+    }
+
+    /// Downloads filter lists using `fetcher`, validates that every list uses `https://` and returns
+    /// valid filter content (never overwriting an existing `filters.dat` on a failed, empty, or
+    /// malformed download), and atomically writes the compiled `.dat` snapshot.
+    pub fn refresh_from_urls_with_fetcher<F>(
+        &self,
+        cache_path: &Path,
+        urls: &[(&str, &str)],
+        mut fetcher: F,
+    ) -> Result<usize, BlockingError>
+    where
+        F: FnMut(&str) -> Result<String, BlockingError>,
+    {
+        if urls.is_empty() {
+            return Err(BlockingError::RemoteFetch(
+                "No remote filter list URLs configured".to_string(),
+            ));
+        }
+
+        let mut downloaded_sources = Vec::with_capacity(urls.len());
         let mut total_bytes = 0usize;
 
-        let agent = ureq::Agent::config_builder()
-            .timeout_global(Some(std::time::Duration::from_secs(30)))
-            .build()
-            .new_agent();
+        for &(name, url) in urls {
+            let parsed = Url::parse(url)?;
+            if parsed.scheme() != "https" {
+                return Err(BlockingError::RemoteFetch(format!(
+                    "Refusing non-HTTPS filter list URL for {name}: {url}"
+                )));
+            }
 
-        for &(_name, url) in REMOTE_FILTER_LIST_URLS {
-            let mut resp = agent
-                .get(url)
-                .header("User-Agent", "Slate-Browser/0.1 (+https://slate.browser)")
-                .call()
-                .map_err(|e| BlockingError::RemoteFetch(format!("{url}: {e}")))?;
-            let body = resp
-                .body_mut()
-                .with_config()
-                .limit(64 * 1024 * 1024)
-                .read_to_string()
-                .map_err(|e| BlockingError::RemoteFetch(format!("{url} read: {e}")))?;
+            let body = fetcher(url)?;
+            validate_filter_list_payload(name, url, &body)?;
+
             total_bytes += body.len();
             downloaded_sources.push(CustomFilterSource::RemoteUrl {
                 url: url.to_string(),
@@ -445,20 +465,26 @@ impl BlockingPipeline {
         }
 
         let combined = {
-            let mut guard = self.custom_lists.write().unwrap();
-            // Replace any previous entries for the same remote URLs:
-            guard.retain(|src| {
-                !matches!(src, CustomFilterSource::RemoteUrl { url, .. }
-                    if REMOTE_FILTER_LIST_URLS.iter().any(|&(_, u)| u == url))
-            });
-            for src in downloaded_sources {
-                guard.push(src);
-            }
-            guard.clone()
+            let guard = self.custom_lists.read().unwrap();
+            let mut next: Vec<CustomFilterSource> = guard
+                .iter()
+                .filter(|src| {
+                    !matches!(src, CustomFilterSource::RemoteUrl { url, .. }
+                        if urls.iter().any(|&(_, u)| u == url))
+                })
+                .cloned()
+                .collect();
+            next.extend(downloaded_sources);
+            next
         };
 
         let new_engine = Self::build_engine(&[DEFAULT_FILTER_LIST], &combined);
         let serialized = new_engine.serialize();
+        if serialized.is_empty() {
+            return Err(BlockingError::RemoteFetch(
+                "Serialized adblock engine is empty".to_string(),
+            ));
+        }
 
         if let Some(parent) = cache_path.parent() {
             fs::create_dir_all(parent)?;
@@ -467,6 +493,9 @@ impl BlockingPipeline {
         fs::write(&tmp_path, &serialized)?;
         fs::rename(&tmp_path, cache_path)?;
 
+        if let Ok(mut list_guard) = self.custom_lists.write() {
+            *list_guard = combined;
+        }
         if let Ok(mut guard) = self.engine.write() {
             *guard = new_engine;
         }
@@ -735,6 +764,105 @@ impl BlockingPipeline {
         }
         Ok(())
     }
+}
+
+/// Validates that a downloaded filter list payload is non-empty, not an HTML error/captive-portal
+/// page, and contains recognizable Adblock/uBlock filter rules.
+pub fn validate_filter_list_payload(
+    name: &str,
+    url: &str,
+    body: &str,
+) -> Result<(), BlockingError> {
+    let trimmed = body.trim();
+    if trimmed.is_empty() {
+        return Err(BlockingError::RemoteFetch(format!(
+            "Downloaded filter list '{name}' from {url} is empty"
+        )));
+    }
+    let lower_prefix = trimmed
+        .chars()
+        .take(256)
+        .collect::<String>()
+        .to_ascii_lowercase();
+    if lower_prefix.starts_with("<!doctype html") || lower_prefix.starts_with("<html") {
+        return Err(BlockingError::RemoteFetch(format!(
+            "Downloaded filter list '{name}' from {url} returned an HTML error page instead of filter rules"
+        )));
+    }
+
+    let mut rule_or_comment_lines = 0usize;
+    let mut active_rule_lines = 0usize;
+    for line in trimmed.lines() {
+        let l = line.trim();
+        if l.is_empty() {
+            continue;
+        }
+        if l.starts_with('!') || l.starts_with("[Adblock") {
+            rule_or_comment_lines += 1;
+            continue;
+        }
+        if l.starts_with("||")
+            || l.starts_with("@@")
+            || l.contains("##")
+            || l.contains("#@#")
+            || l.contains('$')
+            || l.starts_with('/')
+            || l.starts_with('|')
+        {
+            rule_or_comment_lines += 1;
+            active_rule_lines += 1;
+        }
+    }
+
+    if active_rule_lines == 0 || rule_or_comment_lines < 2 {
+        return Err(BlockingError::RemoteFetch(format!(
+            "Downloaded filter list '{name}' from {url} is malformed (found {active_rule_lines} active rules)"
+        )));
+    }
+
+    Ok(())
+}
+
+/// Fetches a remote filter list strictly over HTTPS (`--proto =https --tlsv1.2`) with full TLS
+/// certificate verification enabled (never `-k` / `--insecure`).
+pub fn fetch_https_filter_list(url: &str) -> Result<String, BlockingError> {
+    let parsed = Url::parse(url)?;
+    if parsed.scheme() != "https" {
+        return Err(BlockingError::RemoteFetch(format!(
+            "Refusing non-HTTPS filter list URL: {url}"
+        )));
+    }
+    let output = std::process::Command::new("curl")
+        .args([
+            "--fail",
+            "--silent",
+            "--show-error",
+            "--location",
+            "--proto",
+            "=https",
+            "--tlsv1.2",
+            "--max-time",
+            "30",
+            "-A",
+            "Slate-Browser/0.1 (+https://slate.browser)",
+            url,
+        ])
+        .output()
+        .map_err(|e| {
+            BlockingError::RemoteFetch(format!("Failed to execute curl for {url}: {e}"))
+        })?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(BlockingError::RemoteFetch(format!(
+            "HTTPS fetch failed for {url} (status {}): {}",
+            output.status,
+            stderr.trim()
+        )));
+    }
+
+    String::from_utf8(output.stdout)
+        .map_err(|e| BlockingError::RemoteFetch(format!("Invalid UTF-8 from {url}: {e}")))
 }
 
 /// Strips known tracking query parameters (`utm_*`, `fbclid`, `gclid`, etc.) while preserving
@@ -1165,5 +1293,100 @@ mod tests {
                 .should_block
         );
         let _ = fs::remove_file(&dat_path);
+    }
+
+    #[test]
+    fn failed_empty_or_malformed_download_never_overwrites_good_filters_dat() {
+        let pipeline = BlockingPipeline::new_with_default_lists();
+        let cache_path =
+            std::env::temp_dir().join(format!("slate_safe_cache_{}.dat", std::process::id()));
+        let _ = fs::remove_file(&cache_path);
+
+        // 1. Seed a known-good cache containing a custom rule `||good-cached-rule.example^`:
+        let good_urls = [(
+            "GoodList",
+            "https://filters.slate.example/good_easylist.txt",
+        )];
+        let bytes = pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &good_urls, |_url| {
+                Ok(
+                    "! Title: Good List\n||good-cached-rule.example^\n##.good-ad-slot\n"
+                        .to_string(),
+                )
+            })
+            .expect("initial good refresh should succeed");
+        assert!(bytes > 0);
+        assert!(cache_path.exists());
+        let good_dat_bytes = fs::read(&cache_path).expect("read good cache");
+        assert!(!good_dat_bytes.is_empty());
+
+        // Verify the rule is active:
+        assert!(
+            pipeline
+                .evaluate_network_request(
+                    "https://good-cached-rule.example/ad.js",
+                    "https://news.example/",
+                    "script",
+                    "GET"
+                )
+                .should_block
+        );
+
+        // 2. Non-HTTPS URL must be rejected without touching `filters.dat`:
+        let http_urls = [("InsecureList", "http://filters.slate.example/easylist.txt")];
+        assert!(pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &http_urls, |_url| {
+                Ok("! Title: Insecure\n||other.example^\n".to_string())
+            })
+            .is_err());
+        assert_eq!(fs::read(&cache_path).unwrap(), good_dat_bytes);
+
+        // 3. Network failure must not overwrite `filters.dat`:
+        assert!(pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &good_urls, |_url| {
+                Err(BlockingError::RemoteFetch(
+                    "TLS certificate verification failed".to_string(),
+                ))
+            })
+            .is_err());
+        assert_eq!(fs::read(&cache_path).unwrap(), good_dat_bytes);
+
+        // 4. Empty payload must be rejected without touching `filters.dat`:
+        assert!(pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &good_urls, |_url| {
+                Ok("   \n\t  ".to_string())
+            })
+            .is_err());
+        assert_eq!(fs::read(&cache_path).unwrap(), good_dat_bytes);
+
+        // 5. HTML captive-portal / 502 error page must be rejected without touching `filters.dat`:
+        assert!(pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &good_urls, |_url| {
+                Ok("<!DOCTYPE html><html><body>502 Bad Gateway</body></html>".to_string())
+            })
+            .is_err());
+        assert_eq!(fs::read(&cache_path).unwrap(), good_dat_bytes);
+
+        // 6. Malformed gibberish with zero filter rules must be rejected without touching `filters.dat`:
+        assert!(pipeline
+            .refresh_from_urls_with_fetcher(&cache_path, &good_urls, |_url| {
+                Ok("not a filter list at all\njust plain text words\n".to_string())
+            })
+            .is_err());
+        assert_eq!(fs::read(&cache_path).unwrap(), good_dat_bytes);
+
+        // And the live pipeline still blocks the rule from the good cache:
+        assert!(
+            pipeline
+                .evaluate_network_request(
+                    "https://good-cached-rule.example/ad.js",
+                    "https://news.example/",
+                    "script",
+                    "GET"
+                )
+                .should_block
+        );
+
+        let _ = fs::remove_file(&cache_path);
     }
 }
