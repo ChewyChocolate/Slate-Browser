@@ -21,8 +21,8 @@ This log records major technical decisions, options considered, tradeoffs, and v
 ---
 
 ## ADR-003: Phase 0 Engine Selection (CEF vs. WebKitGTK)
-- **Date**: 2026-11-09
-- **Status**: Pending User Approval (Phase 0 Gate)
+- **Date**: 2026-11-10
+- **Status**: Accepted (Option A — CEF)
 - **Context**: Compare Option A (Rust shell + CEF 156 via `cef` crate) and Option B (Rust shell + WebKitGTK 2.54 via `webkit2gtk` crate) against Brave `1.99.55` on Arch Linux (`x86_64`), evaluating disk footprint, cold start, 1-tab and 10-tab RAM, site compatibility (YouTube, Google Docs, banking login, DRM video, WebGL/WebRTC), and ad-blocking interception capabilities.
 - **Options**:
   1. **Option A — CEF (`cef = "156.4.0+156.0.26"`, Chromium 156)**
@@ -41,3 +41,26 @@ This log records major technical decisions, options considered, tradeoffs, and v
        - **Higher 10-tab RAM & process explosion**: At 10 tabs across 10 origins, WebKitGTK spawns **62 processes** (`WebKitWebProcess` + `bwrap` sandbox helpers per tab) consuming **622.8 MiB PSS** (`637,707 KiB`), which is **35% more PSS RAM than CEF (`461.5 MiB`) and 32% more than Brave (`470.1 MiB`)**.
        - **Subresource ad-blocking gap**: UI-process `connect_decide_policy` blocked **0 of 10** `<script>` ad subresources in the 10-tab benchmark because it only fires for frame navigations; subresource blocking requires either Apple Content Blocking JSON (150k rule ceiling, missing uBO `$removeparam`/`$csp` modifiers, and `add_filter` is commented out in `webkit2gtk-rs`) or a separate C/Rust WebProcess `.so` extension (which still cannot intercept WebSockets or Service Worker fetches).
 - **Recommendation**: **Option A (CEF)** is strongly recommended because "Zero tolerance for broken major sites: banking, YouTube, Google Docs must work", video-call/DRM compatibility, 10-tab memory scaling, and Brave-grade subresource ad-blocking are hard requirements that CEF satisfies natively and WebKitGTK fails in live testing.
+
+---
+
+## ADR-004: Chromium / CEF Bloat Reduction & Subprocess Fast-Path
+- **Date**: 2026-11-10
+- **Status**: Accepted
+- **Context**: Stock CEF initializes background telemetry, spare renderer processes, and large default caches, and if `BlockingPipeline` (`adblock-rust`) is initialized before `cef::execute_process`, every child subprocess (`--type=renderer`, `--type=gpu-process`, `--type=utility`, `--type=zygote`) allocates its own unused copy of the adblock engine in private RAM.
+- **Decision**:
+  1. Execute a fast-path `execute_process` check for `--type=` subprocesses before allocating `BlockingPipeline` so `adblock-rust` exists only in the browser process.
+  2. Apply progressive command-line optimizations in `on_before_command_line_processing` (`CefOptimizationLevel::Level3MemoryAndV8Tuning`), appending to CEF's existing `--disable-features` (never overwriting it) to disable `Translate`, `OptimizationHints`, `AutofillServerCommunication`, `CertificateTransparencyComponentUpdater`, `InterestFeedContentSuggestions`, `BrowsingTopics`, `Fledge`, `PrivacySandboxSettings4`, `LiveCaption`, `AudioServiceOutOfProcess`, and `SpareRendererForSitePerProcess`, plus setting `--renderer-process-limit=6`, `--disk-cache-size=33554432`, `--media-cache-size=16777216`, `--enable-features=BackForwardCacheMemoryControls`, and `--js-flags=--optimize-for-size`.
+  3. Keep `MediaRouter` / `GlobalMediaControls` enabled because CEF 156 Chrome runtime dereferences `MediaRouter` during `ChromeBrowserView` startup.
+
+---
+
+## ADR-005: Proprietary Codecs (H.264/AAC) & Widevine CDM Strategy
+- **Date**: 2026-11-10
+- **Status**: Accepted
+- **Context**:
+  - Spotify's prebuilt CEF binary (`cef_binary_156.0.26..._linux64_minimal`) compiles Chromium with `proprietary_codecs=false ffmpeg_branding="Chromium"`, supporting royalty-free `VP9`, `AV1`, and `Opus` (which covers YouTube), while returning `""` / `false` for patent-encumbered `H.264` (`avc1`) and `AAC` (`mp4a.40.2`).
+  - `com.widevine.alpha` (Widevine EME DRM) works in CEF 156 (`mediaKeysCreated: true` for `SW_SECURE_CRYPTO`) when pointed at an existing system/browser `WidevineCdm` directory (`--widevine-cdm-path`), but cannot be bundled in uncertified redistributions without a Google Widevine CWIP license.
+- **Decision**:
+  - Support on-demand external Widevine CDM loading (`--widevine-cdm-path` or user-configured system CDM path from `/opt/google/chrome/WidevineCdm` / `~/.config/BraveSoftware/Brave-Browser/WidevineCdm`) without redistributing Google's proprietary `libwidevinecdm.so`. Keep it opt-in / on-demand so non-DRM browsing does not spawn the Widevine utility process on sites like YouTube that probe EME on load.
+  - For Arch Linux packaging (AUR `PKGBUILD`), provide a source build option for `libcef.so` with `proprietary_codecs=true ffmpeg_branding="Chrome"` (or system `ffmpeg`) so end users compiling locally get full H.264/AAC support without binary patent redistribution liability.

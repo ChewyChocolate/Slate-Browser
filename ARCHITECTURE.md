@@ -53,8 +53,22 @@ flowchart TD
 - **Sandbox**: Enabled in both engines (`context.set_sandbox_enabled(true)` in WebKitGTK; `Settings { no_sandbox: 0, .. }` in CEF).
 - **Internal UI pages**: No remote code loading; locked down with `INTERNAL_UI_CSP`; IPC commands reject any non-`slate://` origin.
 - **`unsafe` policy**:
-  - `slate-core`, `slate-blocking`, `slate-ui-bridge`, `slate-engine-adapter`, and `slate-spike-webkit` all enforce `#![forbid(unsafe_code)]`.
-  - `slate-spike-cef` contains zero manual `unsafe` blocks in our code, but invokes the `cef` crate's `wrap_*!` macros (`wrap_app!`, `wrap_client!`, `wrap_request_handler!`, etc.), which expand internally to `unsafe` C reference-count calls (`RcImpl` / `add_ref`).
+  - `slate-core`, `slate-blocking`, `slate-ui-bridge`, `slate-spike-cef`, and `slate-spike-webkit` all enforce **`#![forbid(unsafe_code)]`** (verified by automated test `unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter`).
+  - `slate-engine-adapter` enforces `#![deny(unsafe_code)]` at the crate root and confines all `cef` `wrap_*!` FFI macro expansions strictly inside [`crates/engine-adapter/src/cef_backend.rs`](file:///home/earl/Desktop/Slate/crates/engine-adapter/src/cef_backend.rs).
+- **Service Worker & Background Request Interception**:
+  - Both `Client::request_handler` (`SlateRequestHandler`) and `RequestContextHandler::resource_request_handler` (`SlateRequestContextHandler` via `request_context_cef_create_context_shared`) are wired to `SlateResourceRequestHandler`. This ensures that Service Worker script installations and background `fetch()` calls inside Service Workers (where `CefBrowser`/`CefFrame` are `None`) are evaluated and blocked by `slate-blocking`.
+
+## Chromium / CEF Security Update Plan
+
+1. **Tracking Upstream Releases**:
+   - Chromium releases a new Stable major milestone every 4 weeks and bi-weekly security patch updates (tracked via the [ChromiumDash Stable Linux API](https://chromiumdash.appspot.com/fetch_releases?channel=Stable&platform=Linux&num=1) and the [Chrome Releases Blog](https://chromereleases.googleblog.com/)).
+   - The `cef` (`cef-rs`) crate publishes prebuilt Linux `x86_64` minimal binaries from Spotify's automated CEF builder within days of each Chromium Stable cut.
+2. **Automated Version Check (`scripts/check_cef_version.sh`)**:
+   - Run `./scripts/check_cef_version.sh` locally or in CI. It compares the pinned `cef-dll-sys` version in `Cargo.lock` against both the latest `cef` release on `crates.io` and the latest upstream Google Chromium Linux Stable version from ChromiumDash, exiting with code `2` when an update is available.
+3. **Update Procedure**:
+   - Run `cargo update -p cef -p cef-dll-sys`.
+   - Build and cache the new CEF binary distribution (`CEF_PATH="$HOME/.cache/slate-cef" cargo build --release`).
+   - Run `./scripts/check.sh`, `./scripts/bench_realworld.sh`, and `--test-service-worker` before committing the updated `Cargo.lock`.
 
 ## Fingerprinting Protection Scope
 
