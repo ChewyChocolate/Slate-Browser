@@ -64,3 +64,24 @@ This log records major technical decisions, options considered, tradeoffs, and v
 - **Decision**:
   - Support on-demand external Widevine CDM loading (`--widevine-cdm-path` or user-configured system CDM path from `/opt/google/chrome/WidevineCdm` / `~/.config/BraveSoftware/Brave-Browser/WidevineCdm`) without redistributing Google's proprietary `libwidevinecdm.so`. Keep it opt-in / on-demand so non-DRM browsing does not spawn the Widevine utility process on sites like YouTube that probe EME on load.
   - For Arch Linux packaging (AUR `PKGBUILD`), provide a source build option for `libcef.so` with `proprietary_codecs=true ffmpeg_branding="Chrome"` (or system `ffmpeg`) so end users compiling locally get full H.264/AAC support without binary patent redistribution liability.
+
+---
+
+## ADR-006: Service Worker Request Interception via Dual `Client::request_handler` + `RequestContextHandler`
+- **Date**: 2026-11-10
+- **Status**: Accepted
+- **Context**: In CEF / Chromium, Service Worker script loads (`RT_SERVICE_WORKER`) and background `fetch()` calls initiated inside an active Service Worker thread do not belong to a single `CefBrowser` frame and can bypass `Client::request_handler` (`BrowserClient::request_handler`).
+- **Decision**:
+  - Wire both `Client::request_handler` (`SlateRequestHandler`) and `RequestContextHandler::resource_request_handler` (`SlateRequestContextHandler`) to the shared `Arc<BlockingPipeline>`.
+  - Create browser instances using `request_context_cef_create_context_shared(request_context_get_global_context(), Some(&mut rc_handler))` so every profile-level request (including Service Worker `fetch()` calls without a `Browser` handle) flows through `SlateResourceRequestHandler`.
+  - When `browser` or `frame` is `None` (out-of-tab Service Worker context), fall back to `request.referrer_url()` or `request.url()` as `source_url` so `adblock-rust` evaluates third-partyness accurately.
+
+---
+
+## ADR-007: Confining CEF `unsafe` FFI Macros to `crates/engine-adapter`
+- **Date**: 2026-11-10
+- **Status**: Accepted
+- **Context**: The `cef` crate (`156.4.0+156.0.26`) generates `unsafe extern "C"` reference-counted C-ABI wrapper structs inside its `wrap_app!`, `wrap_client!`, `wrap_request_handler!`, `wrap_request_context_handler!`, `wrap_resource_request_handler!`, `wrap_cookie_access_filter!`, `wrap_life_span_handler!`, and `wrap_load_handler!` proc macros.
+- **Decision**:
+  - Place all CEF `wrap_*!` macro invocations inside `crates/engine-adapter/src/cef_backend.rs` behind the `cef-engine` Cargo feature.
+  - Enforce `#![forbid(unsafe_code)]` on `crates/core`, `crates/blocking`, `crates/ui-bridge`, `spikes/spike-cef`, `spikes/spike-webkit`, and the non-`cef-engine` surface of `crates/engine-adapter`, verified by the automated test `unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter`.
