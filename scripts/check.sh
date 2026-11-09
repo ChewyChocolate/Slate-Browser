@@ -15,11 +15,25 @@ cargo clippy --workspace --all-targets -- -D warnings
 echo "==> [3/4] Running automated test suite (cargo test --workspace)"
 cargo test --workspace
 
-echo "==> [4/4] Running dependency security audit (cargo audit)"
+echo "==> [4/5] Running dependency security audit (cargo audit)"
 if command -v cargo-audit >/dev/null 2>&1; then
     cargo audit
 else
     echo "NOTE: cargo-audit binary not installed in PATH; install with 'cargo install cargo-audit' or 'pacman -S cargo-audit'."
 fi
+
+echo "==> [5/5] Running live CEF launch smoke test (slate-spike-cef --tabs 1 --exit-after-load)"
+cargo build --release -p slate-spike-cef
+SMOKE_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
+    "$ROOT_DIR/target/release/slate-spike-cef" --tabs 1 --exit-after-load)
+echo "    Smoke output: $SMOKE_OUT"
+python3 -c '
+import sys, json
+data = json.loads(sys.argv[1])
+assert data.get("engine") == "cef-156", f"unexpected engine: {data}"
+assert data.get("tabs") == 1, f"unexpected tabs: {data}"
+assert data.get("pss_tree_kb", 0) > 0, f"missing pss_tree_kb: {data}"
+assert data.get("document_start_injected") is True, f"document_start_injected failed: {data}"
+' "$SMOKE_OUT"
 
 echo "==> All checks passed!"
