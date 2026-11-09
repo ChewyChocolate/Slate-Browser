@@ -1711,6 +1711,7 @@ dependencies = [
 name = "slate-engine-adapter"
 version = "0.1.0"
 dependencies = [
+ "cef",
  "serde",
  "serde_json",
  "slate-blocking",
@@ -1722,13 +1723,7 @@ dependencies = [
 name = "slate-spike-cef"
 version = "0.1.0"
 dependencies = [
- "cef",
- "serde",
- "serde_json",
- "slate-blocking",
- "slate-core",
  "slate-engine-adapter",
- "slate-ui-bridge",
 ]
 
 [[package]]

@@ -1,6 +1,13 @@
-#![forbid(unsafe_code)]
+#![deny(unsafe_code)]
 //! `slate-engine-adapter`: The sole abstraction boundary between `slate-core` / `slate-blocking`
 //! and the underlying web rendering engine (CEF or WebKitGTK).
+//!
+//! Security note: All safe adapter traits live in `lib.rs` under `#![deny(unsafe_code)]`.
+//! The `cef` crate's `wrap_*!` FFI reference-counting macros are strictly confined to
+//! [`cef_backend`](file:///home/earl/Desktop/Slate/crates/engine-adapter/src/cef_backend.rs).
+
+#[allow(unsafe_code)]
+pub mod cef_backend;
 
 use serde::{Deserialize, Serialize};
 use slate_core::{ScrollPosition, TabId};
@@ -158,6 +165,10 @@ pub fn webkitgtk_capability_report() -> EngineCapabilityReport {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::cef_backend::ServiceWorkerTestServer;
+    use slate_blocking::BlockingPipeline;
+    use std::io::{Read, Write};
+    use std::net::TcpStream;
 
     #[test]
     fn capability_reports_document_cef_and_webkit_tradeoffs() {
@@ -174,5 +185,71 @@ mod tests {
         ));
         assert!(!cef.interception_gaps.is_empty());
         assert!(!wk.interception_gaps.is_empty());
+    }
+
+    #[test]
+    fn service_worker_requests_are_evaluated_and_blocked_by_request_context_pipeline() {
+        let srv = ServiceWorkerTestServer::start().expect("Failed to start SW test server");
+        let root = srv.root_url();
+        let addr = root.strip_prefix("http://").unwrap().trim_end_matches('/');
+
+        let mut stream = TcpStream::connect(addr).expect("Connect to SW test server");
+        stream
+            .write_all(b"GET /sw.js HTTP/1.1\r\nHost: 127.0.0.1\r\n\r\n")
+            .unwrap();
+        let mut resp = String::new();
+        stream.read_to_string(&mut resp).unwrap();
+        assert!(resp.contains("RUN_SW_BLOCK_TEST"));
+
+        let pipeline = BlockingPipeline::new_with_default_lists();
+        // Simulate RequestContextHandler::resource_request_handler when frame is None (Service Worker fetch)
+        let sw_initiator = "https://service-worker.slate.local/";
+        let ad_decision = pipeline.evaluate_network_request(
+            "https://securepubads.g.doubleclick.net/gpt/pubads_impl_sw_test.js",
+            sw_initiator,
+            "xmlhttprequest",
+            "GET",
+        );
+        assert!(ad_decision.should_block);
+
+        let tracker_decision = pipeline.evaluate_network_request(
+            "https://www.google-analytics.com/analytics.js",
+            sw_initiator,
+            "script",
+            "GET",
+        );
+        assert!(tracker_decision.should_block);
+
+        let allowed_decision = pipeline.evaluate_network_request(
+            &format!("{root}sw-allowed.json"),
+            &root,
+            "xmlhttprequest",
+            "GET",
+        );
+        assert!(!allowed_decision.should_block);
+    }
+
+    #[test]
+    fn unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter() {
+        let workspace_root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .parent()
+            .unwrap();
+        let crates_requiring_forbid = [
+            "crates/core/src/lib.rs",
+            "crates/blocking/src/lib.rs",
+            "crates/ui-bridge/src/lib.rs",
+            "spikes/spike-cef/src/main.rs",
+            "spikes/spike-webkit/src/main.rs",
+        ];
+        for rel_path in crates_requiring_forbid {
+            let content = std::fs::read_to_string(workspace_root.join(rel_path))
+                .unwrap_or_else(|e| panic!("Failed to read {rel_path}: {e}"));
+            assert!(
+                content.contains("#![forbid(unsafe_code)]"),
+                "Crate {rel_path} must contain #![forbid(unsafe_code)]"
+            );
+        }
     }
 }

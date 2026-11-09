@@ -5,6 +5,7 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
+cef = "156.4.0"
 serde.workspace = true
 serde_json.workspace = true
 slate-blocking.workspace = true

@@ -5,13 +5,7 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-cef = "156.4.0"
-serde.workspace = true
-serde_json.workspace = true
-slate-blocking.workspace = true
-slate-core.workspace = true
 slate-engine-adapter.workspace = true
-slate-ui-bridge.workspace = true
 
 [lints]
 workspace = true
