@@ -1,0 +1,1591 @@
+{
+  "slate": {
+    "1tab": [
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 1,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 5852,
+        "rss_tree_kb": 1140656,
+        "pss_tree_kb": 629429,
+        "process_count": 8,
+        "evaluated_requests": 66,
+        "blocked_requests": 11,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 77758,
+            "kind": "browser",
+            "pss_kb": 146767,
+            "rss_kb": 268728
+          },
+          {
+            "pid": 77765,
+            "kind": "zygote",
+            "pss_kb": 18322,
+            "rss_kb": 73056
+          },
+          {
+            "pid": 77766,
+            "kind": "zygote",
+            "pss_kb": 14365,
+            "rss_kb": 73064
+          },
+          {
+            "pid": 77768,
+            "kind": "zygote",
+            "pss_kb": 4605,
+            "rss_kb": 19616
+          },
+          {
+            "pid": 77799,
+            "kind": "gpu-process",
+            "pss_kb": 66461,
+            "rss_kb": 156016
+          },
+          {
+            "pid": 77804,
+            "kind": "utility:network",
+            "pss_kb": 53982,
+            "rss_kb": 122912
+          },
+          {
+            "pid": 77825,
+            "kind": "utility:storage",
+            "pss_kb": 10365,
+            "rss_kb": 46844
+          },
+          {
+            "pid": 77888,
+            "kind": "renderer",
+            "pss_kb": 314562,
+            "rss_kb": 380420
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 1,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 9467,
+        "rss_tree_kb": 908444,
+        "pss_tree_kb": 414967,
+        "process_count": 8,
+        "evaluated_requests": 24,
+        "blocked_requests": 0,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 79997,
+            "kind": "browser",
+            "pss_kb": 148319,
+            "rss_kb": 265004
+          },
+          {
+            "pid": 80004,
+            "kind": "zygote",
+            "pss_kb": 18420,
+            "rss_kb": 73024
+          },
+          {
+            "pid": 80005,
+            "kind": "zygote",
+            "pss_kb": 14435,
+            "rss_kb": 73080
+          },
+          {
+            "pid": 80007,
+            "kind": "zygote",
+            "pss_kb": 4600,
+            "rss_kb": 19616
+          },
+          {
+            "pid": 80040,
+            "kind": "gpu-process",
+            "pss_kb": 53743,
+            "rss_kb": 140416
+          },
+          {
+            "pid": 80045,
+            "kind": "utility:network",
+            "pss_kb": 50289,
+            "rss_kb": 118260
+          },
+          {
+            "pid": 80061,
+            "kind": "utility:storage",
+            "pss_kb": 10208,
+            "rss_kb": 46196
+          },
+          {
+            "pid": 80115,
+            "kind": "renderer",
+            "pss_kb": 114953,
+            "rss_kb": 172848
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 1,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 9413,
+        "rss_tree_kb": 865772,
+        "pss_tree_kb": 380408,
+        "process_count": 8,
+        "evaluated_requests": 21,
+        "blocked_requests": 0,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 81843,
+            "kind": "browser",
+            "pss_kb": 148530,
+            "rss_kb": 263372
+          },
+          {
+            "pid": 81850,
+            "kind": "zygote",
+            "pss_kb": 18390,
+            "rss_kb": 73144
+          },
+          {
+            "pid": 81851,
+            "kind": "zygote",
+            "pss_kb": 14438,
+            "rss_kb": 73184
+          },
+          {
+            "pid": 81853,
+            "kind": "zygote",
+            "pss_kb": 4605,
+            "rss_kb": 19624
+          },
+          {
+            "pid": 81884,
+            "kind": "gpu-process",
+            "pss_kb": 50736,
+            "rss_kb": 135656
+          },
+          {
+            "pid": 81889,
+            "kind": "utility:network",
+            "pss_kb": 50059,
+            "rss_kb": 116948
+          },
+          {
+            "pid": 81915,
+            "kind": "utility:storage",
+            "pss_kb": 10197,
+            "rss_kb": 46188
+          },
+          {
+            "pid": 81966,
+            "kind": "renderer",
+            "pss_kb": 83453,
+            "rss_kb": 137656
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      }
+    ],
+    "5tabs": [
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 5,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 3381,
+        "rss_tree_kb": 2076312,
+        "pss_tree_kb": 895213,
+        "process_count": 14,
+        "evaluated_requests": 127,
+        "blocked_requests": 9,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 77947,
+            "kind": "browser",
+            "pss_kb": 155012,
+            "rss_kb": 291640
+          },
+          {
+            "pid": 77954,
+            "kind": "zygote",
+            "pss_kb": 15588,
+            "rss_kb": 72932
+          },
+          {
+            "pid": 77955,
+            "kind": "zygote",
+            "pss_kb": 9556,
+            "rss_kb": 72964
+          },
+          {
+            "pid": 77957,
+            "kind": "zygote",
+            "pss_kb": 2360,
+            "rss_kb": 19752
+          },
+          {
+            "pid": 77988,
+            "kind": "gpu-process",
+            "pss_kb": 64862,
+            "rss_kb": 158844
+          },
+          {
+            "pid": 77993,
+            "kind": "utility:network",
+            "pss_kb": 46493,
+            "rss_kb": 122116
+          },
+          {
+            "pid": 78031,
+            "kind": "utility:storage",
+            "pss_kb": 12564,
+            "rss_kb": 54072
+          },
+          {
+            "pid": 78068,
+            "kind": "renderer",
+            "pss_kb": 27344,
+            "rss_kb": 124752
+          },
+          {
+            "pid": 78079,
+            "kind": "renderer",
+            "pss_kb": 71642,
+            "rss_kb": 177784
+          },
+          {
+            "pid": 78090,
+            "kind": "renderer",
+            "pss_kb": 53889,
+            "rss_kb": 158920
+          },
+          {
+            "pid": 78105,
+            "kind": "renderer",
+            "pss_kb": 231469,
+            "rss_kb": 347884
+          },
+          {
+            "pid": 78121,
+            "kind": "renderer",
+            "pss_kb": 88249,
+            "rss_kb": 197660
+          },
+          {
+            "pid": 78135,
+            "kind": "renderer",
+            "pss_kb": 91723,
+            "rss_kb": 193512
+          },
+          {
+            "pid": 78173,
+            "kind": "utility",
+            "pss_kb": 24462,
+            "rss_kb": 83480
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 5,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 3301,
+        "rss_tree_kb": 1432088,
+        "pss_tree_kb": 499885,
+        "process_count": 12,
+        "evaluated_requests": 58,
+        "blocked_requests": 0,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 80133,
+            "kind": "browser",
+            "pss_kb": 153422,
+            "rss_kb": 280840
+          },
+          {
+            "pid": 80140,
+            "kind": "zygote",
+            "pss_kb": 17247,
+            "rss_kb": 72812
+          },
+          {
+            "pid": 80141,
+            "kind": "zygote",
+            "pss_kb": 11471,
+            "rss_kb": 72984
+          },
+          {
+            "pid": 80143,
+            "kind": "zygote",
+            "pss_kb": 2614,
+            "rss_kb": 19744
+          },
+          {
+            "pid": 80174,
+            "kind": "gpu-process",
+            "pss_kb": 47776,
+            "rss_kb": 136384
+          },
+          {
+            "pid": 80179,
+            "kind": "utility:network",
+            "pss_kb": 47653,
+            "rss_kb": 120476
+          },
+          {
+            "pid": 80198,
+            "kind": "utility:storage",
+            "pss_kb": 6858,
+            "rss_kb": 46788
+          },
+          {
+            "pid": 80254,
+            "kind": "renderer",
+            "pss_kb": 28615,
+            "rss_kb": 122744
+          },
+          {
+            "pid": 80265,
+            "kind": "renderer",
+            "pss_kb": 63721,
+            "rss_kb": 160924
+          },
+          {
+            "pid": 80276,
+            "kind": "renderer",
+            "pss_kb": 31487,
+            "rss_kb": 122340
+          },
+          {
+            "pid": 80293,
+            "kind": "renderer",
+            "pss_kb": 42924,
+            "rss_kb": 134944
+          },
+          {
+            "pid": 80311,
+            "kind": "renderer",
+            "pss_kb": 46097,
+            "rss_kb": 141108
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 5,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 5443,
+        "rss_tree_kb": 1574884,
+        "pss_tree_kb": 536751,
+        "process_count": 13,
+        "evaluated_requests": 60,
+        "blocked_requests": 0,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 81982,
+            "kind": "browser",
+            "pss_kb": 152143,
+            "rss_kb": 281688
+          },
+          {
+            "pid": 81989,
+            "kind": "zygote",
+            "pss_kb": 17122,
+            "rss_kb": 72956
+          },
+          {
+            "pid": 81990,
+            "kind": "zygote",
+            "pss_kb": 11158,
+            "rss_kb": 73040
+          },
+          {
+            "pid": 81992,
+            "kind": "zygote",
+            "pss_kb": 2349,
+            "rss_kb": 19744
+          },
+          {
+            "pid": 82024,
+            "kind": "gpu-process",
+            "pss_kb": 50610,
+            "rss_kb": 140912
+          },
+          {
+            "pid": 82029,
+            "kind": "utility:network",
+            "pss_kb": 48331,
+            "rss_kb": 121808
+          },
+          {
+            "pid": 82049,
+            "kind": "utility:storage",
+            "pss_kb": 6443,
+            "rss_kb": 46764
+          },
+          {
+            "pid": 82107,
+            "kind": "renderer",
+            "pss_kb": 26520,
+            "rss_kb": 122728
+          },
+          {
+            "pid": 82118,
+            "kind": "renderer",
+            "pss_kb": 57640,
+            "rss_kb": 158664
+          },
+          {
+            "pid": 82129,
+            "kind": "renderer",
+            "pss_kb": 39336,
+            "rss_kb": 138136
+          },
+          {
+            "pid": 82146,
+            "kind": "renderer",
+            "pss_kb": 65173,
+            "rss_kb": 164568
+          },
+          {
+            "pid": 82159,
+            "kind": "renderer",
+            "pss_kb": 43373,
+            "rss_kb": 140552
+          },
+          {
+            "pid": 82183,
+            "kind": "renderer",
+            "pss_kb": 16553,
+            "rss_kb": 93324
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      }
+    ],
+    "10tabs": [
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 3003,
+        "rss_tree_kb": 2989652,
+        "pss_tree_kb": 1180976,
+        "process_count": 19,
+        "evaluated_requests": 517,
+        "blocked_requests": 16,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 78190,
+            "kind": "browser",
+            "pss_kb": 173079,
+            "rss_kb": 314396
+          },
+          {
+            "pid": 78197,
+            "kind": "zygote",
+            "pss_kb": 15138,
+            "rss_kb": 73060
+          },
+          {
+            "pid": 78198,
+            "kind": "zygote",
+            "pss_kb": 8556,
+            "rss_kb": 72968
+          },
+          {
+            "pid": 78200,
+            "kind": "zygote",
+            "pss_kb": 1705,
+            "rss_kb": 19744
+          },
+          {
+            "pid": 78231,
+            "kind": "gpu-process",
+            "pss_kb": 63711,
+            "rss_kb": 159236
+          },
+          {
+            "pid": 78236,
+            "kind": "utility:network",
+            "pss_kb": 44406,
+            "rss_kb": 121240
+          },
+          {
+            "pid": 78261,
+            "kind": "utility:storage",
+            "pss_kb": 10012,
+            "rss_kb": 52316
+          },
+          {
+            "pid": 78315,
+            "kind": "renderer",
+            "pss_kb": 19566,
+            "rss_kb": 122696
+          },
+          {
+            "pid": 78326,
+            "kind": "renderer",
+            "pss_kb": 62727,
+            "rss_kb": 176036
+          },
+          {
+            "pid": 78337,
+            "kind": "renderer",
+            "pss_kb": 46161,
+            "rss_kb": 157740
+          },
+          {
+            "pid": 78348,
+            "kind": "renderer",
+            "pss_kb": 54788,
+            "rss_kb": 168536
+          },
+          {
+            "pid": 78370,
+            "kind": "renderer",
+            "pss_kb": 73075,
+            "rss_kb": 189472
+          },
+          {
+            "pid": 78381,
+            "kind": "renderer",
+            "pss_kb": 70277,
+            "rss_kb": 187008
+          },
+          {
+            "pid": 78392,
+            "kind": "renderer",
+            "pss_kb": 91309,
+            "rss_kb": 205864
+          },
+          {
+            "pid": 78411,
+            "kind": "renderer",
+            "pss_kb": 211025,
+            "rss_kb": 334500
+          },
+          {
+            "pid": 78433,
+            "kind": "renderer",
+            "pss_kb": 51826,
+            "rss_kb": 167556
+          },
+          {
+            "pid": 78445,
+            "kind": "renderer",
+            "pss_kb": 76161,
+            "rss_kb": 192036
+          },
+          {
+            "pid": 78474,
+            "kind": "renderer",
+            "pss_kb": 83810,
+            "rss_kb": 192068
+          },
+          {
+            "pid": 78522,
+            "kind": "utility",
+            "pss_kb": 23644,
+            "rss_kb": 83180
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 7640,
+        "rss_tree_kb": 1928164,
+        "pss_tree_kb": 508226,
+        "process_count": 17,
+        "evaluated_requests": 83,
+        "blocked_requests": 1,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 80332,
+            "kind": "browser",
+            "pss_kb": 169531,
+            "rss_kb": 298428
+          },
+          {
+            "pid": 80339,
+            "kind": "zygote",
+            "pss_kb": 16855,
+            "rss_kb": 73180
+          },
+          {
+            "pid": 80340,
+            "kind": "zygote",
+            "pss_kb": 10275,
+            "rss_kb": 72836
+          },
+          {
+            "pid": 80342,
+            "kind": "zygote",
+            "pss_kb": 1804,
+            "rss_kb": 19748
+          },
+          {
+            "pid": 80373,
+            "kind": "gpu-process",
+            "pss_kb": 47183,
+            "rss_kb": 136924
+          },
+          {
+            "pid": 80378,
+            "kind": "utility:network",
+            "pss_kb": 44660,
+            "rss_kb": 118136
+          },
+          {
+            "pid": 80394,
+            "kind": "utility:storage",
+            "pss_kb": 5656,
+            "rss_kb": 47212
+          },
+          {
+            "pid": 80457,
+            "kind": "renderer",
+            "pss_kb": 23542,
+            "rss_kb": 122624
+          },
+          {
+            "pid": 80468,
+            "kind": "renderer",
+            "pss_kb": 24074,
+            "rss_kb": 119320
+          },
+          {
+            "pid": 80479,
+            "kind": "renderer",
+            "pss_kb": 18678,
+            "rss_kb": 115052
+          },
+          {
+            "pid": 80490,
+            "kind": "renderer",
+            "pss_kb": 23828,
+            "rss_kb": 119060
+          },
+          {
+            "pid": 80512,
+            "kind": "renderer",
+            "pss_kb": 18574,
+            "rss_kb": 112236
+          },
+          {
+            "pid": 80523,
+            "kind": "renderer",
+            "pss_kb": 19920,
+            "rss_kb": 114752
+          },
+          {
+            "pid": 80534,
+            "kind": "renderer",
+            "pss_kb": 22152,
+            "rss_kb": 116856
+          },
+          {
+            "pid": 80550,
+            "kind": "renderer",
+            "pss_kb": 26396,
+            "rss_kb": 121724
+          },
+          {
+            "pid": 80561,
+            "kind": "renderer",
+            "pss_kb": 17347,
+            "rss_kb": 109908
+          },
+          {
+            "pid": 80584,
+            "kind": "renderer",
+            "pss_kb": 17751,
+            "rss_kb": 110168
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 4289,
+        "rss_tree_kb": 2354552,
+        "pss_tree_kb": 735543,
+        "process_count": 18,
+        "evaluated_requests": 222,
+        "blocked_requests": 6,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": false,
+        "suspended_tabs_count": 0,
+        "rss_after_suspend_kb": null,
+        "pss_after_suspend_kb": null,
+        "process_count_after_suspend": null,
+        "process_breakdown": [
+          {
+            "pid": 82197,
+            "kind": "browser",
+            "pss_kb": 166303,
+            "rss_kb": 301180
+          },
+          {
+            "pid": 82204,
+            "kind": "zygote",
+            "pss_kb": 16685,
+            "rss_kb": 73104
+          },
+          {
+            "pid": 82205,
+            "kind": "zygote",
+            "pss_kb": 10055,
+            "rss_kb": 73000
+          },
+          {
+            "pid": 82207,
+            "kind": "zygote",
+            "pss_kb": 1684,
+            "rss_kb": 19748
+          },
+          {
+            "pid": 82239,
+            "kind": "gpu-process",
+            "pss_kb": 52434,
+            "rss_kb": 145596
+          },
+          {
+            "pid": 82244,
+            "kind": "utility:network",
+            "pss_kb": 50129,
+            "rss_kb": 125856
+          },
+          {
+            "pid": 82272,
+            "kind": "utility:storage",
+            "pss_kb": 5385,
+            "rss_kb": 47372
+          },
+          {
+            "pid": 82318,
+            "kind": "renderer",
+            "pss_kb": 20384,
+            "rss_kb": 122688
+          },
+          {
+            "pid": 82329,
+            "kind": "renderer",
+            "pss_kb": 51369,
+            "rss_kb": 160468
+          },
+          {
+            "pid": 82340,
+            "kind": "renderer",
+            "pss_kb": 30316,
+            "rss_kb": 137892
+          },
+          {
+            "pid": 82351,
+            "kind": "renderer",
+            "pss_kb": 38303,
+            "rss_kb": 146660
+          },
+          {
+            "pid": 82373,
+            "kind": "renderer",
+            "pss_kb": 37030,
+            "rss_kb": 139256
+          },
+          {
+            "pid": 82384,
+            "kind": "renderer",
+            "pss_kb": 47182,
+            "rss_kb": 156336
+          },
+          {
+            "pid": 82395,
+            "kind": "renderer",
+            "pss_kb": 40071,
+            "rss_kb": 142640
+          },
+          {
+            "pid": 82415,
+            "kind": "renderer",
+            "pss_kb": 93325,
+            "rss_kb": 208992
+          },
+          {
+            "pid": 82427,
+            "kind": "renderer",
+            "pss_kb": 30148,
+            "rss_kb": 125100
+          },
+          {
+            "pid": 82449,
+            "kind": "renderer",
+            "pss_kb": 32261,
+            "rss_kb": 135192
+          },
+          {
+            "pid": 82479,
+            "kind": "renderer",
+            "pss_kb": 12479,
+            "rss_kb": 93472
+          }
+        ],
+        "process_breakdown_after_suspend": null
+      }
+    ],
+    "10tabs_sleep": [
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 3803,
+        "rss_tree_kb": 2660588,
+        "pss_tree_kb": 968499,
+        "process_count": 18,
+        "evaluated_requests": 335,
+        "blocked_requests": 12,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": true,
+        "suspended_tabs_count": 9,
+        "rss_after_suspend_kb": 1261616,
+        "pss_after_suspend_kb": 628230,
+        "process_count_after_suspend": 10,
+        "process_breakdown": [
+          {
+            "pid": 78535,
+            "kind": "browser",
+            "pss_kb": 169150,
+            "rss_kb": 306300
+          },
+          {
+            "pid": 78542,
+            "kind": "zygote",
+            "pss_kb": 16621,
+            "rss_kb": 73044
+          },
+          {
+            "pid": 78543,
+            "kind": "zygote",
+            "pss_kb": 10066,
+            "rss_kb": 73008
+          },
+          {
+            "pid": 78545,
+            "kind": "zygote",
+            "pss_kb": 1713,
+            "rss_kb": 19744
+          },
+          {
+            "pid": 78576,
+            "kind": "gpu-process",
+            "pss_kb": 59958,
+            "rss_kb": 153788
+          },
+          {
+            "pid": 78581,
+            "kind": "utility:network",
+            "pss_kb": 56389,
+            "rss_kb": 134664
+          },
+          {
+            "pid": 78600,
+            "kind": "utility:storage",
+            "pss_kb": 5452,
+            "rss_kb": 47628
+          },
+          {
+            "pid": 78658,
+            "kind": "renderer",
+            "pss_kb": 20084,
+            "rss_kb": 122812
+          },
+          {
+            "pid": 78669,
+            "kind": "renderer",
+            "pss_kb": 53694,
+            "rss_kb": 163784
+          },
+          {
+            "pid": 78680,
+            "kind": "renderer",
+            "pss_kb": 46767,
+            "rss_kb": 156828
+          },
+          {
+            "pid": 78691,
+            "kind": "renderer",
+            "pss_kb": 44403,
+            "rss_kb": 154476
+          },
+          {
+            "pid": 78713,
+            "kind": "renderer",
+            "pss_kb": 41294,
+            "rss_kb": 146784
+          },
+          {
+            "pid": 78724,
+            "kind": "renderer",
+            "pss_kb": 65827,
+            "rss_kb": 176496
+          },
+          {
+            "pid": 78735,
+            "kind": "renderer",
+            "pss_kb": 56380,
+            "rss_kb": 160748
+          },
+          {
+            "pid": 78753,
+            "kind": "renderer",
+            "pss_kb": 136555,
+            "rss_kb": 258084
+          },
+          {
+            "pid": 78765,
+            "kind": "renderer",
+            "pss_kb": 52049,
+            "rss_kb": 163228
+          },
+          {
+            "pid": 78777,
+            "kind": "renderer",
+            "pss_kb": 49146,
+            "rss_kb": 160628
+          },
+          {
+            "pid": 78821,
+            "kind": "renderer",
+            "pss_kb": 82951,
+            "rss_kb": 188544
+          }
+        ],
+        "process_breakdown_after_suspend": [
+          {
+            "pid": 78535,
+            "kind": "browser",
+            "pss_kb": 177983,
+            "rss_kb": 305076
+          },
+          {
+            "pid": 78542,
+            "kind": "zygote",
+            "pss_kb": 17943,
+            "rss_kb": 73044
+          },
+          {
+            "pid": 78543,
+            "kind": "zygote",
+            "pss_kb": 13267,
+            "rss_kb": 73008
+          },
+          {
+            "pid": 78545,
+            "kind": "zygote",
+            "pss_kb": 3824,
+            "rss_kb": 19744
+          },
+          {
+            "pid": 78576,
+            "kind": "gpu-process",
+            "pss_kb": 64496,
+            "rss_kb": 155388
+          },
+          {
+            "pid": 78581,
+            "kind": "utility:network",
+            "pss_kb": 57623,
+            "rss_kb": 129100
+          },
+          {
+            "pid": 78600,
+            "kind": "utility:storage",
+            "pss_kb": 9434,
+            "rss_kb": 47960
+          },
+          {
+            "pid": 78658,
+            "kind": "helper",
+            "pss_kb": 0,
+            "rss_kb": 0
+          },
+          {
+            "pid": 78753,
+            "kind": "renderer",
+            "pss_kb": 208504,
+            "rss_kb": 298968
+          },
+          {
+            "pid": 78765,
+            "kind": "renderer",
+            "pss_kb": 75156,
+            "rss_kb": 159328
+          }
+        ]
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 11401,
+        "rss_tree_kb": 1695740,
+        "pss_tree_kb": 414781,
+        "process_count": 17,
+        "evaluated_requests": 10,
+        "blocked_requests": 0,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": false,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": true,
+        "suspended_tabs_count": 9,
+        "rss_after_suspend_kb": 839608,
+        "pss_after_suspend_kb": 367119,
+        "process_count_after_suspend": 9,
+        "process_breakdown": [
+          {
+            "pid": 80600,
+            "kind": "browser",
+            "pss_kb": 163316,
+            "rss_kb": 281564
+          },
+          {
+            "pid": 80607,
+            "kind": "zygote",
+            "pss_kb": 16965,
+            "rss_kb": 73088
+          },
+          {
+            "pid": 80608,
+            "kind": "zygote",
+            "pss_kb": 10454,
+            "rss_kb": 73112
+          },
+          {
+            "pid": 80610,
+            "kind": "zygote",
+            "pss_kb": 1788,
+            "rss_kb": 19688
+          },
+          {
+            "pid": 80641,
+            "kind": "gpu-process",
+            "pss_kb": 47989,
+            "rss_kb": 136556
+          },
+          {
+            "pid": 80646,
+            "kind": "utility:network",
+            "pss_kb": 33620,
+            "rss_kb": 97976
+          },
+          {
+            "pid": 80665,
+            "kind": "utility:storage",
+            "pss_kb": 4928,
+            "rss_kb": 45300
+          },
+          {
+            "pid": 80699,
+            "kind": "renderer",
+            "pss_kb": 14302,
+            "rss_kb": 98092
+          },
+          {
+            "pid": 80710,
+            "kind": "renderer",
+            "pss_kb": 13488,
+            "rss_kb": 96696
+          },
+          {
+            "pid": 80721,
+            "kind": "renderer",
+            "pss_kb": 13488,
+            "rss_kb": 96696
+          },
+          {
+            "pid": 80732,
+            "kind": "renderer",
+            "pss_kb": 13496,
+            "rss_kb": 96704
+          },
+          {
+            "pid": 80743,
+            "kind": "renderer",
+            "pss_kb": 13492,
+            "rss_kb": 96700
+          },
+          {
+            "pid": 80754,
+            "kind": "renderer",
+            "pss_kb": 13488,
+            "rss_kb": 96696
+          },
+          {
+            "pid": 80765,
+            "kind": "renderer",
+            "pss_kb": 13492,
+            "rss_kb": 96700
+          },
+          {
+            "pid": 80776,
+            "kind": "renderer",
+            "pss_kb": 13500,
+            "rss_kb": 96708
+          },
+          {
+            "pid": 80787,
+            "kind": "renderer",
+            "pss_kb": 13496,
+            "rss_kb": 96696
+          },
+          {
+            "pid": 80798,
+            "kind": "renderer",
+            "pss_kb": 13479,
+            "rss_kb": 96768
+          }
+        ],
+        "process_breakdown_after_suspend": [
+          {
+            "pid": 80600,
+            "kind": "browser",
+            "pss_kb": 179662,
+            "rss_kb": 291764
+          },
+          {
+            "pid": 80607,
+            "kind": "zygote",
+            "pss_kb": 18427,
+            "rss_kb": 73088
+          },
+          {
+            "pid": 80608,
+            "kind": "zygote",
+            "pss_kb": 14451,
+            "rss_kb": 73112
+          },
+          {
+            "pid": 80610,
+            "kind": "zygote",
+            "pss_kb": 4628,
+            "rss_kb": 19752
+          },
+          {
+            "pid": 80641,
+            "kind": "gpu-process",
+            "pss_kb": 52087,
+            "rss_kb": 136936
+          },
+          {
+            "pid": 80646,
+            "kind": "utility:network",
+            "pss_kb": 38504,
+            "rss_kb": 101092
+          },
+          {
+            "pid": 80665,
+            "kind": "utility:storage",
+            "pss_kb": 10257,
+            "rss_kb": 45772
+          },
+          {
+            "pid": 80699,
+            "kind": "renderer",
+            "pss_kb": 49103,
+            "rss_kb": 98092
+          },
+          {
+            "pid": 80710,
+            "kind": "helper",
+            "pss_kb": 0,
+            "rss_kb": 0
+          }
+        ]
+      },
+      {
+        "engine": "cef-156",
+        "opt_level": 3,
+        "tabs": 10,
+        "real_sites": true,
+        "filter_cache_warm": true,
+        "cold_start_ms": 4386,
+        "rss_tree_kb": 2150468,
+        "pss_tree_kb": 663575,
+        "process_count": 17,
+        "evaluated_requests": 169,
+        "blocked_requests": 2,
+        "request_context_intercepts": 0,
+        "service_worker_blocked_requests": 0,
+        "document_start_injected": true,
+        "third_party_cookies_blocked": true,
+        "youtube_video_playing": false,
+        "screenshots_captured": 0,
+        "tab_suspended_and_restored": true,
+        "suspended_tabs_count": 9,
+        "rss_after_suspend_kb": 926236,
+        "pss_after_suspend_kb": 433836,
+        "process_count_after_suspend": 9,
+        "process_breakdown": [
+          {
+            "pid": 82503,
+            "kind": "browser",
+            "pss_kb": 169006,
+            "rss_kb": 301084
+          },
+          {
+            "pid": 82510,
+            "kind": "zygote",
+            "pss_kb": 16706,
+            "rss_kb": 73012
+          },
+          {
+            "pid": 82511,
+            "kind": "zygote",
+            "pss_kb": 10216,
+            "rss_kb": 72892
+          },
+          {
+            "pid": 82513,
+            "kind": "zygote",
+            "pss_kb": 1813,
+            "rss_kb": 19748
+          },
+          {
+            "pid": 82546,
+            "kind": "gpu-process",
+            "pss_kb": 47056,
+            "rss_kb": 137036
+          },
+          {
+            "pid": 82551,
+            "kind": "utility:network",
+            "pss_kb": 50806,
+            "rss_kb": 126868
+          },
+          {
+            "pid": 82577,
+            "kind": "utility:storage",
+            "pss_kb": 5537,
+            "rss_kb": 47232
+          },
+          {
+            "pid": 82627,
+            "kind": "renderer",
+            "pss_kb": 21466,
+            "rss_kb": 122732
+          },
+          {
+            "pid": 82638,
+            "kind": "renderer",
+            "pss_kb": 51090,
+            "rss_kb": 158528
+          },
+          {
+            "pid": 82649,
+            "kind": "renderer",
+            "pss_kb": 25262,
+            "rss_kb": 122876
+          },
+          {
+            "pid": 82660,
+            "kind": "renderer",
+            "pss_kb": 40137,
+            "rss_kb": 146808
+          },
+          {
+            "pid": 82682,
+            "kind": "renderer",
+            "pss_kb": 23782,
+            "rss_kb": 117892
+          },
+          {
+            "pid": 82693,
+            "kind": "renderer",
+            "pss_kb": 60723,
+            "rss_kb": 167616
+          },
+          {
+            "pid": 82704,
+            "kind": "renderer",
+            "pss_kb": 23580,
+            "rss_kb": 118676
+          },
+          {
+            "pid": 82727,
+            "kind": "renderer",
+            "pss_kb": 48169,
+            "rss_kb": 148516
+          },
+          {
+            "pid": 82740,
+            "kind": "renderer",
+            "pss_kb": 23633,
+            "rss_kb": 117300
+          },
+          {
+            "pid": 82762,
+            "kind": "renderer",
+            "pss_kb": 44593,
+            "rss_kb": 151652
+          }
+        ],
+        "process_breakdown_after_suspend": [
+          {
+            "pid": 82503,
+            "kind": "browser",
+            "pss_kb": 182737,
+            "rss_kb": 299320
+          },
+          {
+            "pid": 82510,
+            "kind": "zygote",
+            "pss_kb": 18329,
+            "rss_kb": 73012
+          },
+          {
+            "pid": 82511,
+            "kind": "zygote",
+            "pss_kb": 14369,
+            "rss_kb": 72892
+          },
+          {
+            "pid": 82513,
+            "kind": "zygote",
+            "pss_kb": 4622,
+            "rss_kb": 19748
+          },
+          {
+            "pid": 82546,
+            "kind": "gpu-process",
+            "pss_kb": 51767,
+            "rss_kb": 137224
+          },
+          {
+            "pid": 82551,
+            "kind": "utility:network",
+            "pss_kb": 55327,
+            "rss_kb": 125060
+          },
+          {
+            "pid": 82577,
+            "kind": "utility:storage",
+            "pss_kb": 10830,
+            "rss_kb": 47500
+          },
+          {
+            "pid": 82727,
+            "kind": "renderer",
+            "pss_kb": 95855,
+            "rss_kb": 151480
+          },
+          {
+            "pid": 82762,
+            "kind": "helper",
+            "pss_kb": 0,
+            "rss_kb": 0
+          }
+        ]
+      }
+    ]
+  },
+  "brave": {
+    "1tab": [
+      {
+        "rss_tree_kb": 1538396,
+        "pss_tree_kb": 659703,
+        "process_count": 11
+      },
+      {
+        "rss_tree_kb": 1147060,
+        "pss_tree_kb": 456072,
+        "process_count": 9
+      },
+      {
+        "rss_tree_kb": 1121504,
+        "pss_tree_kb": 436456,
+        "process_count": 9
+      }
+    ],
+    "5tabs": [
+      {
+        "rss_tree_kb": 2094456,
+        "pss_tree_kb": 760642,
+        "process_count": 14
+      },
+      {
+        "rss_tree_kb": 1774116,
+        "pss_tree_kb": 562051,
+        "process_count": 13
+      },
+      {
+        "rss_tree_kb": 1736996,
+        "pss_tree_kb": 548210,
+        "process_count": 13
+      }
+    ],
+    "10tabs": [
+      {
+        "rss_tree_kb": 2882600,
+        "pss_tree_kb": 882796,
+        "process_count": 19
+      },
+      {
+        "rss_tree_kb": 2366600,
+        "pss_tree_kb": 624884,
+        "process_count": 18
+      },
+      {
+        "rss_tree_kb": 2418036,
+        "pss_tree_kb": 655445,
+        "process_count": 18
+      }
+    ],
+    "10tabs_sleep": [
+      {
+        "rss_tree_kb": 2832564,
+        "pss_tree_kb": 846482,
+        "process_count": 19
+      },
+      {
+        "rss_tree_kb": 2214744,
+        "pss_tree_kb": 550020,
+        "process_count": 18
+      },
+      {
+        "rss_tree_kb": 2420068,
+        "pss_tree_kb": 641379,
+        "process_count": 18
+      }
+    ]
+  }
+}

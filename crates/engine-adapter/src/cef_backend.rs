@@ -259,6 +259,7 @@ pub struct BenchmarkOutput {
     pub rss_tree_kb: u64,
     pub pss_tree_kb: u64,
     pub process_count: usize,
+    pub evaluated_requests: usize,
     pub blocked_requests: usize,
     pub request_context_intercepts: usize,
     pub service_worker_blocked_requests: usize,
@@ -499,11 +500,26 @@ pub fn measure_process_tree_detailed(root_pid: u32) -> (u64, u64, usize, Vec<Pro
             .and_then(|b| String::from_utf8(b).ok())
             .unwrap_or_default();
 
+        let mut thread_comms = HashSet::new();
+        if let Ok(tasks) = fs::read_dir(format!("/proc/{pid}/task")) {
+            for t in tasks.flatten() {
+                if let Ok(comm) = fs::read_to_string(t.path().join("comm")) {
+                    thread_comms.insert(comm.trim().to_string());
+                }
+            }
+        }
+
         let kind = if pid == root_pid {
             "browser".to_string()
-        } else if cmdline.contains("--type=renderer") {
+        } else if cmdline.contains("--type=renderer")
+            || thread_comms.contains("Compositor")
+            || thread_comms.contains("CompositorTileW")
+        {
             "renderer".to_string()
-        } else if cmdline.contains("--type=gpu-process") {
+        } else if cmdline.contains("--type=gpu-process")
+            || thread_comms.contains("GpuWatchdog")
+            || thread_comms.contains("VizCompositorTh")
+        {
             "gpu-process".to_string()
         } else if cmdline.contains("--type=utility") {
             if cmdline.contains("network.mojom.NetworkService") {
@@ -515,6 +531,8 @@ pub fn measure_process_tree_detailed(root_pid: u32) -> (u64, u64, usize, Vec<Pro
             } else {
                 "utility".to_string()
             }
+        } else if thread_comms.contains("Chrome_ChildIOT") {
+            "utility:storage".to_string()
         } else if cmdline.contains("--type=zygote") {
             "zygote".to_string()
         } else {
@@ -570,6 +588,7 @@ struct SharedSpikeState {
     pipeline: BlockingPipeline,
     bench_server: Mutex<Option<BenchServer>>,
     sw_server: Mutex<Option<ServiceWorkerTestServer>>,
+    evaluated_requests: AtomicUsize,
     blocked_requests: AtomicUsize,
     request_context_intercepts: AtomicUsize,
     service_worker_blocked_requests: AtomicUsize,
@@ -628,7 +647,7 @@ wrap_dev_tools_message_observer! {
                             if let Some(parent) = self.out_path.parent() {
                                 let _ = fs::create_dir_all(parent);
                             }
-                            if fs::write(&self.out_path, png).is_ok() {
+                            if !self.out_path.exists() && fs::write(&self.out_path, png).is_ok() {
                                 self.state.screenshots_captured.fetch_add(1, Ordering::Relaxed);
                             }
                         }
@@ -717,6 +736,7 @@ wrap_resource_request_handler! {
             let Some(req) = request else {
                 return ReturnValue::CONTINUE;
             };
+            self.state.evaluated_requests.fetch_add(1, Ordering::Relaxed);
             let raw_url = CefString::from(&req.url()).to_string();
             let method = CefString::from(&req.method()).to_string();
             let raw_rt = req.resource_type();
@@ -726,16 +746,24 @@ wrap_resource_request_handler! {
                 || raw_rt == ResourceType::SERVICE_WORKER
                 || self.from_request_context;
 
+            let main_frame_url = browser
+                .and_then(|b| b.main_frame())
+                .map(|mf| CefString::from(&mf.url()).to_string())
+                .filter(|s| s.starts_with("http://") || s.starts_with("https://"));
+
             let source_url = frame
                 .map(|f| CefString::from(&f.url()).to_string())
-                .filter(|s| !s.is_empty())
+                .filter(|s| s.starts_with("http://") || s.starts_with("https://"))
                 .or_else(|| {
-                    if !self.initiator_url.is_empty() && self.initiator_url != "null" {
+                    if self.initiator_url.starts_with("http://")
+                        || self.initiator_url.starts_with("https://")
+                    {
                         Some(self.initiator_url.clone())
                     } else {
                         None
                     }
                 })
+                .or(main_frame_url)
                 .unwrap_or_else(|| "https://service-worker.slate.local/".to_string());
 
             let decision = self
@@ -950,6 +978,7 @@ wrap_task! {
                 rss_tree_kb: self.snapshot.rss_before,
                 pss_tree_kb: self.snapshot.pss_before,
                 process_count: self.snapshot.procs_before,
+                evaluated_requests: self.state.evaluated_requests.load(Ordering::Relaxed),
                 blocked_requests: self.state.blocked_requests.load(Ordering::Relaxed),
                 request_context_intercepts: self
                     .state
@@ -1118,6 +1147,7 @@ wrap_task! {
                 rss_tree_kb: rss_before,
                 pss_tree_kb: pss_before,
                 process_count: procs_before,
+                evaluated_requests: self.state.evaluated_requests.load(Ordering::Relaxed),
                 blocked_requests: self.state.blocked_requests.load(Ordering::Relaxed),
                 request_context_intercepts: self
                     .state
@@ -1576,7 +1606,8 @@ wrap_window_delegate! {
             }
             self.state.windows.lock().unwrap().push(win.clone());
             win.show();
-            if !self.is_foreground {
+            let is_screenshot_run = self.state.opts.screenshot_dir.is_some();
+            if !self.is_foreground && !is_screenshot_run {
                 win.hide();
             }
 
@@ -1891,6 +1922,7 @@ pub fn run_from_cli() {
         pipeline: BlockingPipeline::new_with_cache_and_background_refresh(None),
         bench_server: Mutex::new(None),
         sw_server: Mutex::new(None),
+        evaluated_requests: AtomicUsize::new(0),
         blocked_requests: AtomicUsize::new(0),
         request_context_intercepts: AtomicUsize::new(0),
         service_worker_blocked_requests: AtomicUsize::new(0),
