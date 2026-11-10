@@ -4,3 +4,4 @@
 /benchmarks/tmp-*
 *.profraw
 .DS_Store
+__pycache__/
