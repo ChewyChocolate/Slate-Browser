@@ -4,25 +4,27 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
+echo "Stages: [1] fmt  [2] clippy  [3] cargo test  [4] cargo audit  [5] spike CEF smoke  [6] real app smoke  [7] site isolation  [8] filter cache  [9] fake-counter guard"
 export CEF_PATH="${CEF_PATH:-$HOME/.cache/slate-cef}"
 
-echo "==> [1/4] Checking Rust formatting (cargo fmt --all -- --check)"
+echo "==> [1/9] Checking Rust formatting (cargo fmt --all -- --check)"
 cargo fmt --all -- --check
 
-echo "==> [2/4] Running Clippy with warnings as errors (cargo clippy --workspace --all-targets -- -D warnings)"
+echo "==> [2/9] Running Clippy with warnings as errors (cargo clippy --workspace --all-targets -- -D warnings)"
 cargo clippy --workspace --all-targets -- -D warnings
 
-echo "==> [3/4] Running automated test suite (cargo test --workspace)"
+echo "==> [3/9] Running automated test suite (cargo test --workspace)"
 cargo test --workspace
 
-echo "==> [4/5] Running dependency security audit (cargo audit)"
-if command -v cargo-audit >/dev/null 2>&1; then
-    cargo audit
-else
-    echo "NOTE: cargo-audit binary not installed in PATH; install with 'cargo install cargo-audit' or 'pacman -S cargo-audit'."
+echo "==> [4/9] Running dependency security audit (cargo audit; FAILS if cargo-audit is missing)"
+if ! command -v cargo-audit >/dev/null 2>&1; then
+    echo "ERROR: cargo-audit is not installed. Install with 'cargo install cargo-audit --locked' or 'pacman -S cargo-audit'." >&2
+    echo "       The audit must never be silently skipped." >&2
+    exit 1
 fi
+cargo audit
 
-echo "==> [5/6] Running live CEF launch smoke test (slate-spike-cef --tabs 1 --exit-after-load)"
+echo "==> [5/9] Running live CEF launch smoke test on the spike (slate-spike-cef --tabs 1 --exit-after-load)"
 cargo build --release -p slate-spike-cef
 SMOKE_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
     "$ROOT_DIR/target/release/slate-spike-cef" --tabs 1 --exit-after-load)
@@ -36,7 +38,28 @@ assert data.get("pss_tree_kb", 0) > 0, f"missing pss_tree_kb: {data}"
 assert data.get("document_start_injected") is True, f"document_start_injected failed: {data}"
 ' "$SMOKE_OUT"
 
-echo "==> [6/7] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)"
+echo "==> [6/9] Running live smoke test on the REAL app binary (target/release/slate --exit-after-load)"
+cargo build --release -p slate-app
+set +e
+APP_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
+    timeout 60 "$ROOT_DIR/target/release/slate" --exit-after-load)
+APP_RC=$?
+set -e
+echo "    Real app exit code: $APP_RC"
+echo "    Real app output: $APP_OUT"
+if [ "$APP_RC" -ne 0 ]; then
+    echo "ERROR: target/release/slate did not start and exit cleanly (exit code $APP_RC; 124 means timeout)." >&2
+    exit 1
+fi
+python3 -c '
+import sys, json
+data = json.loads(sys.argv[1])
+assert data.get("engine") == "cef-156", f"unexpected engine: {data}"
+assert data.get("pss_tree_kb", 0) > 0, f"missing pss_tree_kb: {data}"
+assert data.get("process_count", 0) >= 2, f"too few processes: {data}"
+' "$APP_OUT"
+
+echo "==> [7/9] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)"
 SITE_ISO_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
     "$ROOT_DIR/target/release/slate-spike-cef" --test-site-isolation --tabs 2 --real-sites)
 echo "    Site isolation output: $SITE_ISO_OUT"
@@ -49,7 +72,7 @@ pids = data.get("renderer_pids", [])
 assert len(pids) >= 2 and len(set(pids)) == len(pids), f"renderer pids not unique: {pids}"
 ' "$SITE_ISO_OUT"
 
-echo "==> [7/7] Verifying filters.dat cache rule count matches configured lists"
+echo "==> [8/9] Verifying filters.dat cache rule count matches configured lists"
 python3 -c "
 import json, os
 meta_path = os.path.expanduser('~/.local/share/slate/filters.meta.json')
@@ -62,5 +85,12 @@ assert d.get('list_count') == 8, f'expected 8 lists, got {d.get(\"list_count\")}
 assert d.get('rule_count', 0) >= 250000, f'rule count too low: {d.get(\"rule_count\")}'
 print(f'    Filter cache verified: {d.get(\"rule_count\")} active rules from {d.get(\"list_count\")} lists ({os.path.getsize(dat_path)} bytes)')
 "
+
+echo "==> [9/9] Guarding shell UI against hardcoded/simulated tracker data (crates/app/resources/ui)"
+if grep -nE "blocked *= *[0-9]+|theverge\.com|Simulating" crates/app/resources/ui/shell.js; then
+    echo "ERROR: shell.js contains hardcoded or simulated blocked-tracker data. Counters must come from the real pipeline." >&2
+    exit 1
+fi
+echo "    shell.js contains no hardcoded counters"
 
 echo "==> All checks passed!"

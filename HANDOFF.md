@@ -7,6 +7,38 @@
 > [!WARNING]
 > **Security Notice**: **Slate is NOT suitable for sensitive logins (e.g. banking, primary Google accounts) until an upstream security update path works.** Upstream Chromium 157 shipped on Nov 3, 2026, while the `cef` crate remains on M156 (a lag of 7+ days).
 
+## 0. Session log — 2026-11-10 (latest)
+
+**Correction to earlier reports:** earlier sessions said `cargo audit` "passed". It was **never running**:
+`scripts/check.sh` skipped it with a NOTE because `cargo-audit` was not installed. Nothing before this
+session can be cited as an audit result.
+
+State now:
+- `cargo-audit 0.22.2` installed to `~/.cargo/bin` (`cargo install cargo-audit --locked`, build log in the session task log).
+- `cargo audit` result (raw output `/tmp/audit.out`, not committed): advisory DB 1430 advisories, 254 crate dependencies scanned,
+  **0 vulnerabilities, 2 warnings**: `proc-macro-error 1.0.4` (RUSTSEC-2024-0370, unmaintained) and `glib 0.18.5`
+  (RUSTSEC-2024-0429, unsound `VariantStrIter`). Both come only through `slate-spike-webkit` → `gtk`/`webkit2gtk`
+  (`cargo tree -i`), i.e. the rejected WebKitGTK spike, not the CEF app. Not yet fixed or suppressed.
+- `scripts/check.sh` now has 9 numbered stages, listed at the top of its output, and **fails** if `cargo-audit` is missing.
+  Stages: 1 fmt, 2 clippy, 3 cargo test, 4 cargo audit, 5 spike CEF smoke, 6 **real app smoke** (`target/release/slate --exit-after-load`,
+  asserts exit code 0 + JSON), 7 site isolation, 8 filter cache, 9 fake-counter guard. Full run: exit code 0 (`/tmp/check2.out`).
+  Negative tests run by hand: stage 4 with no `cargo-audit` on PATH → exit 1; stage 9 with an injected `active.blocked = 38;` → exit 1.
+- Shell: fake counters removed (step 1, commit `658e74e`).
+- `docs/shell-architecture.md` written (design only, nothing built). **Waiting for the owner's choice** of Option 1/2/3, toolbar placement, and IPC.
+- The real-app smoke test only proves the binary starts and exits; it does **not** prove the UI renders or that pages load.
+  The iframe viewport is still broken (frame-restricted sites fail) until the redesign is built.
+- NOT RUN this session: benchmarks (owner instruction), banking/YouTube/Google sign-in checks, M157 swap, codec work (steps 3–5 still pending).
+
+### Rule for future sessions (a smaller/cheaper model may be used)
+Tests and design docs, not the model's memory, must carry the constraints. Therefore:
+1. Read `docs/shell-architecture.md` and this file first; do not start building before the owner picks an option.
+2. Never weaken `scripts/check.sh`; do not skip or soften stages. If a stage cannot run, it must **fail**, not print a note.
+3. When fixing a bug, add a check.sh stage or test that would have caught it.
+4. Small steps: build + run after each change, commit per task, report raw file paths for every number.
+5. Anything unverified in the `cef` crate API stays marked UNVERIFIED in docs until a running test proves it.
+6. Do not run memory/CPU benchmarks unless asked. Do not write counters, titles, or sample data into the UI.
+7. Escalate large decisions (architecture, major crates) to the owner with 2–3 options.
+
 ---
 
 ## 1. Traceability & Reporting Rules
@@ -65,9 +97,10 @@ Every future session and report **must** adhere strictly to the following integr
 1. **`iframe` Shell Viewport**:
    - `crates/app/resources/ui/index.html` hosts web pages in an `<iframe>`.
    - Broken behavior: Major sites enforcing `X-Frame-Options: SAMEORIGIN` or CSP `frame-ancestors` (e.g. Google Docs, Chase, GitHub logins, Reddit) fail or refuse to render inside the iframe.
-2. **Fake / Hardcoded Tracker Counters**:
-   - In `crates/app/resources/ui/shell.js` (lines 120–130), tracker counters are hardcoded in a domain lookup table (`theverge.com: 38`, `youtube.com: 14`, `wikipedia.org: 3`).
-   - Broken behavior: On Wikipedia, the real engine evaluated 26 requests and blocked **0**, but `shell.js` showed "3 Blocked". Real engine metrics are not yet wired via IPC into the UI DOM.
+2. **~~Fake / Hardcoded Tracker Counters~~ — REMOVED (commit `658e74e`)**:
+   - `shell.js` no longer has a domain table or simulated counts. The UI shows `-` until the real pipeline feeds it.
+   - Still true: **no per-tab real count is wired to the UI yet** (the engine only has global atomics). See `docs/shell-architecture.md` §3.4.
+   - `scripts/check.sh` stage 9 fails if `shell.js` regains hardcoded counts. OS screenshot: `screenshots/step1-no-fake-counters.png`.
 3. **No H.264 / AAC MP4 Playback**:
    - Stock Spotify CEF binaries compile without proprietary codecs (`proprietary_codecs=false`).
    - `HTMLMediaElement.canPlayType("video/mp4; codecs='avc1.42E01E'")` returns `""` and MSE is `false`.
