@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
 """
-7-Run Benchmark Suite (Slate vs. Seeded Brave)
-- 7 runs per scenario, run 1 discarded as warmup.
-- Evaluates:
+7-Run Fair Benchmark Suite (Slate vs. Seeded Brave)
+- 7 runs per scenario.
+- Writes raw run data directly to `benchmarks/results/realworld/benchmark_7runs_raw.json` AS IT GOES.
+- Scenarios:
   1_tab (YouTube)
-  5_tabs
-  10_tabs
-  10_tabs_sleep (exact same 9 background tabs discarded in both)
-- Symmetrical Brave profile seeded with adblock_cache
-- Calculates Median, Q1, Q3, IQR, and Min-Max range for PSS (primary) and RSS (secondary).
+  5_tabs (YouTube, Docs, HN, Wikipedia, Slashdot)
+  10_tabs (All 10 sites)
+  10_tabs_sleep (10 sites loaded, 9 inactive tabs closed in both browsers)
 """
 
-import sys, os, time, json, subprocess, tempfile, shutil, statistics, urllib.request
+import sys, os, time, json, subprocess, tempfile, shutil, urllib.request
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CEF_BIN = os.path.join(ROOT_DIR, 'target/release/slate-spike-cef')
 RESULTS_DIR = os.path.join(ROOT_DIR, 'benchmarks/results/realworld')
+RAW_OUT_FILE = os.path.join(RESULTS_DIR, 'benchmark_7runs_raw.json')
 BRAVE_ADBLOCK_CACHE = '/home/earl/.config/BraveSoftware/Brave-Browser/Default/adblock_cache'
 
 SITES = [
@@ -65,19 +65,21 @@ def sample_process_tree(root_pid, profile_filter=None):
         p_rss = 0
         p_pss = 0
         try:
-            with open(f'/proc/{pid}/status', 'r', errors='ignore') as f:
+            with open(f'/proc/{pid}/smaps_rollup', 'r') as f:
                 for line in f:
-                    if line.startswith('VmRSS:'):
+                    if line.startswith('Rss:'):
                         p_rss = int(line.split()[1])
-                        break
-        except Exception: pass
-        try:
-            with open(f'/proc/{pid}/smaps_rollup', 'r', errors='ignore') as f:
-                for line in f:
-                    if line.startswith('Pss:'):
+                    elif line.startswith('Pss:'):
                         p_pss = int(line.split()[1])
-                        break
-        except Exception: pass
+        except Exception:
+            try:
+                with open(f'/proc/{pid}/status', 'r') as f:
+                    for line in f:
+                        if line.startswith('VmRSS:'):
+                            p_rss = int(line.split()[1])
+                            p_pss = p_rss
+                            break
+            except Exception: pass
 
         if p_rss > 0:
             rss_kb += p_rss
@@ -85,7 +87,7 @@ def sample_process_tree(root_pid, profile_filter=None):
             pcount += 1
     return pss_kb, rss_kb, pcount
 
-def run_slate(tabs, sleep_tabs, hold_ms=10000):
+def run_slate(tabs, sleep_tabs, hold_ms=8000):
     env = os.environ.copy()
     env['CEF_PATH'] = os.path.expanduser('~/.cache/slate-cef')
     env['LD_LIBRARY_PATH'] = os.path.join(ROOT_DIR, 'target/release')
@@ -121,7 +123,7 @@ def run_slate(tabs, sleep_tabs, hold_ms=10000):
             except Exception: pass
     raise RuntimeError(f"Slate failed to produce JSON output: {out}")
 
-def run_brave(tabs, sleep_tabs, hold_sec=10):
+def run_brave(tabs, sleep_tabs, hold_sec=8):
     prof = tempfile.mkdtemp(prefix='brave-7run-')
     os.makedirs(os.path.join(prof, 'Default'), exist_ok=True)
     if os.path.exists(BRAVE_ADBLOCK_CACHE):
@@ -142,10 +144,10 @@ def run_brave(tabs, sleep_tabs, hold_sec=10):
     time.sleep(hold_sec)
 
     if sleep_tabs and tabs > 1:
-        # Symmetrically discard the exact same 9 background tabs (leaving Tab 0 / YouTube active)
         try:
-            tab_data = json.loads(urllib.request.urlopen('http://127.0.0.1:9222/json', timeout=3).read().decode())
-            page_tabs = [t for t in tab_data if t.get('type') == 'page']
+            req = urllib.request.urlopen('http://127.0.0.1:9222/json', timeout=2)
+            tab_list = json.loads(req.read().decode('utf-8'))
+            page_tabs = [t for t in tab_list if t.get('type') == 'page']
             for bg_tab in page_tabs[1:]:
                 tid = bg_tab['id']
                 urllib.request.urlopen(f'http://127.0.0.1:9222/json/close/{tid}', timeout=2)
@@ -155,7 +157,6 @@ def run_brave(tabs, sleep_tabs, hold_sec=10):
 
     pss_kb, rss_kb, pcount = sample_process_tree(p.pid, prof)
 
-    # Read Brave's blocked count from Preferences
     pref_blocked = None
     pref_file = os.path.join(prof, 'Default/Preferences')
     if os.path.exists(pref_file):
@@ -169,7 +170,7 @@ def run_brave(tabs, sleep_tabs, hold_sec=10):
     try: p.wait(timeout=3)
     except: p.kill()
     subprocess.run(f"pkill -9 -f '{prof}' >/dev/null 2>&1 || true", shell=True)
-    subprocess.run(['rm', '-rf', prof], check=False)
+    shutil.rmtree(prof, ignore_errors=True)
 
     return {
         'pss_mb': round(pss_kb / 1024, 1),
@@ -179,107 +180,59 @@ def run_brave(tabs, sleep_tabs, hold_sec=10):
         'evaluated_requests': None
     }
 
-def compute_iqr_stats(runs):
-    # runs is a list of 6 values (run 1 discarded)
-    sorted_runs = sorted(runs)
-    n = len(sorted_runs)
-    median = statistics.median(sorted_runs)
-    # 25th percentile (Q1) and 75th percentile (Q3)
-    q1 = statistics.median(sorted_runs[:n//2])
-    q3 = statistics.median(sorted_runs[(n+1)//2:]) if n % 2 != 0 else statistics.median(sorted_runs[n//2:])
-    iqr = q3 - q1
-    return {
-        'median': round(median, 1),
-        'q1': round(q1, 1),
-        'q3': round(q3, 1),
-        'iqr': round(iqr, 1),
-        'min': round(min(sorted_runs), 1),
-        'max': round(max(sorted_runs), 1)
-    }
+def save_raw_progress(raw_store):
+    with open(RAW_OUT_FILE, 'w') as f:
+        json.dump(raw_store, f, indent=2)
 
 def main():
     configs = [
         ("1_tab", 1, False, 8000),
-        ("5_tabs", 5, False, 10000),
-        ("10_tabs", 10, False, 12000),
-        ("10_tabs_sleep", 10, True, 12000)
+        ("5_tabs", 5, False, 9000),
+        ("10_tabs", 10, False, 10000),
+        ("10_tabs_sleep", 10, True, 10000)
     ]
 
-    all_data = {
+    raw_store = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "description": "7 runs per scenario. Raw run data written to disk as it executes.",
         "scenarios": {}
     }
 
     print("================================================================================")
-    print(" 7-RUN FAIR BENCHMARK SUITE: SLATE vs BRAVE (SEEDED)")
-    print(" (Run 1 discarded as warmup, Runs 2-7 analyzed)")
+    print(" 7-RUN FAIR BENCHMARK RUNNER (STREAMING TO RAW DISK FILE)")
+    print(f" Target file: {RAW_OUT_FILE}")
     print("================================================================================")
 
     for name, tabs, sleep_tabs, hold_ms in configs:
-        print(f"\n--- Testing Scenario: {name} ({tabs} tabs, sleep={sleep_tabs}) ---")
-        
-        # Slate 7 runs
-        slate_all = []
+        print(f"\n--- Scenario: {name} (tabs={tabs}, sleep={sleep_tabs}) ---")
+        raw_store["scenarios"][name] = {
+            "tabs": tabs,
+            "sleep_tabs": sleep_tabs,
+            "slate_runs": [],
+            "brave_runs": []
+        }
+        save_raw_progress(raw_store)
+
         for r in range(1, 8):
             print(f"  [Slate] Run {r}/7...", end="", flush=True)
-            res = run_slate(tabs, sleep_tabs, hold_ms)
-            slate_all.append(res)
-            print(f" done (PSS: {res['pss_mb']} MB, Procs: {res['process_count']})")
+            s_res = run_slate(tabs, sleep_tabs, hold_ms)
+            s_res["run_index"] = r
+            raw_store["scenarios"][name]["slate_runs"].append(s_res)
+            save_raw_progress(raw_store)
+            print(f" done (PSS: {s_res['pss_mb']} MB, Procs: {s_res['process_count']})")
             time.sleep(1)
 
-        # Brave 7 runs
-        brave_all = []
         for r in range(1, 8):
             print(f"  [Brave] Run {r}/7...", end="", flush=True)
-            res = run_brave(tabs, sleep_tabs, hold_ms // 1000)
-            brave_all.append(res)
-            print(f" done (PSS: {res['pss_mb']} MB, Procs: {res['process_count']})")
+            b_res = run_brave(tabs, sleep_tabs, hold_ms // 1000)
+            b_res["run_index"] = r
+            raw_store["scenarios"][name]["brave_runs"].append(b_res)
+            save_raw_progress(raw_store)
+            print(f" done (PSS: {b_res['pss_mb']} MB, Procs: {b_res['process_count']})")
             time.sleep(1)
 
-        # Discard run 0 (warmup)
-        slate_analyzed = slate_all[1:]
-        brave_analyzed = brave_all[1:]
-
-        s_pss_stats = compute_iqr_stats([x['pss_mb'] for x in slate_analyzed])
-        b_pss_stats = compute_iqr_stats([x['pss_mb'] for x in brave_analyzed])
-
-        s_rss_stats = compute_iqr_stats([x['rss_mb'] for x in slate_analyzed])
-        b_rss_stats = compute_iqr_stats([x['rss_mb'] for x in brave_analyzed])
-
-        s_procs = int(statistics.median([x['process_count'] for x in slate_analyzed]))
-        b_procs = int(statistics.median([x['process_count'] for x in brave_analyzed]))
-
-        s_blocked = int(statistics.median([x['blocked_requests'] for x in slate_analyzed]))
-        b_blocked_vals = [x['blocked_requests'] for x in brave_analyzed if x['blocked_requests'] is not None]
-        b_blocked = int(statistics.median(b_blocked_vals)) if b_blocked_vals else 0
-
-        # Check range overlap: do [min, max] ranges overlap?
-        pss_overlap = not (s_pss_stats['max'] < b_pss_stats['min'] or b_pss_stats['max'] < s_pss_stats['min'])
-
-        all_data["scenarios"][name] = {
-            "slate": {
-                "pss": s_pss_stats,
-                "rss": s_rss_stats,
-                "process_count_median": s_procs,
-                "blocked_median": s_blocked,
-                "raw_runs": slate_all
-            },
-            "brave": {
-                "pss": b_pss_stats,
-                "rss": b_rss_stats,
-                "process_count_median": b_procs,
-                "blocked_median": b_blocked,
-                "raw_runs": brave_all
-            },
-            "pss_ranges_overlap": pss_overlap
-        }
-
-    out_file = os.path.join(RESULTS_DIR, "7run_iqr_summary.json")
-    with open(out_file, "w") as f:
-        json.dump(all_data, f, indent=2)
-
     print("\n================================================================================")
-    print(f" Summary saved to: {out_file}")
+    print(f" Raw runs fully saved to: {RAW_OUT_FILE}")
     print("================================================================================")
 
 if __name__ == '__main__':

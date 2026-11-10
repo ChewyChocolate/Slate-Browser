@@ -1,585 +1,766 @@
 {
-  "timestamp": "2026-11-10T06:59:48Z",
+  "timestamp": "2026-11-10T09:15:27Z",
+  "source_raw_file": "/home/earl/Desktop/Slate/benchmarks/results/realworld/benchmark_7runs_raw.json",
   "scenarios": {
     "1_tab": {
       "slate": {
         "pss": {
-          "median": 371.8,
-          "q1": 356.6,
-          "q3": 385.5,
-          "iqr": 28.9,
-          "min": 350.4,
-          "max": 409.9
+          "median": 391.5,
+          "q1": 355.2,
+          "q3": 469.4,
+          "iqr": 114.2,
+          "min": 348.5,
+          "max": 536.9,
+          "analyzed_runs": [
+            348.5,
+            355.2,
+            364.8,
+            418.2,
+            469.4,
+            536.9
+          ]
         },
         "rss": {
-          "median": 842.0,
-          "q1": 826.6,
-          "q3": 858.4,
-          "iqr": 31.8,
-          "min": 820.5,
-          "max": 889.6
+          "median": 867.4,
+          "q1": 826.3,
+          "q3": 1044.6,
+          "iqr": 218.3,
+          "min": 817.3,
+          "max": 1125.6,
+          "analyzed_runs": [
+            817.3,
+            826.3,
+            835.4,
+            899.4,
+            1044.6,
+            1125.6
+          ]
         },
         "process_count_median": 8,
-        "blocked_median": 0,
         "raw_runs": [
           {
-            "pss_mb": 380.0,
-            "rss_mb": 853.5,
+            "pss_mb": 586.6,
+            "rss_mb": 1080.8,
             "process_count": 8,
-            "blocked_requests": 0,
-            "evaluated_requests": 21
+            "blocked_requests": 6,
+            "evaluated_requests": 50,
+            "run_index": 1
           },
           {
-            "pss_mb": 372.9,
-            "rss_mb": 842.6,
-            "process_count": 8,
-            "blocked_requests": 0,
-            "evaluated_requests": 21
+            "pss_mb": 536.9,
+            "rss_mb": 1125.6,
+            "process_count": 9,
+            "blocked_requests": 5,
+            "evaluated_requests": 42,
+            "run_index": 2
           },
           {
-            "pss_mb": 385.5,
-            "rss_mb": 858.4,
+            "pss_mb": 418.2,
+            "rss_mb": 899.4,
             "process_count": 8,
             "blocked_requests": 0,
-            "evaluated_requests": 21
+            "evaluated_requests": 23,
+            "run_index": 3
           },
           {
-            "pss_mb": 356.6,
-            "rss_mb": 826.6,
+            "pss_mb": 355.2,
+            "rss_mb": 826.3,
             "process_count": 8,
             "blocked_requests": 0,
-            "evaluated_requests": 20
+            "evaluated_requests": 21,
+            "run_index": 4
           },
           {
-            "pss_mb": 409.9,
-            "rss_mb": 889.6,
+            "pss_mb": 348.5,
+            "rss_mb": 817.3,
             "process_count": 8,
             "blocked_requests": 0,
-            "evaluated_requests": 24
+            "evaluated_requests": 21,
+            "run_index": 5
           },
           {
-            "pss_mb": 350.4,
-            "rss_mb": 820.5,
+            "pss_mb": 364.8,
+            "rss_mb": 835.4,
             "process_count": 8,
             "blocked_requests": 0,
-            "evaluated_requests": 21
+            "evaluated_requests": 20,
+            "run_index": 6
           },
           {
-            "pss_mb": 370.7,
-            "rss_mb": 841.5,
-            "process_count": 8,
-            "blocked_requests": 0,
-            "evaluated_requests": 21
+            "pss_mb": 469.4,
+            "rss_mb": 1044.6,
+            "process_count": 9,
+            "blocked_requests": 2,
+            "evaluated_requests": 36,
+            "run_index": 7
           }
         ]
       },
       "brave": {
         "pss": {
-          "median": 410.1,
-          "q1": 409.0,
-          "q3": 410.3,
-          "iqr": 1.3,
-          "min": 408.1,
-          "max": 440.6
+          "median": 403.7,
+          "q1": 371.6,
+          "q3": 407.1,
+          "iqr": 35.5,
+          "min": 368.7,
+          "max": 413.2,
+          "analyzed_runs": [
+            368.7,
+            371.6,
+            403.5,
+            403.9,
+            407.1,
+            413.2
+          ]
         },
         "rss": {
-          "median": 1074.4,
-          "q1": 1073.1,
-          "q3": 1082.8,
-          "iqr": 9.7,
-          "min": 1070.0,
-          "max": 1112.6
+          "median": 1067.5,
+          "q1": 1023.1,
+          "q3": 1076.9,
+          "iqr": 53.8,
+          "min": 1001.3,
+          "max": 1078.1,
+          "analyzed_runs": [
+            1001.3,
+            1023.1,
+            1066.8,
+            1068.2,
+            1076.9,
+            1078.1
+          ]
         },
         "process_count_median": 9,
-        "blocked_median": 0,
         "raw_runs": [
           {
-            "pss_mb": 427.6,
-            "rss_mb": 1094.9,
+            "pss_mb": 415.8,
+            "rss_mb": 1080.1,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 1
           },
           {
-            "pss_mb": 440.6,
-            "rss_mb": 1112.6,
+            "pss_mb": 413.2,
+            "rss_mb": 1078.1,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 2
           },
           {
-            "pss_mb": 410.0,
-            "rss_mb": 1075.3,
+            "pss_mb": 403.5,
+            "rss_mb": 1068.2,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 3
           },
           {
-            "pss_mb": 409.0,
-            "rss_mb": 1070.0,
+            "pss_mb": 407.1,
+            "rss_mb": 1076.9,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 4
           },
           {
-            "pss_mb": 408.1,
-            "rss_mb": 1073.1,
+            "pss_mb": 371.6,
+            "rss_mb": 1023.1,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 5
           },
           {
-            "pss_mb": 410.3,
-            "rss_mb": 1082.8,
+            "pss_mb": 403.9,
+            "rss_mb": 1066.8,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 6
           },
           {
-            "pss_mb": 410.1,
-            "rss_mb": 1073.6,
+            "pss_mb": 368.7,
+            "rss_mb": 1001.3,
             "process_count": 9,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 7
           }
         ]
       },
-      "pss_ranges_overlap": true
+      "iqr_overlap": true,
+      "verdict": "No meaningful diff"
     },
     "5_tabs": {
       "slate": {
         "pss": {
-          "median": 667.3,
-          "q1": 620.5,
-          "q3": 857.1,
-          "iqr": 236.6,
-          "min": 549.1,
-          "max": 955.6
+          "median": 411.8,
+          "q1": 388.6,
+          "q3": 444.9,
+          "iqr": 56.3,
+          "min": 357.6,
+          "max": 526.1,
+          "analyzed_runs": [
+            357.6,
+            388.6,
+            401.5,
+            422.0,
+            444.9,
+            526.1
+          ]
         },
         "rss": {
-          "median": 1654.6,
-          "q1": 1544.7,
-          "q3": 1915.1,
-          "iqr": 370.4,
-          "min": 1471.1,
-          "max": 1925.4
+          "median": 1281.9,
+          "q1": 1220.0,
+          "q3": 1334.2,
+          "iqr": 114.2,
+          "min": 1163.0,
+          "max": 1436.8,
+          "analyzed_runs": [
+            1163.0,
+            1220.0,
+            1257.1,
+            1306.7,
+            1334.2,
+            1436.8
+          ]
         },
         "process_count_median": 12,
-        "blocked_median": 9,
         "raw_runs": [
           {
-            "pss_mb": 433.5,
-            "rss_mb": 1313.3,
+            "pss_mb": 357.1,
+            "rss_mb": 1157.6,
             "process_count": 12,
             "blocked_requests": 0,
-            "evaluated_requests": 46
+            "evaluated_requests": 5,
+            "run_index": 1
           },
           {
-            "pss_mb": 549.1,
-            "rss_mb": 1471.1,
+            "pss_mb": 357.6,
+            "rss_mb": 1163.0,
             "process_count": 12,
-            "blocked_requests": 3,
-            "evaluated_requests": 104
+            "blocked_requests": 0,
+            "evaluated_requests": 5,
+            "run_index": 2
           },
           {
-            "pss_mb": 620.5,
-            "rss_mb": 1544.7,
+            "pss_mb": 401.5,
+            "rss_mb": 1257.1,
             "process_count": 12,
-            "blocked_requests": 9,
-            "evaluated_requests": 128
+            "blocked_requests": 0,
+            "evaluated_requests": 38,
+            "run_index": 3
           },
           {
-            "pss_mb": 672.5,
-            "rss_mb": 1715.4,
-            "process_count": 13,
-            "blocked_requests": 10,
-            "evaluated_requests": 155
-          },
-          {
-            "pss_mb": 857.1,
-            "rss_mb": 1915.1,
-            "process_count": 13,
-            "blocked_requests": 13,
-            "evaluated_requests": 154
-          },
-          {
-            "pss_mb": 955.6,
-            "rss_mb": 1925.4,
+            "pss_mb": 444.9,
+            "rss_mb": 1334.2,
             "process_count": 12,
-            "blocked_requests": 21,
-            "evaluated_requests": 195
+            "blocked_requests": 1,
+            "evaluated_requests": 56,
+            "run_index": 4
           },
           {
-            "pss_mb": 662.1,
-            "rss_mb": 1593.8,
+            "pss_mb": 422.0,
+            "rss_mb": 1306.7,
             "process_count": 12,
-            "blocked_requests": 9,
-            "evaluated_requests": 129
+            "blocked_requests": 0,
+            "evaluated_requests": 39,
+            "run_index": 5
+          },
+          {
+            "pss_mb": 388.6,
+            "rss_mb": 1220.0,
+            "process_count": 12,
+            "blocked_requests": 0,
+            "evaluated_requests": 22,
+            "run_index": 6
+          },
+          {
+            "pss_mb": 526.1,
+            "rss_mb": 1436.8,
+            "process_count": 12,
+            "blocked_requests": 2,
+            "evaluated_requests": 80,
+            "run_index": 7
           }
         ]
       },
       "brave": {
         "pss": {
-          "median": 737.0,
-          "q1": 643.9,
-          "q3": 756.4,
-          "iqr": 112.5,
-          "min": 628.2,
-          "max": 790.2
+          "median": 620.4,
+          "q1": 594.2,
+          "q3": 674.0,
+          "iqr": 79.8,
+          "min": 594.1,
+          "max": 693.1,
+          "analyzed_runs": [
+            594.1,
+            594.2,
+            596.8,
+            644.0,
+            674.0,
+            693.1
+          ]
         },
         "rss": {
-          "median": 2116.4,
-          "q1": 1822.0,
-          "q3": 2131.6,
-          "iqr": 309.6,
-          "min": 1794.3,
-          "max": 2197.3
+          "median": 1855.5,
+          "q1": 1756.3,
+          "q3": 1954.5,
+          "iqr": 198.2,
+          "min": 1755.6,
+          "max": 1974.4,
+          "analyzed_runs": [
+            1755.6,
+            1756.3,
+            1824.0,
+            1886.9,
+            1954.5,
+            1974.4
+          ]
         },
-        "process_count_median": 15,
-        "blocked_median": 0,
+        "process_count_median": 13,
         "raw_runs": [
           {
-            "pss_mb": 661.3,
-            "rss_mb": 1847.9,
+            "pss_mb": 591.8,
+            "rss_mb": 1741.4,
             "process_count": 13,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 1
           },
           {
-            "pss_mb": 643.9,
-            "rss_mb": 1822.0,
+            "pss_mb": 594.1,
+            "rss_mb": 1755.6,
             "process_count": 13,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 2
           },
           {
-            "pss_mb": 738.2,
-            "rss_mb": 2131.6,
-            "process_count": 15,
-            "blocked_requests": null,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 756.4,
-            "rss_mb": 2129.6,
-            "process_count": 15,
-            "blocked_requests": null,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 735.9,
-            "rss_mb": 2103.2,
-            "process_count": 15,
-            "blocked_requests": null,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 790.2,
-            "rss_mb": 2197.3,
-            "process_count": 15,
-            "blocked_requests": null,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 628.2,
-            "rss_mb": 1794.3,
+            "pss_mb": 596.8,
+            "rss_mb": 1756.3,
             "process_count": 13,
             "blocked_requests": null,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 3
+          },
+          {
+            "pss_mb": 594.2,
+            "rss_mb": 1886.9,
+            "process_count": 15,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 4
+          },
+          {
+            "pss_mb": 674.0,
+            "rss_mb": 1954.5,
+            "process_count": 14,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 5
+          },
+          {
+            "pss_mb": 644.0,
+            "rss_mb": 1824.0,
+            "process_count": 13,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 6
+          },
+          {
+            "pss_mb": 693.1,
+            "rss_mb": 1974.4,
+            "process_count": 14,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 7
           }
         ]
       },
-      "pss_ranges_overlap": true
+      "iqr_overlap": false,
+      "verdict": "Probable diff (Slate lower 208.6 MB)"
     },
     "10_tabs": {
       "slate": {
         "pss": {
-          "median": 826.5,
-          "q1": 779.7,
-          "q3": 909.8,
-          "iqr": 130.1,
-          "min": 514.6,
-          "max": 1184.7
+          "median": 777.5,
+          "q1": 652.6,
+          "q3": 883.4,
+          "iqr": 230.8,
+          "min": 532.9,
+          "max": 982.0,
+          "analyzed_runs": [
+            532.9,
+            652.6,
+            713.6,
+            841.4,
+            883.4,
+            982.0
+          ]
         },
         "rss": {
-          "median": 2344.8,
-          "q1": 2277.2,
-          "q3": 2549.9,
-          "iqr": 272.7,
-          "min": 1898.8,
-          "max": 2858.3
+          "median": 2309.4,
+          "q1": 2092.9,
+          "q3": 2443.1,
+          "iqr": 350.2,
+          "min": 1909.7,
+          "max": 2614.1,
+          "analyzed_runs": [
+            1909.7,
+            2092.9,
+            2194.4,
+            2424.3,
+            2443.1,
+            2614.1
+          ]
         },
         "process_count_median": 17,
-        "blocked_median": 13,
         "raw_runs": [
           {
-            "pss_mb": 721.2,
-            "rss_mb": 2202.1,
+            "pss_mb": 606.4,
+            "rss_mb": 2026.8,
             "process_count": 17,
-            "blocked_requests": 7,
-            "evaluated_requests": 328
+            "blocked_requests": 4,
+            "evaluated_requests": 164,
+            "run_index": 1
           },
           {
-            "pss_mb": 514.6,
-            "rss_mb": 1898.8,
-            "process_count": 17,
-            "blocked_requests": 2,
-            "evaluated_requests": 108
-          },
-          {
-            "pss_mb": 1184.7,
-            "rss_mb": 2858.3,
+            "pss_mb": 841.4,
+            "rss_mb": 2443.1,
             "process_count": 18,
-            "blocked_requests": 40,
-            "evaluated_requests": 687
-          },
-          {
-            "pss_mb": 909.8,
-            "rss_mb": 2549.9,
-            "process_count": 18,
-            "blocked_requests": 21,
-            "evaluated_requests": 489
-          },
-          {
-            "pss_mb": 843.4,
-            "rss_mb": 2363.3,
-            "process_count": 17,
-            "blocked_requests": 14,
-            "evaluated_requests": 435
-          },
-          {
-            "pss_mb": 809.7,
-            "rss_mb": 2326.2,
-            "process_count": 17,
-            "blocked_requests": 13,
-            "evaluated_requests": 372
-          },
-          {
-            "pss_mb": 779.7,
-            "rss_mb": 2277.2,
-            "process_count": 17,
             "blocked_requests": 10,
-            "evaluated_requests": 357
+            "evaluated_requests": 353,
+            "run_index": 2
+          },
+          {
+            "pss_mb": 652.6,
+            "rss_mb": 2092.9,
+            "process_count": 17,
+            "blocked_requests": 6,
+            "evaluated_requests": 186,
+            "run_index": 3
+          },
+          {
+            "pss_mb": 713.6,
+            "rss_mb": 2194.4,
+            "process_count": 17,
+            "blocked_requests": 6,
+            "evaluated_requests": 274,
+            "run_index": 4
+          },
+          {
+            "pss_mb": 532.9,
+            "rss_mb": 1909.7,
+            "process_count": 17,
+            "blocked_requests": 3,
+            "evaluated_requests": 91,
+            "run_index": 5
+          },
+          {
+            "pss_mb": 982.0,
+            "rss_mb": 2614.1,
+            "process_count": 18,
+            "blocked_requests": 19,
+            "evaluated_requests": 558,
+            "run_index": 6
+          },
+          {
+            "pss_mb": 883.4,
+            "rss_mb": 2424.3,
+            "process_count": 17,
+            "blocked_requests": 18,
+            "evaluated_requests": 531,
+            "run_index": 7
           }
         ]
       },
       "brave": {
         "pss": {
-          "median": 775.2,
-          "q1": 753.9,
-          "q3": 909.7,
-          "iqr": 155.8,
-          "min": 710.2,
-          "max": 1229.4
+          "median": 694.5,
+          "q1": 512.6,
+          "q3": 868.2,
+          "iqr": 355.6,
+          "min": 473.6,
+          "max": 880.7,
+          "analyzed_runs": [
+            473.6,
+            512.6,
+            548.4,
+            840.5,
+            868.2,
+            880.7
+          ]
         },
         "rss": {
-          "median": 2544.4,
-          "q1": 2531.6,
-          "q3": 2935.0,
-          "iqr": 403.4,
-          "min": 2466.9,
-          "max": 3451.2
+          "median": 2425.1,
+          "q1": 2051.9,
+          "q3": 2794.6,
+          "iqr": 742.7,
+          "min": 1931.8,
+          "max": 2838.2,
+          "analyzed_runs": [
+            1931.8,
+            2051.9,
+            2206.5,
+            2643.7,
+            2794.6,
+            2838.2
+          ]
         },
         "process_count_median": 18,
-        "blocked_median": 4,
         "raw_runs": [
           {
-            "pss_mb": 676.1,
-            "rss_mb": 2425.5,
+            "pss_mb": 892.0,
+            "rss_mb": 2717.3,
             "process_count": 18,
-            "blocked_requests": 4,
-            "evaluated_requests": null
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 1
           },
           {
-            "pss_mb": 710.2,
-            "rss_mb": 2466.9,
+            "pss_mb": 840.5,
+            "rss_mb": 2643.7,
             "process_count": 18,
-            "blocked_requests": 5,
-            "evaluated_requests": null
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 2
           },
           {
-            "pss_mb": 753.9,
-            "rss_mb": 2542.4,
+            "pss_mb": 880.7,
+            "rss_mb": 2838.2,
+            "process_count": 19,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 3
+          },
+          {
+            "pss_mb": 868.2,
+            "rss_mb": 2794.6,
+            "process_count": 19,
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 4
+          },
+          {
+            "pss_mb": 512.6,
+            "rss_mb": 2051.9,
             "process_count": 18,
-            "blocked_requests": 4,
-            "evaluated_requests": null
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 5
           },
           {
-            "pss_mb": 765.2,
-            "rss_mb": 2531.6,
+            "pss_mb": 473.6,
+            "rss_mb": 1931.8,
             "process_count": 18,
-            "blocked_requests": 4,
-            "evaluated_requests": null
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 6
           },
           {
-            "pss_mb": 909.7,
-            "rss_mb": 2935.0,
-            "process_count": 20,
-            "blocked_requests": 7,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 785.3,
-            "rss_mb": 2546.4,
+            "pss_mb": 548.4,
+            "rss_mb": 2206.5,
             "process_count": 18,
-            "blocked_requests": 2,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 1229.4,
-            "rss_mb": 3451.2,
-            "process_count": 21,
-            "blocked_requests": 25,
-            "evaluated_requests": null
+            "blocked_requests": null,
+            "evaluated_requests": null,
+            "run_index": 7
           }
         ]
       },
-      "pss_ranges_overlap": true
+      "iqr_overlap": true,
+      "verdict": "No meaningful diff"
     },
     "10_tabs_sleep": {
       "slate": {
         "pss": {
-          "median": 422.8,
-          "q1": 408.9,
-          "q3": 437.9,
-          "iqr": 29.0,
-          "min": 397.9,
-          "max": 697.2
+          "median": 379.1,
+          "q1": 363.8,
+          "q3": 382.1,
+          "iqr": 18.3,
+          "min": 349.3,
+          "max": 411.9,
+          "analyzed_runs": [
+            349.3,
+            363.8,
+            377.9,
+            380.3,
+            382.1,
+            411.9
+          ]
         },
         "rss": {
-          "median": 900.2,
-          "q1": 884.0,
-          "q3": 914.1,
-          "iqr": 30.1,
-          "min": 872.9,
-          "max": 1262.7
+          "median": 849.4,
+          "q1": 828.3,
+          "q3": 852.6,
+          "iqr": 24.3,
+          "min": 804.1,
+          "max": 886.6,
+          "analyzed_runs": [
+            804.1,
+            828.3,
+            848.0,
+            850.7,
+            852.6,
+            886.6
+          ]
         },
         "process_count_median": 9,
-        "blocked_median": 7,
         "raw_runs": [
           {
-            "pss_mb": 791.3,
-            "rss_mb": 1489.8,
-            "process_count": 10,
-            "blocked_requests": 53,
-            "evaluated_requests": 723
-          },
-          {
-            "pss_mb": 697.2,
-            "rss_mb": 1262.7,
-            "process_count": 10,
-            "blocked_requests": 31,
-            "evaluated_requests": 629
-          },
-          {
-            "pss_mb": 421.8,
-            "rss_mb": 898.8,
+            "pss_mb": 379.2,
+            "rss_mb": 850.1,
             "process_count": 9,
-            "blocked_requests": 7,
-            "evaluated_requests": 255
+            "blocked_requests": 1,
+            "evaluated_requests": 37,
+            "run_index": 1
           },
           {
-            "pss_mb": 437.9,
-            "rss_mb": 914.1,
+            "pss_mb": 380.3,
+            "rss_mb": 850.7,
             "process_count": 9,
-            "blocked_requests": 13,
-            "evaluated_requests": 348
+            "blocked_requests": 0,
+            "evaluated_requests": 30,
+            "run_index": 2
           },
           {
-            "pss_mb": 408.9,
-            "rss_mb": 884.0,
+            "pss_mb": 411.9,
+            "rss_mb": 886.6,
             "process_count": 9,
-            "blocked_requests": 5,
-            "evaluated_requests": 199
+            "blocked_requests": 0,
+            "evaluated_requests": 43,
+            "run_index": 3
           },
           {
-            "pss_mb": 397.9,
-            "rss_mb": 872.9,
+            "pss_mb": 349.3,
+            "rss_mb": 804.1,
             "process_count": 9,
-            "blocked_requests": 7,
-            "evaluated_requests": 235
+            "blocked_requests": 0,
+            "evaluated_requests": 10,
+            "run_index": 4
           },
           {
-            "pss_mb": 423.7,
-            "rss_mb": 901.7,
+            "pss_mb": 382.1,
+            "rss_mb": 852.6,
             "process_count": 9,
-            "blocked_requests": 6,
-            "evaluated_requests": 258
+            "blocked_requests": 1,
+            "evaluated_requests": 35,
+            "run_index": 5
+          },
+          {
+            "pss_mb": 377.9,
+            "rss_mb": 848.0,
+            "process_count": 9,
+            "blocked_requests": 1,
+            "evaluated_requests": 32,
+            "run_index": 6
+          },
+          {
+            "pss_mb": 363.8,
+            "rss_mb": 828.3,
+            "process_count": 9,
+            "blocked_requests": 0,
+            "evaluated_requests": 20,
+            "run_index": 7
           }
         ]
       },
       "brave": {
         "pss": {
-          "median": 578.4,
-          "q1": 471.2,
-          "q3": 620.0,
-          "iqr": 148.8,
-          "min": 451.9,
-          "max": 674.2
+          "median": 511.9,
+          "q1": 468.8,
+          "q3": 582.4,
+          "iqr": 113.6,
+          "min": 425.7,
+          "max": 598.9,
+          "analyzed_runs": [
+            425.7,
+            468.8,
+            475.7,
+            548.0,
+            582.4,
+            598.9
+          ]
         },
         "rss": {
-          "median": 1371.2,
-          "q1": 1144.3,
-          "q3": 1486.2,
-          "iqr": 341.9,
-          "min": 1133.1,
-          "max": 1655.7
+          "median": 1260.2,
+          "q1": 1142.8,
+          "q3": 1370.3,
+          "iqr": 227.5,
+          "min": 1094.7,
+          "max": 1484.0,
+          "analyzed_runs": [
+            1094.7,
+            1142.8,
+            1152.4,
+            1368.0,
+            1370.3,
+            1484.0
+          ]
         },
-        "process_count_median": 10,
-        "blocked_median": 4,
+        "process_count_median": 9,
         "raw_runs": [
           {
-            "pss_mb": 455.1,
-            "rss_mb": 1126.4,
+            "pss_mb": 461.8,
+            "rss_mb": 1282.0,
+            "process_count": 11,
+            "blocked_requests": 1,
+            "evaluated_requests": null,
+            "run_index": 1
+          },
+          {
+            "pss_mb": 425.7,
+            "rss_mb": 1094.7,
             "process_count": 9,
+            "blocked_requests": 0,
+            "evaluated_requests": null,
+            "run_index": 2
+          },
+          {
+            "pss_mb": 582.4,
+            "rss_mb": 1370.3,
+            "process_count": 10,
             "blocked_requests": 3,
-            "evaluated_requests": null
+            "evaluated_requests": null,
+            "run_index": 3
           },
           {
-            "pss_mb": 471.2,
-            "rss_mb": 1144.3,
+            "pss_mb": 468.8,
+            "rss_mb": 1142.8,
             "process_count": 9,
-            "blocked_requests": 4,
-            "evaluated_requests": null
+            "blocked_requests": 5,
+            "evaluated_requests": null,
+            "run_index": 4
           },
           {
-            "pss_mb": 674.2,
-            "rss_mb": 1655.7,
-            "process_count": 12,
-            "blocked_requests": 15,
-            "evaluated_requests": null
+            "pss_mb": 475.7,
+            "rss_mb": 1152.4,
+            "process_count": 9,
+            "blocked_requests": 13,
+            "evaluated_requests": null,
+            "run_index": 5
+          },
+          {
+            "pss_mb": 548.0,
+            "rss_mb": 1368.0,
+            "process_count": 11,
+            "blocked_requests": 13,
+            "evaluated_requests": null,
+            "run_index": 6
           },
           {
             "pss_mb": 598.9,
-            "rss_mb": 1486.2,
+            "rss_mb": 1484.0,
             "process_count": 11,
-            "blocked_requests": 4,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 451.9,
-            "rss_mb": 1133.1,
-            "process_count": 9,
-            "blocked_requests": 3,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 557.9,
-            "rss_mb": 1344.2,
-            "process_count": 10,
-            "blocked_requests": 3,
-            "evaluated_requests": null
-          },
-          {
-            "pss_mb": 620.0,
-            "rss_mb": 1398.2,
-            "process_count": 10,
-            "blocked_requests": 5,
-            "evaluated_requests": null
+            "blocked_requests": 19,
+            "evaluated_requests": null,
+            "run_index": 7
           }
         ]
       },
-      "pss_ranges_overlap": true
+      "iqr_overlap": false,
+      "verdict": "Probable diff (Slate lower 132.8 MB)"
     }
   }
 }

@@ -106,6 +106,7 @@ pub struct CefRunnerOptions {
     pub allow_autoplay: bool,
     pub enable_security_updaters: bool,
     pub test_site_isolation: bool,
+    pub no_blocking: bool,
 }
 
 impl CefRunnerOptions {
@@ -128,6 +129,7 @@ impl CefRunnerOptions {
         let mut allow_autoplay = false;
         let mut enable_security_updaters = true;
         let mut test_site_isolation = false;
+        let mut no_blocking = false;
 
         let mut args = env::args().skip(1);
         while let Some(arg) = args.next() {
@@ -209,6 +211,9 @@ impl CefRunnerOptions {
                 "--test-site-isolation" => {
                     test_site_isolation = true;
                 }
+                "--no-blocking" => {
+                    no_blocking = true;
+                }
                 _ => {}
             }
         }
@@ -236,6 +241,7 @@ impl CefRunnerOptions {
             allow_autoplay,
             enable_security_updaters,
             test_site_isolation,
+            no_blocking,
         }
     }
 }
@@ -766,6 +772,10 @@ wrap_resource_request_handler! {
                 .or(main_frame_url)
                 .unwrap_or_else(|| "https://service-worker.slate.local/".to_string());
 
+            if self.state.opts.no_blocking {
+                return ReturnValue::CONTINUE;
+            }
+
             let decision = self
                 .state
                 .pipeline
@@ -845,7 +855,7 @@ wrap_request_handler! {
                 return 0;
             };
             let raw_url = CefString::from(&req.url()).to_string();
-            if raw_url.starts_with("data:") || raw_url == "about:blank" {
+            if self.state.opts.no_blocking || raw_url.starts_with("data:") || raw_url == "about:blank" {
                 return 0;
             }
             let source_url = frame
@@ -1410,18 +1420,20 @@ wrap_load_handler! {
             _transition_type: TransitionType,
         ) {
             if let Some(f) = frame {
-                let page_url = CefString::from(&f.url()).to_string();
-                let bundle = self.state.pipeline.page_injection_bundle(
-                    &page_url,
-                    &["ad-banner", "ad-container"],
-                    &["sidebar-ad", "test-ad-banner"],
-                );
-                let code = CefString::from(bundle.document_start_script.as_str());
-                let script_url = CefString::from("slate://blocking/document_start.js");
-                f.execute_java_script(Some(&code), Some(&script_url), 1);
-                self.state
-                    .document_start_injected
-                    .store(true, Ordering::Relaxed);
+                if !self.state.opts.no_blocking {
+                    let page_url = CefString::from(&f.url()).to_string();
+                    let bundle = self.state.pipeline.page_injection_bundle(
+                        &page_url,
+                        &["ad-banner", "ad-container"],
+                        &["sidebar-ad", "test-ad-banner"],
+                    );
+                    let code = CefString::from(bundle.document_start_script.as_str());
+                    let script_url = CefString::from("slate://blocking/document_start.js");
+                    f.execute_java_script(Some(&code), Some(&script_url), 1);
+                    self.state
+                        .document_start_injected
+                        .store(true, Ordering::Relaxed);
+                }
             }
             if let Some(b) = browser {
                 if let Some(host) = b.host() {

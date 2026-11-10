@@ -22,7 +22,7 @@ else
     echo "NOTE: cargo-audit binary not installed in PATH; install with 'cargo install cargo-audit' or 'pacman -S cargo-audit'."
 fi
 
-echo "==> [5/5] Running live CEF launch smoke test (slate-spike-cef --tabs 1 --exit-after-load)"
+echo "==> [5/6] Running live CEF launch smoke test (slate-spike-cef --tabs 1 --exit-after-load)"
 cargo build --release -p slate-spike-cef
 SMOKE_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
     "$ROOT_DIR/target/release/slate-spike-cef" --tabs 1 --exit-after-load)
@@ -35,5 +35,18 @@ assert data.get("tabs") == 1, f"unexpected tabs: {data}"
 assert data.get("pss_tree_kb", 0) > 0, f"missing pss_tree_kb: {data}"
 assert data.get("document_start_injected") is True, f"document_start_injected failed: {data}"
 ' "$SMOKE_OUT"
+
+echo "==> [6/6] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)"
+SITE_ISO_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
+    "$ROOT_DIR/target/release/slate-spike-cef" --test-site-isolation --tabs 2 --real-sites)
+echo "    Site isolation output: $SITE_ISO_OUT"
+python3 -c '
+import sys, json
+data = json.loads(sys.argv[1])
+assert data.get("strict_one_process_per_site_preserved") is True, f"site isolation failed: {data}"
+assert data.get("renderer_process_count", 0) >= 2, f"fewer than 2 renderers: {data}"
+pids = data.get("renderer_pids", [])
+assert len(pids) >= 2 and len(set(pids)) == len(pids), f"renderer pids not unique: {pids}"
+' "$SITE_ISO_OUT"
 
 echo "==> All checks passed!"

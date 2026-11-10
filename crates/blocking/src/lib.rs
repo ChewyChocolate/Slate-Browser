@@ -277,7 +277,14 @@ pub enum CustomFilterSource {
 }
 
 /// Built-in uBlock-style scriptlet resources registered into `adblock-rust`.
-/// Sourced from Brave's maintained `adblock-resources` library (MPL-2.0).
+///
+/// **Licensing Note**:
+/// Sourced from Brave's maintained `adblock-resources` library (`resources.json`).
+/// - Brave additions and modifications are licensed under the **Mozilla Public License 2.0 (MPL-2.0)**.
+/// - Original uBlock Origin scriptlet implementations are Copyright (C) Raymond Hill and contributors,
+///   licensed under the **GNU General Public License v3.0 or later (GPL-3.0-or-later)**.
+/// - Incorporating and distributing these scriptlets requires preserving upstream copyright and
+///   license notices (MPL-2.0 and GPL-3.0-or-later).
 pub fn builtin_scriptlet_resources() -> Vec<Resource> {
     const RAW_RESOURCES_JSON: &str = include_str!("../resources/adblock-resources.json");
     serde_json::from_str::<Vec<Resource>>(RAW_RESOURCES_JSON).unwrap_or_else(|e| {
@@ -1379,5 +1386,53 @@ mod tests {
             builtin_scriptlet_resources().len()
         );
         println!("=========================\n");
+    }
+
+    #[test]
+    fn every_configured_remote_filter_list_contributes_rules() {
+        assert_eq!(
+            REMOTE_FILTER_LIST_URLS.len(),
+            8,
+            "Expected exactly 8 remote filter lists configured"
+        );
+
+        let mut custom_sources = Vec::new();
+        let mut expected_blocks = Vec::new();
+
+        for (name, url) in REMOTE_FILTER_LIST_URLS {
+            let sanitized_name = name.to_lowercase().replace('-', "_");
+            let domain = format!("test-ad-{}.example.com", sanitized_name);
+            let test_rule = format!("||{}^\n", domain);
+            let test_url = format!("https://{}/tracker.js", domain);
+
+            custom_sources.push(CustomFilterSource::RemoteUrl {
+                url: url.to_string(),
+                cached_rules: test_rule,
+            });
+            expected_blocks.push((name, test_url));
+        }
+
+        let engine = BlockingPipeline::build_engine(&[DEFAULT_FILTER_LIST], &custom_sources);
+        let pipeline = BlockingPipeline {
+            engine: Arc::new(RwLock::new(engine)),
+            custom_lists: Arc::new(RwLock::new(custom_sources)),
+            https_fallback_hosts: Arc::new(RwLock::new(HashSet::new())),
+            loaded_from_dat_cache: Arc::new(AtomicBool::new(false)),
+            https_upgrades_enabled: true,
+            block_third_party_cookies: true,
+        };
+
+        for (name, url) in &expected_blocks {
+            let decision = pipeline.evaluate_network_request(
+                url,
+                "https://publisher.example/",
+                "script",
+                "GET",
+            );
+            assert!(
+                decision.should_block,
+                "Expected rule from list '{name}' to block '{url}'"
+            );
+        }
     }
 }
