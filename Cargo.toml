@@ -5,6 +5,7 @@ members = [
     "crates/blocking",
     "crates/ui-bridge",
     "crates/engine-adapter",
+    "crates/app",
     "spikes/spike-webkit",
     "spikes/spike-cef",
 ]

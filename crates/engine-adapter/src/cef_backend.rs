@@ -111,6 +111,10 @@ pub struct CefRunnerOptions {
 
 impl CefRunnerOptions {
     pub fn parse_from_env() -> Self {
+        Self::parse_from_args(env::args().skip(1))
+    }
+
+    pub fn parse_from_args(args: impl IntoIterator<Item = String>) -> Self {
         let mut tabs = 1usize;
         let mut url = "about:blank".to_string();
         let mut real_sites = false;
@@ -131,16 +135,16 @@ impl CefRunnerOptions {
         let mut test_site_isolation = false;
         let mut no_blocking = false;
 
-        let mut args = env::args().skip(1);
-        while let Some(arg) = args.next() {
+        let mut args_iter = args.into_iter();
+        while let Some(arg) = args_iter.next() {
             match arg.as_str() {
                 "--tabs" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         tabs = val.parse().unwrap_or(1);
                     }
                 }
                 "--url" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         url = val;
                     }
                 }
@@ -154,7 +158,7 @@ impl CefRunnerOptions {
                     exit_after_load = true;
                 }
                 "--hold-ms" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         hold_ms = val.parse().ok();
                     }
                 }
@@ -162,12 +166,12 @@ impl CefRunnerOptions {
                     verify_capabilities = true;
                 }
                 "--compat-probe" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         compat_probe = Some(val);
                     }
                 }
                 "--deep-compat" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         deep_compat = Some(val);
                     }
                 }
@@ -175,13 +179,13 @@ impl CefRunnerOptions {
                     test_service_worker = true;
                 }
                 "--opt-level" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         let lvl = val.parse::<u8>().unwrap_or(3);
                         opt_level = CefOptimizationLevel::from_u8(lvl);
                     }
                 }
                 "--widevine-cdm-path" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         widevine_cdm_path = Some(val);
                     }
                 }
@@ -189,12 +193,12 @@ impl CefRunnerOptions {
                     bootstrap_filters = true;
                 }
                 "--screenshot-dir" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         screenshot_dir = Some(val);
                     }
                 }
                 "--renderer-process-limit" => {
-                    if let Some(val) = args.next() {
+                    if let Some(val) = args_iter.next() {
                         let n = val.parse::<usize>().unwrap_or(0);
                         renderer_process_limit = if n == 0 { None } else { Some(n) };
                     }
@@ -1876,8 +1880,20 @@ wrap_app! {
     }
 }
 
-/// Entrypoint for running the CEF engine adapter from a `#![forbid(unsafe_code)]` binary crate.
+/// Entrypoint for running the CEF engine adapter from a `#![forbid(unsafe_code)]` binary crate with custom CLI args.
+pub fn run_with_args(custom_args: Vec<String>) {
+    let opts = CefRunnerOptions::parse_from_args(custom_args.into_iter().skip(1));
+    run_with_options(opts);
+}
+
+/// Entrypoint for running the CEF engine adapter from a `#![forbid(unsafe_code)]` binary crate using environment args.
 pub fn run_from_cli() {
+    let opts = CefRunnerOptions::parse_from_env();
+    run_with_options(opts);
+}
+
+/// Core execution routine for CEF engine adapter.
+pub fn run_with_options(opts: CefRunnerOptions) {
     let start_instant = Instant::now();
     let _ = api_hash(sys::CEF_API_VERSION_LAST, 0);
 
@@ -1891,8 +1907,6 @@ pub fn run_from_cli() {
             std::process::exit(exit_code);
         }
     }
-
-    let opts = CefRunnerOptions::parse_from_env();
 
     if opts.bootstrap_filters {
         let cache_path = default_filter_cache_path();

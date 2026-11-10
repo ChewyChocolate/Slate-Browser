@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slate Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="browser-container">
+    <!-- Vertical Tabs Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <span class="brand-name">Slate</span>
+        </div>
+        <button id="btn-new-tab" class="btn-icon" title="New Tab (Ctrl+T)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tab Strip -->
+      <nav class="vertical-tabs" id="tab-strip" aria-label="Open tabs">
+        <!-- Tab items injected dynamically -->
+      </nav>
+
+      <!-- Sidebar Footer / Shields Summary -->
+      <div class="sidebar-footer">
+        <div class="shield-badge">
+          <svg class="shield-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+          </svg>
+          <div class="shield-info">
+            <span class="shield-title">Shields: UP</span>
+            <span class="shield-stats" id="global-blocked-count">0 Trackers Blocked</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main View Area -->
+    <main class="main-content">
+      <!-- Navigation Bar / Omnibox -->
+      <header class="navbar">
+        <div class="nav-controls">
+          <button id="btn-back" class="btn-nav" title="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button id="btn-forward" class="btn-nav" title="Forward">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <button id="btn-reload" class="btn-nav" title="Reload">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 4v6h-6M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="omnibox-container">
+          <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="text" id="omnibox-input" class="omnibox-input" placeholder="Search or enter web address" value="https://news.ycombinator.com" autocomplete="off" spellcheck="false">
+          <div class="omnibox-shield-pill">
+            <span class="pill-badge" id="omnibox-blocked-badge">🛡️ Blocked</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Active Web View Viewport -->
+      <div class="viewport" id="web-viewport">
+        <div class="new-tab-splash" id="new-tab-splash">
+          <div class="splash-card">
+            <h1>Slate Browser</h1>
+            <p class="tagline">Lightweight Brave-grade privacy with a Rust core on Chromium 156</p>
+            <div class="features-grid">
+              <div class="feat-card">
+                <h3>🛡️ Brave adblock-rust</h3>
+                <p>EasyList, EasyPrivacy, uBlock filters & 216 scriptlets built-in</p>
+              </div>
+              <div class="feat-card">
+                <h3>⚡ Fast Cold Start</h3>
+                <p>FlatBuffer 1.7 ms zero-lag cache warm start</p>
+              </div>
+              <div class="feat-card">
+                <h3>💤 Tab Sleeping</h3>
+                <p>Reclaim up to 50% RAM by discarding inactive background tabs</p>
+              </div>
+            </div>
+            <div class="quick-links">
+              <a href="#" class="quick-btn" data-url="https://news.ycombinator.com">Hacker News</a>
+              <a href="#" class="quick-btn" data-url="https://en.wikipedia.org">Wikipedia</a>
+              <a href="#" class="quick-btn" data-url="https://github.com">GitHub</a>
+              <a href="#" class="quick-btn" data-url="https://www.youtube.com">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="shell.js"></script>
+</body>
+</html>

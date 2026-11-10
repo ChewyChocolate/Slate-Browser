@@ -1,0 +1,20 @@
+[package]
+name = "slate-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+default-run = "slate"
+
+[[bin]]
+name = "slate"
+path = "src/main.rs"
+
+[dependencies]
+slate-core.workspace = true
+slate-blocking.workspace = true
+slate-ui-bridge.workspace = true
+slate-engine-adapter.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+url.workspace = true
