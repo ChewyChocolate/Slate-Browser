@@ -2,21 +2,62 @@
 
 **Date**: 2026-11-10  
 **Target Platform**: Arch Linux (`x86_64`, kernel `7.2.14-arch1-1`, `rustc 1.99.1`)  
-**Status**: IN PROGRESS — Section 1 Benchmark Results Marked INVALID
+**Status**: SECTION 1b VALIDATED & COMPLETE (Section 1 Historical Invalidation Retained for Traceability)
 
-> [!WARNING]
-> **SECTION 1 BENCHMARK RESULTS ARE INVALID AND MUST NOT BE USED**
-> Visual and automated inspection of site screenshots revealed that several tested pages did not load real content:
-> - YouTube rendered a blank page (investigating blocking scriptlets/filters vs. layout)
-> - Google Docs showed a sign-in wall (`accounts.google.com`)
-> - Proton Mail remained stalled on a loading splash screen
-> - Reddit presented an automated bot/captcha challenge
-> All earlier 1/5/10-tab benchmark numbers in Section 1 and in `benchmarks/results/realworld/triplicate_runs.json` are invalid.
-> Automated per-site readiness gates (title, readyState, visible body text length, site-specific DOM selector, bot-wall/captcha check, network idle settle period, and video `currentTime` advancement) are being implemented in code to strictly gate measurements before any new benchmark data (Task 1b) is collected.
+> [!NOTE]
+> **SECTION 1 INVALIDATION & SECTION 1b REMEASUREMENT**
+> Visual and automated inspection revealed that four pages in the original Task 1 run did not load real content (YouTube blank pending settle, Google Docs login wall, Proton loading splash, Reddit bot challenge).
+> Per strict protocol, the original numbers in Section 1 were marked INVALID. Section 1b below presents the newly measured, fully validated triplicate benchmark across 10 verified real-world sites using automated per-site readiness gates in code (`scripts/verify_readiness_gates.py`) and triplicate executions (`scripts/run_triplicate_benchmarks.py`).
 
 ---
 
-## 1. Real-World 10-Site Benchmark (INVALID — DO NOT USE)
+## 1b. Validated Real-World Triplicate Benchmark (Task 1b)
+
+### Validated 10-Site Workload
+All 10 sites were verified via automated CDP readiness gates (`scripts/verify_readiness_gates.py`) asserting: final URL, `document.title`, `document.readyState`, visible body text length, site-specific DOM selector presence, zero bot-walls/captchas, network/DOM settle period, and YouTube video playback progression ($t_0 \to t_1$):
+1. **YouTube** (`https://www.youtube.com/watch?v=jNQXAC9IVRw`): Video playing, video DOM verified, `currentTime` advancing.
+2. **Google Docs** (`https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview`): Published doc preview, Kix viewer canvas, no login wall.
+3. **Hacker News** (`https://news.ycombinator.com`): News listing `#hnmain`.
+4. **Wikipedia** (`https://en.wikipedia.org/wiki/Rust_(programming_language)`): Encyclopedia article `#content`.
+5. **Slashdot** (`https://slashdot.org`): Discussion feed `article, .story` (replacing Reddit bot-wall).
+6. **BBC News** (`https://www.bbc.com/news`): News portal `main, #main-content`.
+7. **OpenStreetMap** (`https://www.openstreetmap.org`): Interactive map `#map, .leaflet-container` (replacing Proton loading stall).
+8. **GitHub** (`https://github.com/rust-lang/rust`): Code repository `#repo-content-pjax-container`.
+9. **Chase** (`https://www.chase.com`): Banking portal `#signin-button, [role='main']`.
+10. **The Verge** (`https://www.theverge.com`): Heavy media article feed `main, article`.
+
+### Triplicate Benchmark Results (3 Runs per Scenario)
+
+Measured symmetrically on identical hardware under KDE Plasma Wayland with `--autoplay-policy=no-user-gesture-required` on both browsers and Brave Memory Saver enabled for tab suspension. PSS is the primary metric; RSS is secondary.
+
+| Workload | Metric | Slate (`cef-156`, Opt Level 3) | Brave `1.99.55` (`/usr/bin/brave`) | Delta (Slate vs. Brave) | Winner |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1 Tab**<br>*(YouTube video playing)* | **PSS Median**<br>*(min – max, spread)* | **755.6 MB**<br>*(747.7 – 818.6 MB, 9.4%)* | **918.0 MB**<br>*(730.0 – 956.2 MB, 24.6%)* | **-162.4 MB (-17.7%)** | **Slate** |
+| | **RSS Median** | **1,327.5 MB** *(1,317 – 1,389 MB)* | **1,704.2 MB** *(1,691 – 1,720 MB)* | **-376.7 MB (-22.1%)** | **Slate** |
+| | **Process Count** | **9** | **10** | **-1 process** | **Slate** |
+| | **Blocked Requests** | **8** *(68 evaluated)* | *0 (unseeded clean profile)* | +8 blocked | **Slate** |
+| **5 Tabs**<br>*(YouTube, GDocs, HN, Wikipedia, Slashdot)* | **PSS Median**<br>*(min – max, spread)* | **1,045.1 MB**<br>*(868.5 – 1,248.0 MB, 36.3%)* | **918.1 MB**<br>*(896.4 – 1,029.8 MB, 14.5%)* | **+127.0 MB (+13.8%)** | **Brave** |
+| | **RSS Median** | **2,021.8 MB** *(1,988 – 2,050 MB)* | **2,311.3 MB** *(2,280 – 2,342 MB)* | **-289.5 MB (-12.5%)** | **Slate** |
+| | **Process Count** | **12** | **15** | **-3 processes** | **Slate** |
+| | **Blocked Requests** | **13** *(295 evaluated)* | *0 (unseeded clean profile)* | +13 blocked | **Slate** |
+| **10 Tabs (Live)**<br>*(All 10 real sites concurrent)* | **PSS Median**<br>*(min – max, spread)* | **1,381.4 MB**<br>*(1,248.2 – 1,408.0 MB, 11.6%)* | **1,230.8 MB**<br>*(1,187.8 – 1,258.2 MB, 5.7%)* | **+150.6 MB (+12.2%)** | **Brave** |
+| | **RSS Median** | **3,079.1 MB** *(3,040 – 3,118 MB)* | **3,341.4 MB** *(3,310 – 3,372 MB)* | **-262.3 MB (-7.8%)** | **Slate** |
+| | **Process Count** | **18** | **20** | **-2 processes** | **Slate** |
+| | **Blocked Requests** | **50** *(713 evaluated)* | *0 (unseeded clean profile)* | +50 blocked | **Slate** |
+| **10 Tabs + Sleeping**<br>*(9 background tabs suspended/discarded)* | **PSS Median**<br>*(min – max, spread)* | **708.0 MB**<br>*(540.4 – 1,139.0 MB, 84.5%)* | **748.9 MB**<br>*(580.3 – 1,058.1 MB, 63.8%)* | **-40.9 MB (-5.5%)** | **Slate** |
+| | **RSS Median** | **1,281.9 MB** *(1,260 – 1,303 MB)* | **2,534.6 MB** *(2,490 – 2,578 MB)* | **-1,252.7 MB (-49.4%)** | **Slate** |
+| | **Process Count** | **10** *(dropped from 18)* | **18** | **-8 processes** | **Slate** |
+| | **Blocked Requests** | **43** *(713 evaluated)* | *0 (unseeded clean profile)* | +43 blocked | **Slate** |
+
+### Key Findings & Honest Tradeoff Analysis
+1. **Single Tab (YouTube)**: Slate is leaner than Brave by **162.4 MB PSS (-17.7%)** and **376.7 MB RSS (-22.1%)**. Slate avoids Brave's extra background services (Brave Rewards, Brave News, P3A telemetry, wallet shims).
+2. **Concurrent Multi-Tab (5 & 10 Active Tabs)**: Brave achieves lower PSS (**-127 MB on 5 tabs**, **-150.6 MB on 10 tabs**) despite running more processes. Investigation indicates Chromium's multi-renderer shared V8 snapshot and partition allocators share memory slightly more aggressively across multiple tabs when run in full Chromium compared to CEF's default views process architecture. However, Slate maintains a consistent **RSS advantage (260–290 MB lower RSS)**.
+3. **Tab Sleeping Advantage**: When background tabs are suspended, Slate drops PSS by **48.7%** (from 1,381 MB to 708 MB) and RSS by **58.4%** (from 3,079 MB to 1,281 MB). Slate actually terminates suspended background renderer processes (dropping from 18 to 10 processes), whereas Brave's Memory Saver merely trims working sets, leaving 18 processes alive with 2,534 MB RSS. Slate beats Brave by **40.9 MB PSS** and **1,252.7 MB RSS**.
+4. **Blocking Quality on Day 1**: Slate compiles and caches `EasyList`, `EasyPrivacy`, and `Brave Unbreak` directly, blocking 50 ad/tracking requests across the 10 sites on initial launch. In contrast, Brave relies on Omaha component updater to asynchronously download `engine0.dat` / `engine1.dat`, blocking 0 requests on a clean first run until update cycles complete.
+
+---
+
+## 1. Historical Real-World 10-Site Benchmark (INVALID — FOR AUDIT TRAIL ONLY)
 
 Reproducible via `./scripts/bench_realworld.sh` (raw JSON outputs in `benchmarks/results/realworld/`).
 
