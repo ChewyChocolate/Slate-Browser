@@ -1,0 +1,30 @@
+{
+  "1_tab": {
+    "slate": {
+      "cpu_pct": 11.85,
+      "dt_sec": 60.01,
+      "dticks": 711,
+      "process_count": 8
+    },
+    "brave": {
+      "cpu_pct": 11.68,
+      "dt_sec": 60.03,
+      "dticks": 701,
+      "process_count": 11
+    }
+  },
+  "10_tab": {
+    "slate": {
+      "cpu_pct": 93.53,
+      "dt_sec": 60.02,
+      "dticks": 5614,
+      "process_count": 17
+    },
+    "brave": {
+      "cpu_pct": 102.33,
+      "dt_sec": 60.02,
+      "dticks": 6142,
+      "process_count": 21
+    }
+  }
+}

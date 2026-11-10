@@ -396,13 +396,17 @@ def main():
         slate_gate = evaluate_browser_site('slate', site, slate_ss)
         slate_ok, slate_reason = judge_gate(site, slate_gate)
 
-        # Enforce cross-browser relative completeness rule: Slate visible text must not be < 50% of Brave
+        # Enforce two-sided cross-browser relative completeness rule: Slate visible text must not be < 50% or > 200% of Brave
         if slate_ok and brave_ok and not site.get('is_video'):
             s_len = slate_gate.get('visible_body_text_len', 0)
             b_len = brave_gate.get('visible_body_text_len', 0)
-            if b_len > 0 and s_len < 0.5 * b_len:
-                slate_ok = False
-                slate_reason = f"Slate text length under 50% of Brave ({s_len} < {int(0.5 * b_len)})"
+            if b_len > 0:
+                if s_len < 0.5 * b_len:
+                    slate_ok = False
+                    slate_reason = f"Slate text length under 50% of Brave ({s_len} < {int(0.5 * b_len)})"
+                elif s_len > 2.0 * b_len:
+                    slate_ok = False
+                    slate_reason = f"Slate text length over 200% of Brave ({s_len} > {int(2.0 * b_len)})"
 
         site_entry = {
             "slug": slug,

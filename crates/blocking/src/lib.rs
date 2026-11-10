@@ -37,6 +37,30 @@ pub const REMOTE_FILTER_LIST_URLS: &[(&str, &str)] = &[
         "EasyPrivacy",
         "https://easylist.to/easylist/easyprivacy.txt",
     ),
+    (
+        "uBlock-Filters",
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt",
+    ),
+    (
+        "uBlock-Badware",
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt",
+    ),
+    (
+        "uBlock-Resource-Abuse",
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt",
+    ),
+    (
+        "uBlock-Quick-Fixes",
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt",
+    ),
+    (
+        "uBlock-Unbreak",
+        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt",
+    ),
+    (
+        "Malicious-URLs",
+        "https://malware-filter.gitlab.io/urlhaus-filter/urlhaus-filter-online.txt",
+    ),
 ];
 
 /// Returns the default path for the compiled FlatBuffer filter cache (`~/.local/share/slate/filters.dat`).

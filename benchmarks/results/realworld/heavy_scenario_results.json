@@ -1,0 +1,12 @@
+{
+  "slate": {
+    "pss_mb": 1290.2,
+    "rss_mb": 1918.7,
+    "process_count": 9
+  },
+  "brave": {
+    "pss_mb": 1110.8,
+    "rss_mb": 2122.8,
+    "process_count": 12
+  }
+}
