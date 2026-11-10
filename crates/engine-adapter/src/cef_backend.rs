@@ -90,6 +90,7 @@ impl CefOptimizationLevel {
 pub struct CefRunnerOptions {
     pub tabs: usize,
     pub url: String,
+    pub urls: Vec<String>,
     pub real_sites: bool,
     pub sleep_background_tabs: bool,
     pub exit_after_load: bool,
@@ -117,6 +118,7 @@ impl CefRunnerOptions {
     pub fn parse_from_args(args: impl IntoIterator<Item = String>) -> Self {
         let mut tabs = 1usize;
         let mut url = "about:blank".to_string();
+        let mut urls = Vec::new();
         let mut real_sites = false;
         let mut sleep_background_tabs = false;
         let mut exit_after_load = false;
@@ -146,6 +148,18 @@ impl CefRunnerOptions {
                 "--url" => {
                     if let Some(val) = args_iter.next() {
                         url = val;
+                    }
+                }
+                "--urls" => {
+                    if let Some(val) = args_iter.next() {
+                        urls = val
+                            .split(',')
+                            .map(|s| s.trim().to_string())
+                            .filter(|s| !s.is_empty())
+                            .collect();
+                        if !urls.is_empty() {
+                            tabs = urls.len();
+                        }
                     }
                 }
                 "--real-sites" => {
@@ -229,6 +243,7 @@ impl CefRunnerOptions {
         Self {
             tabs,
             url,
+            urls,
             real_sites,
             sleep_background_tabs,
             exit_after_load,
@@ -1723,7 +1738,9 @@ wrap_browser_process_handler! {
             );
 
             for i in 0..self.state.opts.tabs {
-                let target_url = if let Some(ref sw_srv) = sw_server {
+                let target_url = if !self.state.opts.urls.is_empty() {
+                    self.state.opts.urls[i % self.state.opts.urls.len()].clone()
+                } else if let Some(ref sw_srv) = sw_server {
                     sw_srv.root_url()
                 } else if let Some(ref deep_mode) = self.state.opts.deep_compat {
                     match deep_mode.as_str() {

@@ -81,22 +81,23 @@
 
       <!-- Active Web View Viewport -->
       <div class="viewport" id="web-viewport">
+        <iframe id="active-web-frame" class="web-frame" src="about:blank" style="display:none; width:100%; height:100%; border:none; background:#ffffff;"></iframe>
         <div class="new-tab-splash" id="new-tab-splash">
           <div class="splash-card">
             <h1>Slate Browser</h1>
-            <p class="tagline">Lightweight Brave-grade privacy with a Rust core on Chromium 156</p>
+            <p class="tagline">Minimalist privacy browser with a Rust core on Chromium 156</p>
             <div class="features-grid">
               <div class="feat-card">
-                <h3>🛡️ Brave adblock-rust</h3>
-                <p>EasyList, EasyPrivacy, uBlock filters & 216 scriptlets built-in</p>
+                <h3>🛡️ Native Ad & Tracker Blocking</h3>
+                <p>Network request and cookie blocking with Brave adblock-rust</p>
               </div>
               <div class="feat-card">
-                <h3>⚡ Fast Cold Start</h3>
-                <p>FlatBuffer 1.7 ms zero-lag cache warm start</p>
+                <h3>⚡ Fast Start</h3>
+                <p>Cached filter list deserialization on launch</p>
               </div>
               <div class="feat-card">
                 <h3>💤 Tab Sleeping</h3>
-                <p>Reclaim up to 50% RAM by discarding inactive background tabs</p>
+                <p>Background tab suspension and process lifecycle management</p>
               </div>
             </div>
             <div class="quick-links">

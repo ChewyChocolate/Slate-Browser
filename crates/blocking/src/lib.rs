@@ -22,7 +22,7 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{
-    atomic::{AtomicBool, Ordering},
+    atomic::{AtomicBool, AtomicUsize, Ordering},
     Arc, RwLock,
 };
 use thiserror::Error;
@@ -293,6 +293,18 @@ pub fn builtin_scriptlet_resources() -> Vec<Resource> {
     })
 }
 
+/// Metadata recorded alongside the compiled `.dat` snapshot in `filters.meta.json`.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct FilterCacheMetadata {
+    pub rule_count: usize,
+    pub network_rule_count: usize,
+    pub cosmetic_rule_count: usize,
+    pub list_count: usize,
+    pub lists: Vec<String>,
+    pub timestamp: u64,
+    pub cache_bytes: usize,
+}
+
 /// Thread-safe, hot-swappable blocking pipeline powered by `adblock-rust`.
 #[derive(Clone)]
 pub struct BlockingPipeline {
@@ -300,6 +312,7 @@ pub struct BlockingPipeline {
     custom_lists: Arc<RwLock<Vec<CustomFilterSource>>>,
     https_fallback_hosts: Arc<RwLock<HashSet<String>>>,
     loaded_from_dat_cache: Arc<AtomicBool>,
+    rule_count: Arc<AtomicUsize>,
     https_upgrades_enabled: bool,
     block_third_party_cookies: bool,
 }
@@ -315,11 +328,18 @@ impl BlockingPipeline {
     /// and standard uBlock scriptlet resources.
     pub fn new_with_default_lists() -> Self {
         let engine = Self::build_engine(&[DEFAULT_FILTER_LIST], &[]);
+        let (net, cos) = adblock::lists::parse_filters(
+            DEFAULT_FILTER_LIST.lines(),
+            false,
+            ParseOptions::default(),
+        );
+        let baseline_rules = net.len() + cos.len();
         Self {
             engine: Arc::new(RwLock::new(engine)),
             custom_lists: Arc::new(RwLock::new(Vec::new())),
             https_fallback_hosts: Arc::new(RwLock::new(HashSet::new())),
             loaded_from_dat_cache: Arc::new(AtomicBool::new(false)),
+            rule_count: Arc::new(AtomicUsize::new(baseline_rules)),
             https_upgrades_enabled: true,
             block_third_party_cookies: true,
         }
@@ -344,8 +364,29 @@ impl BlockingPipeline {
             }
         }
 
-        // Only spawn background network refresh if cache is missing or older than 24 hours.
-        let needs_refresh = if !cache_hit {
+        // Verify sidecar metadata
+        let meta_path = path.with_extension("meta.json");
+        let mut meta_matches = false;
+        if let Ok(meta_str) = fs::read_to_string(&meta_path) {
+            if let Ok(meta) = serde_json::from_str::<FilterCacheMetadata>(&meta_str) {
+                let configured: Vec<&str> =
+                    REMOTE_FILTER_LIST_URLS.iter().map(|(n, _)| *n).collect();
+                if meta
+                    .lists
+                    .iter()
+                    .map(|s| s.as_str())
+                    .eq(configured.iter().copied())
+                {
+                    pipeline
+                        .rule_count
+                        .store(meta.rule_count, Ordering::Relaxed);
+                    meta_matches = true;
+                }
+            }
+        }
+
+        // Spawn background refresh if cache is missing, metadata is stale/mismatched, or older than 24 hours.
+        let needs_refresh = if !cache_hit || !meta_matches {
             true
         } else {
             fs::metadata(&path)
@@ -369,6 +410,11 @@ impl BlockingPipeline {
         }
 
         pipeline
+    }
+
+    /// Returns the exact count of active rules (network + cosmetic) loaded into the pipeline.
+    pub fn rule_count(&self) -> usize {
+        self.rule_count.load(Ordering::Relaxed)
     }
 
     /// Returns `true` if the active `adblock-rust` engine was loaded from or updated to
@@ -456,6 +502,53 @@ impl BlockingPipeline {
         let tmp_path = cache_path.with_extension("dat.tmp");
         fs::write(&tmp_path, &serialized)?;
         fs::rename(&tmp_path, cache_path)?;
+
+        let mut net_rules = 0usize;
+        let mut cos_rules = 0usize;
+        let opts = ParseOptions::default();
+        let (net, cos) = adblock::lists::parse_filters(DEFAULT_FILTER_LIST.lines(), false, opts);
+        net_rules += net.len();
+        cos_rules += cos.len();
+        for custom in &combined {
+            match custom {
+                CustomFilterSource::RemoteUrl { cached_rules, .. }
+                | CustomFilterSource::PastedRules {
+                    rules: cached_rules,
+                    ..
+                } => {
+                    let (n, c) = adblock::lists::parse_filters(cached_rules.lines(), false, opts);
+                    net_rules += n.len();
+                    cos_rules += c.len();
+                }
+                CustomFilterSource::LocalFile { path } => {
+                    if let Ok(c_str) = fs::read_to_string(path) {
+                        let (n, c) = adblock::lists::parse_filters(c_str.lines(), false, opts);
+                        net_rules += n.len();
+                        cos_rules += c.len();
+                    }
+                }
+            }
+        }
+        let total_rules = net_rules + cos_rules;
+
+        let meta = FilterCacheMetadata {
+            rule_count: total_rules,
+            network_rule_count: net_rules,
+            cosmetic_rule_count: cos_rules,
+            list_count: urls.len(),
+            lists: urls.iter().map(|(n, _)| n.to_string()).collect(),
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_secs(),
+            cache_bytes: serialized.len(),
+        };
+        let meta_path = cache_path.with_extension("meta.json");
+        if let Ok(meta_json) = serde_json::to_string_pretty(&meta) {
+            let _ = fs::write(&meta_path, meta_json);
+        }
+
+        self.rule_count.store(total_rules, Ordering::Relaxed);
 
         if let Ok(mut list_guard) = self.custom_lists.write() {
             *list_guard = combined;
@@ -802,11 +895,12 @@ pub fn fetch_https_filter_list(url: &str) -> Result<String, BlockingError> {
             "--silent",
             "--show-error",
             "--location",
+            "--compressed",
             "--proto",
             "=https",
             "--tlsv1.2",
             "--max-time",
-            "30",
+            "60",
             "-A",
             "Slate-Browser/0.1 (+https://slate.browser)",
             url,
@@ -1418,6 +1512,7 @@ mod tests {
             custom_lists: Arc::new(RwLock::new(custom_sources)),
             https_fallback_hosts: Arc::new(RwLock::new(HashSet::new())),
             loaded_from_dat_cache: Arc::new(AtomicBool::new(false)),
+            rule_count: Arc::new(AtomicUsize::new(0)),
             https_upgrades_enabled: true,
             block_third_party_cookies: true,
         };
@@ -1434,5 +1529,47 @@ mod tests {
                 "Expected rule from list '{name}' to block '{url}'"
             );
         }
+    }
+
+    #[test]
+    fn filter_cache_rule_count_matches_configured_lists() {
+        let path = default_filter_cache_path();
+        let meta_path = path.with_extension("meta.json");
+        assert!(
+            path.exists(),
+            "filters.dat must exist at {}",
+            path.display()
+        );
+        assert!(
+            meta_path.exists(),
+            "filters.meta.json must exist at {}",
+            meta_path.display()
+        );
+
+        let meta_str = fs::read_to_string(&meta_path).expect("failed to read filters.meta.json");
+        let meta: FilterCacheMetadata =
+            serde_json::from_str(&meta_str).expect("invalid filters.meta.json");
+
+        assert_eq!(
+            meta.list_count,
+            REMOTE_FILTER_LIST_URLS.len(),
+            "Metadata list count must match REMOTE_FILTER_LIST_URLS"
+        );
+        assert!(
+            meta.rule_count >= 250_000,
+            "Metadata rule count must be at least 250,000 for the 8 configured lists, found {}",
+            meta.rule_count
+        );
+
+        let pipeline = BlockingPipeline::new_with_cache_and_background_refresh(None);
+        assert!(
+            pipeline.is_loaded_from_dat_cache(),
+            "Pipeline must load from dat cache"
+        );
+        assert_eq!(
+            pipeline.rule_count(),
+            meta.rule_count,
+            "Loaded pipeline rule count must match metadata"
+        );
     }
 }

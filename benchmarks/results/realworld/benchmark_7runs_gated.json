@@ -1,0 +1,2595 @@
+{
+  "timestamp": 1794305199.3375545,
+  "description": "Automated readiness gates enforced. Discarded if any tab fails.",
+  "scenarios": {
+    "1_tab": {
+      "slate_runs": [
+        {
+          "pss_mb": 635.1,
+          "rss_mb": 1134.6,
+          "process_count": 8,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw&themeRefresh=1",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "interactive",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 577.7,
+          "rss_mb": 1171.1,
+          "process_count": 9,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 471.4,
+          "rss_mb": 1051.0,
+          "process_count": 9,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "interactive",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 580.1,
+          "rss_mb": 1172.5,
+          "process_count": 9,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 740.6,
+          "rss_mb": 1243.7,
+          "process_count": 8,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 551,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 811.8,
+          "rss_mb": 1315.6,
+          "process_count": 8,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 520,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 616.1,
+          "rss_mb": 1208.9,
+          "process_count": 9,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "brave_runs": [
+        {
+          "pss_mb": 502.0,
+          "rss_mb": 1502.9,
+          "process_count": 11,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 677.4,
+          "rss_mb": 1585.7,
+          "process_count": 10,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 561,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 750.1,
+          "rss_mb": 1657.9,
+          "process_count": 10,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "interactive",
+              "text_len": 572,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 421.3,
+          "rss_mb": 1398.4,
+          "process_count": 11,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "interactive",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 685.3,
+          "rss_mb": 1600.9,
+          "process_count": 10,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 569,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 690.2,
+          "rss_mb": 1680.6,
+          "process_count": 11,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 564,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 504.1,
+          "rss_mb": 1513.2,
+          "process_count": 11,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "slate": {
+          "pss": {
+            "median": 598.1,
+            "q1": 577.7,
+            "q3": 740.6,
+            "iqr": 162.9,
+            "min": 471.4,
+            "max": 811.8,
+            "raw": [
+              471.4,
+              577.7,
+              580.1,
+              616.1,
+              740.6,
+              811.8
+            ]
+          },
+          "rss": {
+            "median": 1190.7,
+            "q1": 1171.1,
+            "q3": 1243.7,
+            "iqr": 72.6,
+            "min": 1051.0,
+            "max": 1315.6,
+            "raw": [
+              1051.0,
+              1171.1,
+              1172.5,
+              1208.9,
+              1243.7,
+              1315.6
+            ]
+          },
+          "process_count_median": 9
+        },
+        "brave": {
+          "pss": {
+            "median": 681.3,
+            "q1": 504.1,
+            "q3": 690.2,
+            "iqr": 186.1,
+            "min": 421.3,
+            "max": 750.1,
+            "raw": [
+              421.3,
+              504.1,
+              677.4,
+              685.3,
+              690.2,
+              750.1
+            ]
+          },
+          "rss": {
+            "median": 1593.3,
+            "q1": 1513.2,
+            "q3": 1657.9,
+            "iqr": 144.7,
+            "min": 1398.4,
+            "max": 1680.6,
+            "raw": [
+              1398.4,
+              1513.2,
+              1585.7,
+              1600.9,
+              1657.9,
+              1680.6
+            ]
+          },
+          "process_count_median": 10
+        },
+        "iqr_overlap": true
+      }
+    },
+    "5_tabs": {
+      "slate_runs": [
+        {
+          "pss_mb": 1066.7,
+          "rss_mb": 2052.2,
+          "process_count": 12,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 553,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4098,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32778,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1306.1,
+          "rss_mb": 2285.4,
+          "process_count": 12,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4098,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32786,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1315.1,
+          "rss_mb": 2362.8,
+          "process_count": 13,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 567,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4098,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32807,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1284.4,
+          "rss_mb": 2330.5,
+          "process_count": 13,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 585,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32780,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1336.5,
+          "rss_mb": 2382.5,
+          "process_count": 13,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 564,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32798,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1392.1,
+          "rss_mb": 2370.1,
+          "process_count": 12,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32812,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1205.1,
+          "rss_mb": 2185.8,
+          "process_count": 12,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32796,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "brave_runs": [
+        {
+          "pss_mb": 1020.5,
+          "rss_mb": 2404.2,
+          "process_count": 14,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 542,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33002,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1091.1,
+          "rss_mb": 2538.7,
+          "process_count": 15,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 574,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32978,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1085.4,
+          "rss_mb": 2549.2,
+          "process_count": 15,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 906,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4043,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33579,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1034.6,
+          "rss_mb": 2402.5,
+          "process_count": 14,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 575,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33007,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1071.6,
+          "rss_mb": 2528.4,
+          "process_count": 15,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 992,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33556,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1045.9,
+          "rss_mb": 2387.5,
+          "process_count": 14,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw&themeRefresh=1",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "interactive",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33462,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1117.7,
+          "rss_mb": 2591.5,
+          "process_count": 15,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 1071,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33529,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "slate": {
+          "pss": {
+            "median": 1310.6,
+            "q1": 1284.4,
+            "q3": 1336.5,
+            "iqr": 52.1,
+            "min": 1205.1,
+            "max": 1392.1,
+            "raw": [
+              1205.1,
+              1284.4,
+              1306.1,
+              1315.1,
+              1336.5,
+              1392.1
+            ]
+          },
+          "rss": {
+            "median": 2346.7,
+            "q1": 2285.4,
+            "q3": 2370.1,
+            "iqr": 84.7,
+            "min": 2185.8,
+            "max": 2382.5,
+            "raw": [
+              2185.8,
+              2285.4,
+              2330.5,
+              2362.8,
+              2370.1,
+              2382.5
+            ]
+          },
+          "process_count_median": 12
+        },
+        "brave": {
+          "pss": {
+            "median": 1078.5,
+            "q1": 1045.9,
+            "q3": 1091.1,
+            "iqr": 45.2,
+            "min": 1034.6,
+            "max": 1117.7,
+            "raw": [
+              1034.6,
+              1045.9,
+              1071.6,
+              1085.4,
+              1091.1,
+              1117.7
+            ]
+          },
+          "rss": {
+            "median": 2533.6,
+            "q1": 2402.5,
+            "q3": 2549.2,
+            "iqr": 146.7,
+            "min": 2387.5,
+            "max": 2591.5,
+            "raw": [
+              2387.5,
+              2402.5,
+              2528.4,
+              2538.7,
+              2549.2,
+              2591.5
+            ]
+          },
+          "process_count_median": 15
+        },
+        "iqr_overlap": false
+      }
+    },
+    "10_tabs": {
+      "slate_runs": [
+        {
+          "pss_mb": 1608.8,
+          "rss_mb": 3306.6,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 529,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32789,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7954,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20688,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1464.5,
+          "rss_mb": 3171.2,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 519,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33334,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7723,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1318.3,
+          "rss_mb": 3045.8,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33313,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7915,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1691.8,
+          "rss_mb": 3393.5,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 596,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33304,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7915,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1464.0,
+          "rss_mb": 3167.9,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 580,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33296,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7915,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1530.0,
+          "rss_mb": 3235.8,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 1790,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32800,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7915,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1813.0,
+          "rss_mb": 3512.0,
+          "process_count": 18,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 597,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "complete",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4044,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77320,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33309,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7915,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=5/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 565,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5640,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5528,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 20689,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "brave_runs": [
+        {
+          "pss_mb": 1568.8,
+          "rss_mb": 3777.6,
+          "process_count": 20,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "complete",
+              "text_len": 600,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4089,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 33027,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7724,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 3842,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "interactive",
+              "text_len": 7765,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1397.5,
+          "rss_mb": 3514.3,
+          "process_count": 19,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw&themeRefresh=1",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4089,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32894,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7722,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 7765,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1397.6,
+          "rss_mb": 3539.4,
+          "process_count": 19,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw&themeRefresh=1",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 11,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4089,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32999,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7722,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 7765,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1318.7,
+          "rss_mb": 3431.6,
+          "process_count": 19,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw&themeRefresh=1",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 0,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 166,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4091,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32962,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7722,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "complete",
+              "text_len": 7765,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1104.9,
+          "rss_mb": 3296.2,
+          "process_count": 20,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 1,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 1,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4025,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32906,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7486,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "interactive",
+              "text_len": 4163,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1152.0,
+          "rss_mb": 3588.3,
+          "process_count": 22,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 12,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 1,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4025,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32995,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "complete",
+              "text_len": 7486,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "interactive",
+              "text_len": 7759,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        },
+        {
+          "pss_mb": 1074.4,
+          "rss_mb": 3132.0,
+          "process_count": 19,
+          "gates_passed": true,
+          "gate_details": {
+            "01_youtube": {
+              "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+              "title": "Me at the zoo - YouTube",
+              "ready_state": "loading",
+              "text_len": 1,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "02_google_docs": {
+              "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+              "title": "parenthandbook.docx - Google Docs",
+              "ready_state": "interactive",
+              "text_len": 1,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "03_hacker_news": {
+              "url": "https://news.ycombinator.com/",
+              "title": "Hacker News",
+              "ready_state": "complete",
+              "text_len": 4026,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "04_wikipedia": {
+              "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+              "title": "Rust (programming language) - Wikipedia",
+              "ready_state": "complete",
+              "text_len": 77016,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "05_slashdot": {
+              "url": "https://slashdot.org/",
+              "title": "Slashdot: News for nerds, stuff that matters, & software",
+              "ready_state": "complete",
+              "text_len": 32925,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "06_bbc_news": {
+              "url": "https://www.bbc.com/news",
+              "title": "BBC News - Breaking news, video and the latest top stories from the U.S. and around the world",
+              "ready_state": "interactive",
+              "text_len": 7504,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "07_openstreetmap": {
+              "url": "https://www.openstreetmap.org/#map=6/13.02/121.77",
+              "title": "OpenStreetMap",
+              "ready_state": "complete",
+              "text_len": 530,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "08_github": {
+              "url": "https://github.com/rust-lang/rust",
+              "title": "GitHub - rust-lang/rust: Empowering everyone to build reliable and efficient software. \u00b7 GitHub",
+              "ready_state": "complete",
+              "text_len": 5548,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "09_chase": {
+              "url": "https://www.chase.com/",
+              "title": "Credit Card, Mortgage, Banking, Auto | Chase Online | Chase.com",
+              "ready_state": "complete",
+              "text_len": 5230,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            },
+            "10_theverge": {
+              "url": "https://www.theverge.com/",
+              "title": "The Verge",
+              "ready_state": "interactive",
+              "text_len": 4161,
+              "selector_found": true,
+              "bot_wall": false,
+              "passed": true
+            }
+          }
+        }
+      ],
+      "summary": {
+        "slate": {
+          "pss": {
+            "median": 1497.2,
+            "q1": 1464.0,
+            "q3": 1691.8,
+            "iqr": 227.8,
+            "min": 1318.3,
+            "max": 1813.0,
+            "raw": [
+              1318.3,
+              1464.0,
+              1464.5,
+              1530.0,
+              1691.8,
+              1813.0
+            ]
+          },
+          "rss": {
+            "median": 3203.5,
+            "q1": 3167.9,
+            "q3": 3393.5,
+            "iqr": 225.6,
+            "min": 3045.8,
+            "max": 3512.0,
+            "raw": [
+              3045.8,
+              3167.9,
+              3171.2,
+              3235.8,
+              3393.5,
+              3512.0
+            ]
+          },
+          "process_count_median": 18
+        },
+        "brave": {
+          "pss": {
+            "median": 1235.3,
+            "q1": 1104.9,
+            "q3": 1397.5,
+            "iqr": 292.6,
+            "min": 1074.4,
+            "max": 1397.6,
+            "raw": [
+              1074.4,
+              1104.9,
+              1152.0,
+              1318.7,
+              1397.5,
+              1397.6
+            ]
+          },
+          "rss": {
+            "median": 3472.9,
+            "q1": 3296.2,
+            "q3": 3539.4,
+            "iqr": 243.2,
+            "min": 3132.0,
+            "max": 3588.3,
+            "raw": [
+              3132.0,
+              3296.2,
+              3431.6,
+              3514.3,
+              3539.4,
+              3588.3
+            ]
+          },
+          "process_count_median": 19
+        },
+        "iqr_overlap": false
+      }
+    }
+  }
+}

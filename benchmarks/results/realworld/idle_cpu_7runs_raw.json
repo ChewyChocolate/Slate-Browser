@@ -1,0 +1,722 @@
+{
+  "slate_opt3_blank": [
+    {
+      "total_cpu_pct": 0.1,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.1,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.01,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "browser": 0.2,
+        "zygote": 0.0,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.01,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "browser": 0.2,
+        "zygote": 0.0,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.02,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 0.1,
+      "by_process_kind": {
+        "browser": 0.1,
+        "zygote": 0.0,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.02,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "browser": 0.2,
+        "zygote": 0.0,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.02,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 0.1,
+      "by_process_kind": {
+        "browser": 0.1,
+        "zygote": 0.0,
+        "utility:network": 0.0
+      },
+      "process_count": 8,
+      "duration_sec": 10.03,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "utility:network": 0.0,
+        "browser": 0.2
+      },
+      "process_count": 8,
+      "duration_sec": 10.02,
+      "run_index": 7
+    }
+  ],
+  "slate_opt0_blank": [
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.2,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 0.1,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "utility:network": 0.0,
+        "browser": 0.1
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 0.1,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.1,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.2,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.02,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 0.3,
+      "by_process_kind": {
+        "zygote": 0.1,
+        "browser": 0.2,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.2,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.01,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 0.2,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "browser": 0.2,
+        "utility:network": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 7
+    }
+  ],
+  "brave_default_blank": [
+    {
+      "total_cpu_pct": 12.65,
+      "by_process_kind": {
+        "zygote": 0.1,
+        "gpu-process": 0.1,
+        "renderer": 0.1,
+        "utility:network": 5.58,
+        "utility:storage": 0.0,
+        "browser": 6.77
+      },
+      "process_count": 11,
+      "duration_sec": 10.04,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 11.36,
+      "by_process_kind": {
+        "utility:storage": 0.0,
+        "zygote": 0.0,
+        "renderer": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 5.28,
+        "browser": 6.08
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 10.48,
+      "by_process_kind": {
+        "utility:storage": 0.0,
+        "zygote": 0.1,
+        "renderer": 0.3,
+        "gpu-process": 0.0,
+        "utility:network": 4.09,
+        "browser": 5.99
+      },
+      "process_count": 11,
+      "duration_sec": 10.02,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 7.48,
+      "by_process_kind": {
+        "browser": 3.99,
+        "utility:storage": 0.0,
+        "renderer": 0.0,
+        "zygote": 0.1,
+        "utility:network": 3.39,
+        "gpu-process": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 8.16,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "utility:network": 4.08,
+        "renderer": 0.0,
+        "browser": 3.98,
+        "utility:storage": 0.0,
+        "gpu-process": 0.1
+      },
+      "process_count": 11,
+      "duration_sec": 10.04,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 9.98,
+      "by_process_kind": {
+        "renderer": 0.0,
+        "browser": 5.69,
+        "zygote": 0.3,
+        "utility:storage": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 3.99
+      },
+      "process_count": 11,
+      "duration_sec": 10.02,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 9.36,
+      "by_process_kind": {
+        "zygote": 0.0,
+        "renderer": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 4.78,
+        "browser": 4.58,
+        "utility:storage": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.05,
+      "run_index": 7
+    }
+  ],
+  "brave_trimmed_blank": [
+    {
+      "total_cpu_pct": 10.16,
+      "by_process_kind": {
+        "renderer": 0.1,
+        "utility:storage": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 4.18,
+        "browser": 5.68,
+        "zygote": 0.2
+      },
+      "process_count": 11,
+      "duration_sec": 10.04,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 9.06,
+      "by_process_kind": {
+        "zygote": 0.1,
+        "renderer": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 4.28,
+        "browser": 4.68,
+        "utility:storage": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.04,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 9.88,
+      "by_process_kind": {
+        "zygote": 0.1,
+        "renderer": 0.0,
+        "utility:network": 4.19,
+        "gpu-process": 0.0,
+        "browser": 5.59,
+        "utility:storage": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 8.56,
+      "by_process_kind": {
+        "zygote": 0.1,
+        "renderer": 0.1,
+        "utility:storage": 0.0,
+        "gpu-process": 0.0,
+        "utility:network": 3.39,
+        "browser": 4.98
+      },
+      "process_count": 11,
+      "duration_sec": 10.04,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 9.78,
+      "by_process_kind": {
+        "browser": 5.49,
+        "zygote": 0.1,
+        "utility:storage": 0.0,
+        "renderer": 0.2,
+        "utility:network": 3.99,
+        "gpu-process": 0.0
+      },
+      "process_count": 11,
+      "duration_sec": 10.02,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 11.97,
+      "by_process_kind": {
+        "browser": 5.78,
+        "utility:storage": 0.0,
+        "zygote": 0.0,
+        "renderer": 0.0,
+        "gpu-process": 0.1,
+        "utility:network": 6.08
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 8.57,
+      "by_process_kind": {
+        "browser": 4.59,
+        "utility:storage": 0.0,
+        "zygote": 0.0,
+        "renderer": 0.0,
+        "gpu-process": 0.1,
+        "utility:network": 3.89
+      },
+      "process_count": 11,
+      "duration_sec": 10.03,
+      "run_index": 7
+    }
+  ],
+  "slate_opt3_10static": [
+    {
+      "total_cpu_pct": 181.42,
+      "by_process_kind": {
+        "browser": 15.57,
+        "zygote": 130.53,
+        "utility:network": 35.33
+      },
+      "process_count": 17,
+      "duration_sec": 10.02,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 137.42,
+      "by_process_kind": {
+        "zygote": 89.52,
+        "browser": 24.25,
+        "utility": 0.0,
+        "utility:network": 23.65
+      },
+      "process_count": 18,
+      "duration_sec": 10.02,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 167.59,
+      "by_process_kind": {
+        "zygote": 104.71,
+        "utility": 0.0,
+        "utility:network": 33.44,
+        "browser": 29.45
+      },
+      "process_count": 18,
+      "duration_sec": 10.02,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 93.2,
+      "by_process_kind": {
+        "utility:network": 26.42,
+        "zygote": 48.15,
+        "browser": 18.64
+      },
+      "process_count": 17,
+      "duration_sec": 10.03,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 188.42,
+      "by_process_kind": {
+        "zygote": 123.98,
+        "browser": 29.23,
+        "utility": 0.0,
+        "utility:network": 35.21
+      },
+      "process_count": 18,
+      "duration_sec": 10.03,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 150.03,
+      "by_process_kind": {
+        "browser": 25.24,
+        "zygote": 92.07,
+        "utility:network": 32.72
+      },
+      "process_count": 17,
+      "duration_sec": 10.02,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 42.1,
+      "by_process_kind": {
+        "zygote": 19.05,
+        "utility:network": 13.47,
+        "browser": 9.58
+      },
+      "process_count": 17,
+      "duration_sec": 10.02,
+      "run_index": 7
+    }
+  ],
+  "slate_opt0_10static": [
+    {
+      "total_cpu_pct": 36.9,
+      "by_process_kind": {
+        "zygote": 16.25,
+        "browser": 9.87,
+        "utility:network": 10.77
+      },
+      "process_count": 18,
+      "duration_sec": 10.03,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 165.32,
+      "by_process_kind": {
+        "zygote": 113.47,
+        "browser": 23.33,
+        "utility:network": 28.52
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 116.95,
+      "by_process_kind": {
+        "zygote": 90.13,
+        "browser": 12.36,
+        "utility:network": 14.46
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 163.44,
+      "by_process_kind": {
+        "zygote": 108.63,
+        "browser": 27.96,
+        "utility:network": 26.86
+      },
+      "process_count": 20,
+      "duration_sec": 10.02,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 138.11,
+      "by_process_kind": {
+        "zygote": 85.22,
+        "utility:network": 26.54,
+        "browser": 26.34,
+        "utility": 0.0
+      },
+      "process_count": 22,
+      "duration_sec": 10.02,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 66.18,
+      "by_process_kind": {
+        "zygote": 31.59,
+        "browser": 16.44,
+        "utility:network": 18.14
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 145.16,
+      "by_process_kind": {
+        "browser": 23.03,
+        "zygote": 95.41,
+        "utility:network": 26.72
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 7
+    }
+  ],
+  "brave_default_10static": [
+    {
+      "total_cpu_pct": 94.77,
+      "by_process_kind": {
+        "browser": 46.89,
+        "renderer": 19.41,
+        "zygote": 0.1,
+        "gpu-process": 17.12,
+        "utility:network": 11.25,
+        "utility:storage": 0.0
+      },
+      "process_count": 20,
+      "duration_sec": 10.04,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 157.25,
+      "by_process_kind": {
+        "renderer": 78.52,
+        "utility:storage": 0.0,
+        "browser": 45.48,
+        "zygote": 0.0,
+        "gpu-process": 16.02,
+        "utility:network": 17.22
+      },
+      "process_count": 20,
+      "duration_sec": 10.05,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 156.03,
+      "by_process_kind": {
+        "renderer": 69.43,
+        "gpu-process": 16.26,
+        "utility:network": 26.24,
+        "browser": 43.89,
+        "utility:storage": 0.1,
+        "zygote": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.02,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 157.34,
+      "by_process_kind": {
+        "renderer": 80.56,
+        "browser": 44.32,
+        "zygote": 0.1,
+        "gpu-process": 16.33,
+        "utility:network": 15.93,
+        "utility:storage": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.04,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 155.88,
+      "by_process_kind": {
+        "renderer": 80.43,
+        "browser": 45.09,
+        "zygote": 0.2,
+        "gpu-process": 14.93,
+        "utility:network": 15.23,
+        "utility:storage": 0.0
+      },
+      "process_count": 20,
+      "duration_sec": 10.05,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 191.24,
+      "by_process_kind": {
+        "renderer": 99.6,
+        "gpu-process": 16.12,
+        "utility:network": 20.8,
+        "utility:storage": 0.3,
+        "browser": 54.23,
+        "zygote": 0.2
+      },
+      "process_count": 20,
+      "duration_sec": 10.05,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 204.09,
+      "by_process_kind": {
+        "renderer": 114.65,
+        "gpu-process": 15.94,
+        "utility:network": 21.12,
+        "browser": 52.09,
+        "utility:storage": 0.1,
+        "zygote": 0.2
+      },
+      "process_count": 20,
+      "duration_sec": 10.04,
+      "run_index": 7
+    }
+  ],
+  "brave_trimmed_10static": [
+    {
+      "total_cpu_pct": 149.68,
+      "by_process_kind": {
+        "renderer": 75.64,
+        "gpu-process": 15.05,
+        "utility:network": 14.35,
+        "browser": 44.45,
+        "utility:storage": 0.1,
+        "zygote": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 1
+    },
+    {
+      "total_cpu_pct": 163.36,
+      "by_process_kind": {
+        "renderer": 111.6,
+        "gpu-process": 15.43,
+        "utility:network": 2.09,
+        "utility:storage": 0.0,
+        "browser": 34.25,
+        "zygote": 0.0
+      },
+      "process_count": 20,
+      "duration_sec": 10.04,
+      "run_index": 2
+    },
+    {
+      "total_cpu_pct": 95.77,
+      "by_process_kind": {
+        "renderer": 16.03,
+        "browser": 52.36,
+        "zygote": 0.2,
+        "gpu-process": 19.61,
+        "utility:network": 7.57,
+        "utility:storage": 0.0
+      },
+      "process_count": 20,
+      "duration_sec": 10.05,
+      "run_index": 3
+    },
+    {
+      "total_cpu_pct": 199.8,
+      "by_process_kind": {
+        "renderer": 102.29,
+        "browser": 56.13,
+        "zygote": 0.1,
+        "gpu-process": 15.65,
+        "utility:network": 25.42,
+        "utility:storage": 0.2
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 4
+    },
+    {
+      "total_cpu_pct": 166.08,
+      "by_process_kind": {
+        "renderer": 70.22,
+        "gpu-process": 15.76,
+        "utility:network": 23.04,
+        "browser": 56.76,
+        "utility:storage": 0.2,
+        "zygote": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 5
+    },
+    {
+      "total_cpu_pct": 171.99,
+      "by_process_kind": {
+        "gpu-process": 16.06,
+        "renderer": 113.93,
+        "utility:network": 4.69,
+        "browser": 37.21,
+        "utility:storage": 0.0,
+        "zygote": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.02,
+      "run_index": 6
+    },
+    {
+      "total_cpu_pct": 202.76,
+      "by_process_kind": {
+        "renderer": 106.27,
+        "browser": 57.52,
+        "zygote": 0.2,
+        "gpu-process": 16.05,
+        "utility:network": 22.63,
+        "utility:storage": 0.1
+      },
+      "process_count": 20,
+      "duration_sec": 10.03,
+      "run_index": 7
+    }
+  ]
+}

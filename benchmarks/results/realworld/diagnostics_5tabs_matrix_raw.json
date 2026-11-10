@@ -1,0 +1,2353 @@
+{
+  "timestamp": 1794309451.5532339,
+  "description": "5-tab diagnostic matrix measuring PSS by process kind across {Opt0, Opt3} x {blocking on, off} and Brave.",
+  "scenarios": {
+    "slate_opt3_blocking_on": [
+      {
+        "pss_mb": 796.5,
+        "rss_mb": 1876.1,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 178.8,
+          "renderer": 533.1,
+          "gpu": 0.0,
+          "network": 54.9,
+          "utility": 0.0,
+          "zygote": 29.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0.87,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32628,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 807.0,
+        "rss_mb": 1774.5,
+        "process_count": 12,
+        "by_type_mb": {
+          "browser": 170.1,
+          "renderer": 553.7,
+          "gpu": 0.0,
+          "network": 52.8,
+          "utility": 0.0,
+          "zygote": 30.4
+        },
+        "video_info": {
+          "start_time": 0.34,
+          "end_time": 1.37,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32558,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 793.8,
+        "rss_mb": 1858.4,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 167.5,
+          "renderer": 543.3,
+          "gpu": 0.0,
+          "network": 53.2,
+          "utility": 0.0,
+          "zygote": 29.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0.64,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "interactive",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32558,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 793.4,
+        "rss_mb": 1861.0,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 165.7,
+          "renderer": 544.1,
+          "gpu": 0.0,
+          "network": 53.8,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0.35,
+          "end_time": 1.41,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32558,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 801.0,
+        "rss_mb": 1871.0,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 168.0,
+          "renderer": 547.9,
+          "gpu": 0.0,
+          "network": 55.2,
+          "utility": 0.0,
+          "zygote": 30.0
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.75,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32633,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 753.3,
+        "rss_mb": 1810.6,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 172.4,
+          "renderer": 499.8,
+          "gpu": 0.0,
+          "network": 51.2,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0.53,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 13,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32651,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 797.5,
+        "rss_mb": 1873.5,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 176.0,
+          "renderer": 536.3,
+          "gpu": 0.0,
+          "network": 55.4,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.5,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 34,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32683,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      }
+    ],
+    "slate_opt3_blocking_off": [
+      {
+        "pss_mb": 779.7,
+        "rss_mb": 1843.9,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 170.5,
+          "renderer": 525.7,
+          "gpu": 0.0,
+          "network": 53.6,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.39,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32562,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 820.9,
+        "rss_mb": 1889.8,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 171.2,
+          "renderer": 562.8,
+          "gpu": 0.0,
+          "network": 56.9,
+          "utility": 0.0,
+          "zygote": 30.0
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0.88,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4039,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 768.4,
+        "rss_mb": 1824.6,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 171.4,
+          "renderer": 517.3,
+          "gpu": 0.0,
+          "network": 49.9,
+          "utility": 0.0,
+          "zygote": 29.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0.73,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "interactive",
+            "text_len": 13,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 778.8,
+        "rss_mb": 1844.1,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 165.9,
+          "renderer": 530.3,
+          "gpu": 0.0,
+          "network": 52.7,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 5.35,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 805.4,
+        "rss_mb": 1871.7,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 166.9,
+          "renderer": 555.7,
+          "gpu": 0.0,
+          "network": 52.9,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 2.98,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 781.2,
+        "rss_mb": 1845.3,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 166.8,
+          "renderer": 531.4,
+          "gpu": 0.0,
+          "network": 53.1,
+          "utility": 0.0,
+          "zygote": 29.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.62,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 822.9,
+        "rss_mb": 1885.8,
+        "process_count": 13,
+        "by_type_mb": {
+          "browser": 171.2,
+          "renderer": 568.3,
+          "gpu": 0.0,
+          "network": 53.7,
+          "utility": 0.0,
+          "zygote": 29.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.5,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      }
+    ],
+    "slate_opt0_blocking_on": [
+      {
+        "pss_mb": 1005.8,
+        "rss_mb": 2119.6,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 175.1,
+          "renderer": 729.6,
+          "gpu": 0.0,
+          "network": 49.6,
+          "utility": 24.8,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32682,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 974.2,
+        "rss_mb": 2090.6,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 176.5,
+          "renderer": 695.9,
+          "gpu": 0.0,
+          "network": 50.3,
+          "utility": 24.7,
+          "zygote": 26.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "0x0"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4041,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32688,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1051.4,
+        "rss_mb": 2170.9,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 180.0,
+          "renderer": 766.5,
+          "gpu": 0.0,
+          "network": 53.2,
+          "utility": 24.8,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "interactive",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32692,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1045.8,
+        "rss_mb": 2154.2,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 172.7,
+          "renderer": 768.8,
+          "gpu": 0.0,
+          "network": 52.7,
+          "utility": 24.8,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32709,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1074.2,
+        "rss_mb": 2188.1,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 189.0,
+          "renderer": 769.5,
+          "gpu": 0.0,
+          "network": 64.1,
+          "utility": 24.8,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 31793,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1545.8,
+        "rss_mb": 2744.5,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 202.6,
+          "renderer": 1222.1,
+          "gpu": 0.0,
+          "network": 50.0,
+          "utility": 46.2,
+          "zygote": 24.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "complete",
+            "text_len": 4958,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32706,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1391.4,
+        "rss_mb": 2516.7,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 200.3,
+          "renderer": 1097.1,
+          "gpu": 0.0,
+          "network": 44.5,
+          "utility": 24.7,
+          "zygote": 24.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "complete",
+            "text_len": 837,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32685,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      }
+    ],
+    "slate_opt0_blocking_off": [
+      {
+        "pss_mb": 1384.8,
+        "rss_mb": 2579.4,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 203.5,
+          "renderer": 1058.1,
+          "gpu": 0.0,
+          "network": 52.2,
+          "utility": 46.2,
+          "zygote": 24.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "complete",
+            "text_len": 3247,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32620,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1057.9,
+        "rss_mb": 2186.6,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 184.6,
+          "renderer": 762.7,
+          "gpu": 0.0,
+          "network": 58.9,
+          "utility": 24.7,
+          "zygote": 27.0
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32590,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1014.1,
+        "rss_mb": 2142.5,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 187.4,
+          "renderer": 719.0,
+          "gpu": 0.0,
+          "network": 56.1,
+          "utility": 24.8,
+          "zygote": 26.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "interactive",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32596,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 955.2,
+        "rss_mb": 2164.5,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 180.7,
+          "renderer": 674.9,
+          "gpu": 0.0,
+          "network": 48.7,
+          "utility": 24.5,
+          "zygote": 26.3
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4044,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32590,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 885.2,
+        "rss_mb": 2090.0,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 174.2,
+          "renderer": 601.9,
+          "gpu": 0.0,
+          "network": 58.2,
+          "utility": 24.5,
+          "zygote": 26.4
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4046,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32598,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 1040.7,
+        "rss_mb": 2163.5,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 188.9,
+          "renderer": 745.8,
+          "gpu": 0.0,
+          "network": 54.3,
+          "utility": 24.7,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 166,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4046,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "interactive",
+            "text_len": 32622,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 969.1,
+        "rss_mb": 2080.8,
+        "process_count": 14,
+        "by_type_mb": {
+          "browser": 171.1,
+          "renderer": 695.6,
+          "gpu": 0.0,
+          "network": 50.7,
+          "utility": 24.8,
+          "zygote": 26.9
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 0,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ&themeRefresh=1",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4046,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77320,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32622,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      }
+    ],
+    "brave_seeded": [
+      {
+        "pss_mb": 855.9,
+        "rss_mb": 2257.1,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 176.2,
+          "renderer": 483.5,
+          "gpu": 67.8,
+          "network": 64.6,
+          "utility": 35.0,
+          "zygote": 28.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.45,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4046,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32862,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 820.8,
+        "rss_mb": 2234.2,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 169.5,
+          "renderer": 457.5,
+          "gpu": 67.9,
+          "network": 59.3,
+          "utility": 37.2,
+          "zygote": 29.4
+        },
+        "video_info": {
+          "start_time": 0.01,
+          "end_time": 2.06,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4046,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32837,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 812.3,
+        "rss_mb": 2215.8,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 174.9,
+          "renderer": 447.6,
+          "gpu": 68.0,
+          "network": 55.2,
+          "utility": 37.5,
+          "zygote": 29.0
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.32,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4032,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32440,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 858.9,
+        "rss_mb": 2263.6,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 176.8,
+          "renderer": 488.6,
+          "gpu": 67.5,
+          "network": 61.9,
+          "utility": 35.2,
+          "zygote": 28.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.17,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4032,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32799,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 839.6,
+        "rss_mb": 2241.2,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 176.7,
+          "renderer": 484.0,
+          "gpu": 69.3,
+          "network": 46.1,
+          "utility": 34.7,
+          "zygote": 28.8
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 4.41,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "complete",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4032,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32814,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 813.9,
+        "rss_mb": 2221.6,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 175.3,
+          "renderer": 449.8,
+          "gpu": 67.1,
+          "network": 57.9,
+          "utility": 35.3,
+          "zygote": 28.5
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.31,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4032,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32861,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      },
+      {
+        "pss_mb": 854.3,
+        "rss_mb": 2262.0,
+        "process_count": 15,
+        "by_type_mb": {
+          "browser": 177.2,
+          "renderer": 480.5,
+          "gpu": 68.8,
+          "network": 60.5,
+          "utility": 37.3,
+          "zygote": 30.0
+        },
+        "video_info": {
+          "start_time": 0,
+          "end_time": 1.08,
+          "resolution": "854x480"
+        },
+        "gates_passed": true,
+        "gate_details": {
+          "01_youtube_bbb": {
+            "url": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+            "title": "Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film - YouTube",
+            "ready_state": "loading",
+            "text_len": 12,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "02_google_docs": {
+            "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+            "title": "parenthandbook.docx - Google Docs",
+            "ready_state": "interactive",
+            "text_len": 1,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "03_hacker_news": {
+            "url": "https://news.ycombinator.com/",
+            "title": "Hacker News",
+            "ready_state": "complete",
+            "text_len": 4032,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "04_wikipedia": {
+            "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+            "title": "Rust (programming language) - Wikipedia",
+            "ready_state": "complete",
+            "text_len": 77016,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          },
+          "05_slashdot": {
+            "url": "https://slashdot.org/",
+            "title": "Slashdot: News for nerds, stuff that matters, & software",
+            "ready_state": "complete",
+            "text_len": 32440,
+            "selector_found": true,
+            "bot_wall": false,
+            "passed": true
+          }
+        }
+      }
+    ]
+  },
+  "discard_log": [
+    {
+      "scenario": "slate_opt0_blocking_on",
+      "attempt": 3,
+      "failed_tabs": [
+        "01_youtube_bbb",
+        "05_slashdot"
+      ],
+      "timestamp": 1794309695.7848885
+    },
+    {
+      "scenario": "slate_opt0_blocking_on",
+      "attempt": 6,
+      "failed_tabs": [
+        "01_youtube_bbb"
+      ],
+      "timestamp": 1794309768.5318842
+    },
+    {
+      "scenario": "brave_seeded",
+      "attempt": 5,
+      "failed_tabs": [
+        "01_youtube_bbb"
+      ],
+      "timestamp": 1794310106.107068
+    }
+  ]
+}

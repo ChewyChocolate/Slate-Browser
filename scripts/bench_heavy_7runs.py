@@ -81,8 +81,7 @@ def run_heavy_slate():
 
     cmd = [
         CEF_BIN,
-        '--real-sites',
-        '--tabs', '2',
+        '--urls', f"{HEAVY_SITES[0]},{HEAVY_SITES[1]}",
         '--remote-debugging-port=9222',
         '--hold-ms', '30000',
         '--allow-autoplay',
@@ -176,11 +175,20 @@ def run_heavy_brave():
     }
 
 def compute_iqr(vals):
+    if not vals:
+        return {}
     s = sorted(vals)
     n = len(s)
     med = statistics.median(s)
-    q1 = statistics.median(s[:n//2])
-    q3 = statistics.median(s[(n+1)//2:]) if n%2 != 0 else statistics.median(s[n//2:])
+    if n == 1:
+        q1 = med
+        q3 = med
+    elif n < 4:
+        q1 = s[0]
+        q3 = s[-1]
+    else:
+        q1 = statistics.median(s[:n//2])
+        q3 = statistics.median(s[(n+1)//2:]) if n % 2 != 0 else statistics.median(s[n//2:])
     return {
         'median': round(med, 1),
         'q1': round(q1, 1),
@@ -191,57 +199,64 @@ def compute_iqr(vals):
         'raw': [round(x, 1) for x in s]
     }
 
-def main():
-    print("================================================================================")
-    print(" 7-RUN HEAVY SCENARIO BENCHMARK (LONG YOUTUBE STREAM + THE VERGE)")
-    print("================================================================================")
-    slate_runs = []
-    for r in range(1, 8):
-        print(f"  [Slate] Run {r}/7...", end="", flush=True)
-        res = run_heavy_slate()
-        slate_runs.append(res)
-        print(f" done (PSS: {res['pss_mb']} MB, YT: {res['yt_time_start']}s -> {res['yt_time_end']}s)")
-        time.sleep(1)
+def save_checkpoint(out_file, slate_runs, brave_runs):
+    s_analyzed = slate_runs[1:] if len(slate_runs) > 1 else slate_runs
+    b_analyzed = brave_runs[1:] if len(brave_runs) > 1 else brave_runs
 
-    brave_runs = []
-    for r in range(1, 8):
-        print(f"  [Brave] Run {r}/7...", end="", flush=True)
-        res = run_heavy_brave()
-        brave_runs.append(res)
-        print(f" done (PSS: {res['pss_mb']} MB, YT: {res['yt_time_start']}s -> {res['yt_time_end']}s)")
-        time.sleep(1)
+    s_pss = compute_iqr([x['pss_mb'] for x in s_analyzed]) if s_analyzed else {}
+    b_pss = compute_iqr([x['pss_mb'] for x in b_analyzed]) if b_analyzed else {}
+    s_rss = compute_iqr([x['rss_mb'] for x in s_analyzed]) if s_analyzed else {}
+    b_rss = compute_iqr([x['rss_mb'] for x in b_analyzed]) if b_analyzed else {}
 
-    # Discard run 1 as warmup
-    s_analyzed = slate_runs[1:]
-    b_analyzed = brave_runs[1:]
-
-    s_pss = compute_iqr([x['pss_mb'] for x in s_analyzed])
-    b_pss = compute_iqr([x['pss_mb'] for x in b_analyzed])
-
-    s_rss = compute_iqr([x['rss_mb'] for x in s_analyzed])
-    b_rss = compute_iqr([x['rss_mb'] for x in b_analyzed])
-
-    iqr_overlap = not (s_pss['q3'] < b_pss['q1'] or b_pss['q3'] < s_pss['q1'])
+    overlap = None
+    if s_pss and b_pss:
+        overlap = not (s_pss['q3'] < b_pss['q1'] or b_pss['q3'] < s_pss['q1'])
 
     summary = {
+        'scenario': 'heavy_2tabs (YouTube Big Buck Bunny 4K + The Verge)',
+        'timestamp': time.time(),
         'slate': {
             'pss': s_pss,
             'rss': s_rss,
-            'process_count_median': int(statistics.median([x['process_count'] for x in s_analyzed])),
+            'process_count_median': int(statistics.median([x['process_count'] for x in s_analyzed])) if s_analyzed else 0,
             'runs': slate_runs
         },
         'brave': {
             'pss': b_pss,
             'rss': b_rss,
-            'process_count_median': int(statistics.median([x['process_count'] for x in b_analyzed])),
+            'process_count_median': int(statistics.median([x['process_count'] for x in b_analyzed])) if b_analyzed else 0,
             'runs': brave_runs
         },
-        'iqr_overlap': iqr_overlap
+        'iqr_overlap': overlap
     }
-
-    out_file = os.path.join(ROOT_DIR, 'benchmarks/results/realworld/heavy_scenario_7run.json')
     with open(out_file, 'w') as f:
         json.dump(summary, f, indent=2)
+
+def main():
+    print("================================================================================")
+    print(" 7-RUN HEAVY SCENARIO BENCHMARK (LONG YOUTUBE STREAM + THE VERGE)")
+    print("================================================================================")
+    out_file = os.path.join(ROOT_DIR, 'benchmarks/results/realworld/heavy_scenario_7run_verified.json')
+    slate_runs = []
+    brave_runs = []
+
+    for r in range(1, 8):
+        print(f"  [Slate] Run {r}/7...", end="", flush=True)
+        res = run_heavy_slate()
+        slate_runs.append(res)
+        save_checkpoint(out_file, slate_runs, brave_runs)
+        print(f" done (PSS: {res['pss_mb']} MB, YT: {res['yt_time_start']}s -> {res['yt_time_end']}s)")
+        time.sleep(1)
+
+    for r in range(1, 8):
+        print(f"  [Brave] Run {r}/7...", end="", flush=True)
+        res = run_heavy_brave()
+        brave_runs.append(res)
+        save_checkpoint(out_file, slate_runs, brave_runs)
+        print(f" done (PSS: {res['pss_mb']} MB, YT: {res['yt_time_start']}s -> {res['yt_time_end']}s)")
+        time.sleep(1)
+
+    save_checkpoint(os.path.join(ROOT_DIR, 'benchmarks/results/realworld/heavy_scenario_7run.json'), slate_runs, brave_runs)
     print(f"\nSaved heavy 7-run results to: {out_file}")
 
 if __name__ == '__main__':

@@ -1,0 +1,200 @@
+{
+  "slate_opt3_blank": {
+    "count": 7,
+    "values": [
+      0.1,
+      0.1,
+      0.1,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "min": 0.1,
+    "max": 0.2,
+    "median": 0.2,
+    "q1": 0.1,
+    "q3": 0.2,
+    "iqr": 0.1,
+    "by_process_kind_median": {
+      "browser": 0.2,
+      "utility:network": 0.0,
+      "zygote": 0.0
+    }
+  },
+  "slate_opt0_blank": {
+    "count": 7,
+    "values": [
+      0.1,
+      0.1,
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.3
+    ],
+    "min": 0.1,
+    "max": 0.3,
+    "median": 0.2,
+    "q1": 0.15,
+    "q3": 0.2,
+    "iqr": 0.05,
+    "by_process_kind_median": {
+      "browser": 0.2,
+      "utility:network": 0.0,
+      "zygote": 0.0
+    }
+  },
+  "brave_default_blank": {
+    "count": 7,
+    "values": [
+      7.48,
+      8.16,
+      9.36,
+      9.98,
+      10.48,
+      11.36,
+      12.65
+    ],
+    "min": 7.48,
+    "max": 12.65,
+    "median": 9.98,
+    "q1": 8.76,
+    "q3": 10.92,
+    "iqr": 2.16,
+    "by_process_kind_median": {
+      "browser": 5.69,
+      "gpu-process": 0.0,
+      "renderer": 0.0,
+      "utility:network": 4.09,
+      "utility:storage": 0.0,
+      "zygote": 0.1
+    }
+  },
+  "brave_trimmed_blank": {
+    "count": 7,
+    "values": [
+      8.56,
+      8.57,
+      9.06,
+      9.78,
+      9.88,
+      10.16,
+      11.97
+    ],
+    "min": 8.56,
+    "max": 11.97,
+    "median": 9.78,
+    "q1": 8.82,
+    "q3": 10.02,
+    "iqr": 1.2,
+    "by_process_kind_median": {
+      "browser": 5.49,
+      "gpu-process": 0.0,
+      "renderer": 0.0,
+      "utility:network": 4.18,
+      "utility:storage": 0.0,
+      "zygote": 0.1
+    }
+  },
+  "slate_opt3_10static": {
+    "count": 7,
+    "values": [
+      42.1,
+      93.2,
+      137.42,
+      150.03,
+      167.59,
+      181.42,
+      188.42
+    ],
+    "min": 42.1,
+    "max": 188.42,
+    "median": 150.03,
+    "q1": 115.31,
+    "q3": 174.5,
+    "iqr": 59.19,
+    "by_process_kind_median": {
+      "browser": 24.25,
+      "utility": 0.0,
+      "utility:network": 32.72,
+      "zygote": 92.07
+    }
+  },
+  "slate_opt0_10static": {
+    "count": 7,
+    "values": [
+      36.9,
+      66.18,
+      116.95,
+      138.11,
+      145.16,
+      163.44,
+      165.32
+    ],
+    "min": 36.9,
+    "max": 165.32,
+    "median": 138.11,
+    "q1": 91.56,
+    "q3": 154.3,
+    "iqr": 62.74,
+    "by_process_kind_median": {
+      "browser": 23.03,
+      "utility": 0.0,
+      "utility:network": 26.54,
+      "zygote": 90.13
+    }
+  },
+  "brave_default_10static": {
+    "count": 7,
+    "values": [
+      94.77,
+      155.88,
+      156.03,
+      157.25,
+      157.34,
+      191.24,
+      204.09
+    ],
+    "min": 94.77,
+    "max": 204.09,
+    "median": 157.25,
+    "q1": 155.95,
+    "q3": 174.29,
+    "iqr": 18.34,
+    "by_process_kind_median": {
+      "browser": 45.48,
+      "gpu-process": 16.12,
+      "renderer": 80.43,
+      "utility:network": 17.22,
+      "utility:storage": 0.1,
+      "zygote": 0.1
+    }
+  },
+  "brave_trimmed_10static": {
+    "count": 7,
+    "values": [
+      95.77,
+      149.68,
+      163.36,
+      166.08,
+      171.99,
+      199.8,
+      202.76
+    ],
+    "min": 95.77,
+    "max": 202.76,
+    "median": 166.08,
+    "q1": 156.52,
+    "q3": 185.9,
+    "iqr": 29.38,
+    "by_process_kind_median": {
+      "browser": 52.36,
+      "gpu-process": 15.76,
+      "renderer": 102.29,
+      "utility:network": 14.35,
+      "utility:storage": 0.1,
+      "zygote": 0.1
+    }
+  }
+}

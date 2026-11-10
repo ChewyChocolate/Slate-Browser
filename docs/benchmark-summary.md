@@ -1,59 +1,61 @@
 # Slate vs Brave: Benchmark Summary & Architectural Conclusions
 
 ## Executive Verdict
-Across 7-run real-world measurements with automated per-site readiness gates, strict Interquartile Range (IQR) non-overlap testing, and DevTools-isolated CPU accounting, Slate demonstrates measurable advantages in specific workloads while matching or trailing Chromium/Brave in others:
+Across verified 7-run real-world measurements with automated per-site readiness gates, strict Interquartile Range (IQR) non-overlap testing, and DevTools-isolated CPU accounting:
 
-- **Where Slate is lighter**:
-  1. **5 Tabs Static/News Workload**: Slate consumes **411.8 MB** median PSS vs Brave's **620.4 MB** (IQR $[388.6, 444.9]$ vs $[594.2, 674.0]$ MB $\to$ **probable difference**, Slate lower by 208.6 MB).
-  2. **Baseline Overhead after Discarding Tabs (10 Tabs Sleep)**: After closing 9 inactive background tabs in both browsers, Slate uses **379.1 MB** median PSS vs Brave's **511.9 MB** (IQR $[363.8, 382.1]$ vs $[468.8, 582.4]$ MB $\to$ **probable difference**, Slate lower by 132.8 MB). Note: Because both browsers closed background tabs, this measures clean baseline overhead rather than tab sleeping quality.
-  3. **Blank Tab Idle CPU**: Slate consumes **5.15% of 1 core** vs Brave's **19.06% of 1 core** when idle on `about:blank`. When privacy flags (`--disable-background-networking`) are removed, Slate CEF consumes **0.25% of 1 core** at idle.
-  4. **Filter Cache Deserialization**: Binary FlatBuffer cache (`filters.dat`) with 8 full lists and 216 scriptlets deserializes in **1.72 ms** on warm start.
+- **1 Tab (YouTube `jNQXAC9IVRw`)**: **PSS Tie (No meaningful difference)**.
+  - Slate: **598.1 MB** (IQR $[577.7, 740.6]$ MB)
+  - Brave: **681.3 MB** (IQR $[504.1, 690.2]$ MB)
+  - The IQRs overlap.
 
-- **Where Slate is NOT lighter**:
-  1. **Heavy Continuous Streaming**: Under sustained 4K/60fps video playback + interactive news browsing, Slate reaches **1,257.5 MB** median PSS vs Brave's **979.5 MB** (IQR $[1,208.3, 1,311.8]$ vs $[808.2, 1,053.1]$ MB $\to$ **probable difference**, Brave lower by 278.0 MB; hypothesized to be due to Chromium's internal media buffer discard tuning).
-  2. **10-Tab Real-World Idle CPU**: On 10 real-world pages with active JavaScript background timers, Slate consumes **99.62% of 1 core** vs Brave's **91.49% of 1 core** (Slate is slightly higher due to background timers in news renderers).
-  3. **Cold Start to First Web Page**: While Slate starts in ~589 ms to `about:blank`, cold-loading Hacker News takes **3,017.1 ms** median vs Brave's **735.0 ms** under fresh profiles. (The hypothesis that Brave parallelizes DNS pre-connection remains unverified). When `--no-blocking` is passed, Slate loads in **4,583.0 ms** (blocking ON is ~1.5s faster than blocking OFF because network requests are dropped).
+- **5 Tabs (Tech & Media)**: **Brave is lower by ~18% PSS**.
+  - Slate: **1,310.6 MB** (IQR $[1,284.4, 1,336.5]$ MB)
+  - Brave: **1,078.5 MB** (IQR $[1,045.9, 1,091.1]$ MB)
+  - IQRs do not overlap $\to$ **Probable difference** (Brave lower by 232.1 MB PSS).
 
-- **Where there is NO meaningful difference**:
-  1. **1 Tab (YouTube) PSS**: Slate **391.5 MB** (IQR $[355.2, 469.4]$) vs Brave **403.7 MB** (IQR $[371.6, 407.1]$) $\to$ **no meaningful difference** (IQRs overlap).
-  2. **10 Tabs (Heavy Mixed) PSS**: Slate **777.5 MB** (IQR $[652.6, 883.4]$) vs Brave **694.5 MB** (IQR $[512.6, 868.2]$) $\to$ **no meaningful difference** (IQRs overlap).
-  3. **Single Static Page Idle CPU**: Slate **10.16%** vs Brave **15.83%** of 1 core (renderer CPU is **0.0%** on both browsers; all ticks stem from browser event loop and network polling).
+- **10 Tabs (Heavy Mixed)**: **Brave is lower by ~18% PSS**.
+  - Slate: **1,497.2 MB** (IQR $[1,464.0, 1,691.8]$ MB)
+  - Brave: **1,235.3 MB** (IQR $[1,104.9, 1,397.5]$ MB)
+  - IQRs do not overlap $\to$ **Probable difference** (Brave lower by 261.9 MB PSS).
+
+- **Heavy Scenario (YouTube 4K/60fps + The Verge)**: **Brave is lower by ~15–21% PSS**.
+  - Slate: **1,136.0 MB** (IQR $[1,119.1, 1,204.0]$ MB)
+  - Brave: **963.7 MB** (IQR $[942.9, 1,006.8]$ MB)
+  - IQRs do not overlap $\to$ **Probable difference** (Brave lower by 172.3 MB PSS).
+  - *Hypothesis*: It is hypothesized that Chromium's internal media pipeline manages demuxer/video buffer discard thresholds differently than stock CEF, but this remains an unverified hypothesis.
+
+- **Cold Start to First Web Page (Hacker News)**: **Brave is faster**.
+  - Slate (Blocking ON): Median **1,850.6 ms** (IQR $[1,584.6, 2,042.9]$ ms)
+  - Slate (Blocking OFF): Median **1,706.0 ms** (IQR $[1,649.8, 1,924.3]$ ms)
+  - Brave (Fresh Profile): Median **793.4 ms** (IQR $[781.7, 807.8]$ ms)
+  - *Hypothesis*: The startup latency gap between Slate and Brave is hypothesized to stem from CEF runtime initialization and FFI IPC setup overhead relative to a native monolithic Chromium binary, but this has not been individually instrumented or proven.
+
+- **Install Footprint**: **Slate has a smaller binary install footprint**.
+  - Slate application binary is ~6.8 MB (release build) + FlatBuffer filter cache (~21.8 MB), compared to Brave's complete `/opt/brave.com/brave` distribution of ~350 MB.
+
+- **Idle CPU**: **NOT ESTABLISHED**.
+  - Idle CPU measurements vary substantially depending on background timer throttling, network discovery loops, and optimization flags. On `about:blank`, Slate consumes between 7.28% (Opt 3) and 14.36% (Opt 0), while Brave consumes between 11.77% (Rewards/News/Wallet disabled) and 21.04% (Slate flags). Across 10 static pages, background JavaScript timers drive CPU usage to 71–114% of 1 core on both engines. A conclusive, reproducible idle CPU verdict between the two browsers has not been established.
 
 ---
 
-## 1. Summary Comparison Table (Traceable 7-Run Data, Run 1 Discarded)
+## 1. Traceable Multi-Tab Data (7 Runs, Run 1 Discarded)
 
-Data read directly from [`benchmarks/results/realworld/benchmark_7runs_raw.json`](file:///home/earl/Desktop/Slate/benchmarks/results/realworld/benchmark_7runs_raw.json) and computed via [`scripts/compute_iqr_stats.py`](file:///home/earl/Desktop/Slate/scripts/compute_iqr_stats.py):
+Data read directly from [`benchmarks/results/realworld/benchmark_7runs_gated.json`](file:///home/earl/Desktop/Slate/benchmarks/results/realworld/benchmark_7runs_gated.json):
 
-| Scenario / Workload | Slate Analyzed Runs (MB) | Slate Median & IQR | Brave Analyzed Runs (MB) | Brave Median & IQR | IQR Overlap? | Strict Verdict |
+| Workload | Slate Analyzed Runs (MB) | Slate Median & IQR | Brave Analyzed Runs (MB) | Brave Median & IQR | IQR Overlap? | Strict Verdict |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **1 Tab (YouTube)** | 348.5, 355.2, 364.8, 418.2, 469.4, 536.9 | **391.5 MB**<br>IQR: $[355.2, 469.4]$ | 368.7, 371.6, 403.5, 403.9, 407.1, 413.2 | **403.7 MB**<br>IQR: $[371.6, 407.1]$ | **Yes** | **No meaningful difference** |
-| **5 Tabs (Tech / News)** | 357.6, 388.6, 401.5, 422.0, 444.9, 526.1 | **411.8 MB**<br>IQR: $[388.6, 444.9]$ | 594.1, 594.2, 596.8, 644.0, 674.0, 693.1 | **620.4 MB**<br>IQR: $[594.2, 674.0]$ | **No** | **Probable difference**<br>(Slate lower by 208.6 MB) |
-| **10 Tabs (Heavy Mixed)** | 532.9, 652.6, 713.6, 841.4, 883.4, 982.0 | **777.5 MB**<br>IQR: $[652.6, 883.4]$ | 473.6, 512.6, 548.4, 840.5, 868.2, 880.7 | **694.5 MB**<br>IQR: $[512.6, 868.2]$ | **Yes** | **No meaningful difference** |
-| **10 Tabs Sleep (Baseline Overhead)** | 349.3, 363.8, 377.9, 380.3, 382.1, 411.9 | **379.1 MB**<br>IQR: $[363.8, 382.1]$ | 425.7, 468.8, 475.7, 548.0, 582.4, 598.9 | **511.9 MB**<br>IQR: $[468.8, 582.4]$ | **No** | **Probable difference**<br>(Slate lower by 132.8 MB) |
-| **Heavy (4K/60fps BBB + The Verge)** | 1092.9, 1208.3, 1238.9, 1257.5, 1311.8, 1320.7 | **1,257.5 MB**<br>IQR: $[1,208.3, 1,311.8]$ | 728.7, 808.2, 856.4, 979.5, 1053.1, 1123.6 | **979.5 MB**<br>IQR: $[808.2, 1,053.1]$ | **No** | **Probable difference**<br>(Brave lower by 278.0 MB) |
+| **1 Tab (YouTube)** | 471.4, 577.7, 580.1, 616.1, 740.6, 811.8 | **598.1 MB**<br>IQR: $[577.7, 740.6]$ | 421.3, 504.1, 677.4, 685.3, 690.2, 750.1 | **681.3 MB**<br>IQR: $[504.1, 690.2]$ | **Yes** | **No meaningful difference** |
+| **5 Tabs (Tech & Media)** | 1205.1, 1284.4, 1306.1, 1315.1, 1336.5, 1392.1 | **1,310.6 MB**<br>IQR: $[1,284.4, 1,336.5]$ | 1034.6, 1045.9, 1071.6, 1085.4, 1091.1, 1117.7 | **1,078.5 MB**<br>IQR: $[1,045.9, 1,091.1]$ | **No** | **Probable difference**<br>(Brave lower by 232.1 MB PSS) |
+| **10 Tabs (Heavy Mixed)** | 1318.3, 1464.0, 1464.5, 1530.0, 1691.8, 1813.0 | **1,497.2 MB**<br>IQR: $[1,464.0, 1,691.8]$ | 1074.4, 1104.9, 1152.0, 1318.7, 1397.5, 1397.6 | **1,235.3 MB**<br>IQR: $[1,104.9, 1,397.5]$ | **No** | **Probable difference**<br>(Brave lower by 261.9 MB PSS) |
 
 ---
 
-## 2. True Idle CPU Breakdown (DevTools Disconnected, 60s Sample)
+## 2. Heavy Scenario Data (YouTube 4K/60fps + The Verge)
 
-| Test State | Browser | Total CPU | Browser Process | Network Utility | Renderer Processes | GPU Process |
+Data read directly from [`benchmarks/results/realworld/heavy_scenario_7run_verified.json`](file:///home/earl/Desktop/Slate/benchmarks/results/realworld/heavy_scenario_7run_verified.json):
+
+| Workload | Slate Analyzed Runs (MB) | Slate Median & IQR | Brave Analyzed Runs (MB) | Brave Median & IQR | IQR Overlap? | Strict Verdict |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`about:blank`** | **Slate** | **5.15%** | 4.02% | 0.98% | **0.00%** | 0.15% |
-| | Brave | **19.06%** | 13.08% | 5.88% | **0.00%** | 0.10% |
-| **1 Static Page (HN)** | **Slate** | **10.16%** | 7.93% | 2.20% | **0.00%** | 0.03% |
-| | Brave | **15.83%** | 10.84% | 4.85% | **0.03%** | 0.11% |
-| **10 Static Pages** | Slate | **99.62%** | 14.85% | 5.21% | **79.24%** | 0.32% |
-| | Brave | **91.49%** | 18.22% | 7.15% | **65.80%** | 0.32% |
+| **Heavy (4K/60fps BBB + The Verge)** | 1052.8, 1119.1, 1131.0, 1140.9, 1204.0, 1204.3 | **1,136.0 MB**<br>IQR: $[1,119.1, 1,204.0]$ | 917.5, 942.9, 947.6, 979.7, 1006.8, 1037.1 | **963.7 MB**<br>IQR: $[942.9, 1,006.8]$ | **No** | **Probable difference**<br>(Brave lower by 172.3 MB PSS) |
 
-> [!NOTE]
-> On 10 real-world sites, Slate's CPU was slightly higher (99.62% vs 91.49%) because background JavaScript timers in news renderers ran continuously. When tested on `about:blank` with `--opt-level 0` (privacy flags disabled), Slate consumed 0.25% of 1 core.
-
----
-
-## 3. Cold Start Profiling (Blocking ON vs Blocking OFF)
-Measured via [`scripts/measure_cold_start_fair.py`](file:///home/earl/Desktop/Slate/scripts/measure_cold_start_fair.py) on `https://news.ycombinator.com`:
-- **Slate Blocking ON**: Median **3,017.1 ms** (IQR $[2,169.1, 4,036.5]$ ms, range $[2,140.2, 5,668.5]$).
-- **Slate Blocking OFF (`--no-blocking`)**: Median **4,583.0 ms** (IQR $[4,099.2, 5,486.2]$ ms, range $[2,342.4, 8,687.2]$).
-- **Filter Deserialization**: Takes **1.72 ms** in release mode from `filters.dat`.
-- **Finding**: Running with blocking enabled is ~1.5s faster than disabling blocking because dropping subresource requests eliminates network latency. The claim that Brave's faster start is due to parallelized DNS pre-connection remains an untested hypothesis.
+- YouTube `currentTime` confirmed video playback advancement in every analyzed run for both browsers.

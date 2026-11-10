@@ -36,7 +36,7 @@ assert data.get("pss_tree_kb", 0) > 0, f"missing pss_tree_kb: {data}"
 assert data.get("document_start_injected") is True, f"document_start_injected failed: {data}"
 ' "$SMOKE_OUT"
 
-echo "==> [6/6] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)"
+echo "==> [6/7] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)"
 SITE_ISO_OUT=$(LD_LIBRARY_PATH="$ROOT_DIR/target/release:${LD_LIBRARY_PATH:-}" \
     "$ROOT_DIR/target/release/slate-spike-cef" --test-site-isolation --tabs 2 --real-sites)
 echo "    Site isolation output: $SITE_ISO_OUT"
@@ -48,5 +48,19 @@ assert data.get("renderer_process_count", 0) >= 2, f"fewer than 2 renderers: {da
 pids = data.get("renderer_pids", [])
 assert len(pids) >= 2 and len(set(pids)) == len(pids), f"renderer pids not unique: {pids}"
 ' "$SITE_ISO_OUT"
+
+echo "==> [7/7] Verifying filters.dat cache rule count matches configured lists"
+python3 -c "
+import json, os
+meta_path = os.path.expanduser('~/.local/share/slate/filters.meta.json')
+dat_path = os.path.expanduser('~/.local/share/slate/filters.dat')
+assert os.path.exists(dat_path), f'filters.dat missing at {dat_path}'
+assert os.path.exists(meta_path), f'filters.meta.json missing at {meta_path}'
+with open(meta_path) as f:
+    d = json.load(f)
+assert d.get('list_count') == 8, f'expected 8 lists, got {d.get(\"list_count\")}'
+assert d.get('rule_count', 0) >= 250000, f'rule count too low: {d.get(\"rule_count\")}'
+print(f'    Filter cache verified: {d.get(\"rule_count\")} active rules from {d.get(\"list_count\")} lists ({os.path.getsize(dat_path)} bytes)')
+"
 
 echo "==> All checks passed!"

@@ -1,0 +1,66 @@
+[
+  {
+    "cosmetic_rules": 24773,
+    "name": "EasyList",
+    "network_rules": 48649,
+    "raw_lines": 76683,
+    "total_valid_rules": 73422,
+    "url": "https://easylist.to/easylist/easylist.txt"
+  },
+  {
+    "cosmetic_rules": 36,
+    "name": "EasyPrivacy",
+    "network_rules": 56560,
+    "raw_lines": 57373,
+    "total_valid_rules": 56596,
+    "url": "https://easylist.to/easylist/easyprivacy.txt"
+  },
+  {
+    "cosmetic_rules": 4240,
+    "name": "uBlock-Filters",
+    "network_rules": 1640,
+    "raw_lines": 10795,
+    "total_valid_rules": 5880,
+    "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/filters.txt"
+  },
+  {
+    "cosmetic_rules": 143,
+    "name": "uBlock-Badware",
+    "network_rules": 4676,
+    "raw_lines": 7051,
+    "total_valid_rules": 4819,
+    "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/badware.txt"
+  },
+  {
+    "cosmetic_rules": 41,
+    "name": "uBlock-Resource-Abuse",
+    "network_rules": 37,
+    "raw_lines": 226,
+    "total_valid_rules": 78,
+    "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/resource-abuse.txt"
+  },
+  {
+    "cosmetic_rules": 269,
+    "name": "uBlock-Quick-Fixes",
+    "network_rules": 133,
+    "raw_lines": 667,
+    "total_valid_rules": 402,
+    "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/quick-fixes.txt"
+  },
+  {
+    "cosmetic_rules": 601,
+    "name": "uBlock-Unbreak",
+    "network_rules": 1847,
+    "raw_lines": 6105,
+    "total_valid_rules": 2448,
+    "url": "https://raw.githubusercontent.com/uBlockOrigin/uAssets/master/filters/unbreak.txt"
+  },
+  {
+    "cosmetic_rules": 0,
+    "name": "Malicious-URLs",
+    "network_rules": 107070,
+    "raw_lines": 107076,
+    "total_valid_rules": 107070,
+    "url": "https://malware-filter.gitlab.io/urlhaus-filter/urlhaus-filter-online.txt"
+  }
+]
