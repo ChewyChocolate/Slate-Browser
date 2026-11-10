@@ -14,10 +14,8 @@
 use adblock::cosmetic_filter_cache::UrlSpecificResources;
 use adblock::lists::{FilterSet, ParseOptions};
 use adblock::request::Request;
-use adblock::resources::{PermissionMask, Resource, ResourceType};
+use adblock::resources::Resource;
 use adblock::Engine;
-use base64::engine::general_purpose::STANDARD as BASE64_STANDARD;
-use base64::Engine as _;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::env;
@@ -279,82 +277,13 @@ pub enum CustomFilterSource {
 }
 
 /// Built-in uBlock-style scriptlet resources registered into `adblock-rust`.
+/// Sourced from Brave's maintained `adblock-resources` library (MPL-2.0).
 pub fn builtin_scriptlet_resources() -> Vec<Resource> {
-    let scriptlets = [
-        (
-            "set-constant.js",
-            vec!["set-constant", "ubo-set-constant.js"],
-            r#"(function() {
-                const chain = '{{1}}';
-                const rawVal = '{{2}}';
-                let value;
-                if (rawVal === 'undefined') value = undefined;
-                else if (rawVal === 'false') value = false;
-                else if (rawVal === 'true') value = true;
-                else if (rawVal === 'null') value = null;
-                else if (rawVal === 'noopFunc') value = function(){};
-                else if (rawVal === 'emptyObj') value = {};
-                else if (rawVal === 'emptyArr') value = [];
-                else value = rawVal;
-                window.__slateSetConstant = window.__slateSetConstant || [];
-                window.__slateSetConstant.push({ chain, value });
-            })();"#,
-        ),
-        (
-            "abort-on-property-read.js",
-            vec!["abort-on-property-read", "aopr"],
-            r#"(function() {
-                const prop = '{{1}}';
-                window.__slateAbortOnRead = window.__slateAbortOnRead || [];
-                window.__slateAbortOnRead.push(prop);
-                if (prop && !prop.includes('.')) {
-                    Object.defineProperty(window, prop, {
-                        configurable: true,
-                        get: function() {
-                            throw new ReferenceError('Slate blocked property read: ' + prop);
-                        },
-                        set: function() {}
-                    });
-                }
-            })();"#,
-        ),
-        (
-            "json-prune.js",
-            vec!["json-prune", "ubo-json-prune.js"],
-            r#"(function() {
-                const propsToPrune = '{{1}}'.split(/\s+/).filter(Boolean);
-                const origParse = JSON.parse;
-                JSON.parse = function() {
-                    const res = origParse.apply(this, arguments);
-                    if (res && typeof res === 'object') {
-                        for (const path of propsToPrune) {
-                            const parts = path.split('.');
-                            let cur = res;
-                            for (let i = 0; i < parts.length - 1; i++) {
-                                if (cur && typeof cur === 'object') cur = cur[parts[i]];
-                            }
-                            if (cur && typeof cur === 'object') {
-                                delete cur[parts[parts.length - 1]];
-                            }
-                        }
-                    }
-                    return res;
-                };
-            })();"#,
-        ),
-    ];
-
-    scriptlets
-        .into_iter()
-        .map(|(name, aliases, js_body)| Resource {
-            name: name.to_string(),
-            aliases: aliases.into_iter().map(String::from).collect(),
-            kind: ResourceType::Template,
-            content: BASE64_STANDARD.encode(js_body),
-            dependencies: vec![],
-            permission: PermissionMask::default(),
-        })
-        .collect()
+    const RAW_RESOURCES_JSON: &str = include_str!("../resources/adblock-resources.json");
+    serde_json::from_str::<Vec<Resource>>(RAW_RESOURCES_JSON).unwrap_or_else(|e| {
+        eprintln!("[slate-blocking] WARN: Failed to parse adblock-resources.json: {e}");
+        Vec::new()
+    })
 }
 
 /// Thread-safe, hot-swappable blocking pipeline powered by `adblock-rust`.
@@ -1416,5 +1345,39 @@ mod tests {
         );
 
         let _ = fs::remove_file(&cache_path);
+    }
+
+    #[test]
+    fn measure_filters_dat_size_and_warm_start() {
+        let pipeline = BlockingPipeline::new_with_default_lists();
+        let serialized = pipeline.serialize_cache();
+        println!("\n=== FILTERS.DAT STATS ===");
+        println!(
+            "Serialized baseline filters.dat size: {} bytes ({:.2} MB)",
+            serialized.len(),
+            serialized.len() as f64 / (1024.0 * 1024.0)
+        );
+
+        let warm_pipeline = BlockingPipeline::new_with_default_lists();
+        let mut times = Vec::new();
+        for _ in 0..20 {
+            let start = std::time::Instant::now();
+            warm_pipeline.deserialize_cache(&serialized).unwrap();
+            times.push(start.elapsed().as_micros());
+        }
+        times.sort();
+        let median_us = times[times.len() / 2];
+        println!(
+            "Warm-start deserialization time: median {} us ({:.3} ms), range [{} us, {} us]",
+            median_us,
+            median_us as f64 / 1000.0,
+            times[0],
+            times[times.len() - 1]
+        );
+        println!(
+            "Scriptlet resources count: {}",
+            builtin_scriptlet_resources().len()
+        );
+        println!("=========================\n");
     }
 }

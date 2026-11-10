@@ -1,0 +1,78 @@
+{
+  "about_blank": {
+    "slate": {
+      "total_cpu_pct": 5.15,
+      "by_process_kind": {
+        "browser": 4.02,
+        "zygote": 0.15,
+        "utility:network": 0.98
+      },
+      "process_count": 8,
+      "duration_sec": 60.02
+    },
+    "brave": {
+      "total_cpu_pct": 19.06,
+      "by_process_kind": {
+        "renderer": 0.0,
+        "utility:network": 5.88,
+        "browser": 13.08,
+        "utility:storage": 0.02,
+        "zygote": 0.07,
+        "gpu-process": 0.02
+      },
+      "process_count": 11,
+      "duration_sec": 60.03
+    }
+  },
+  "1_static_hn": {
+    "slate": {
+      "total_cpu_pct": 10.16,
+      "by_process_kind": {
+        "browser": 7.93,
+        "zygote": 0.03,
+        "utility:network": 2.2
+      },
+      "process_count": 8,
+      "duration_sec": 60.03
+    },
+    "brave": {
+      "total_cpu_pct": 15.83,
+      "by_process_kind": {
+        "renderer": 0.03,
+        "gpu-process": 0.02,
+        "browser": 10.84,
+        "utility:network": 4.85,
+        "utility:storage": 0.02,
+        "zygote": 0.07
+      },
+      "process_count": 11,
+      "duration_sec": 60.03
+    }
+  },
+  "10_static_pages": {
+    "slate": {
+      "total_cpu_pct": 99.62,
+      "by_process_kind": {
+        "zygote": 64.37,
+        "browser": 20.16,
+        "utility:network": 15.1
+      },
+      "process_count": 17,
+      "duration_sec": 60.02
+    },
+    "brave": {
+      "total_cpu_pct": 91.49,
+      "by_process_kind": {
+        "browser": 39.83,
+        "renderer": 27.15,
+        "zygote": 0.02,
+        "gpu-process": 12.03,
+        "utility:network": 12.43,
+        "utility:storage": 0.03,
+        "utility": 0.0
+      },
+      "process_count": 22,
+      "duration_sec": 60.03
+    }
+  }
+}
