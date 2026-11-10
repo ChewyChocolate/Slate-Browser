@@ -8,6 +8,7 @@
 
 #[allow(unsafe_code)]
 pub mod cef_backend;
+pub mod tabs;
 pub mod test_servers;
 
 use serde::{Deserialize, Serialize};

@@ -3,7 +3,7 @@
 //! for Slate's internal HTML/CSS/JS shell pages (`slate://ui`, `slate://newtab`).
 
 use serde::{Deserialize, Serialize};
-use slate_core::{ScrollPosition, TabId, TabState};
+use slate_core::{ScrollPosition, TabId, TabLifecycleState, TabState};
 use thiserror::Error;
 
 /// Strict Content-Security-Policy applied to all internal browser UI pages.
@@ -53,10 +53,29 @@ pub enum UiCommand {
     },
 }
 
+/// What the shell UI is allowed to know about a tab. `blocked` is `None` when the core has no
+/// real count for the tab (the UI must show "-", never a guess).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct TabView {
+    pub id: TabId,
+    pub url: String,
+    pub title: String,
+    pub lifecycle: TabLifecycleState,
+    pub loading: bool,
+    pub can_go_back: bool,
+    pub can_go_forward: bool,
+    pub blocked: Option<u64>,
+}
+
 /// Events broadcast from the Rust core to the HTML/CSS/JS shell UI.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "event", rename_all = "snake_case")]
 pub enum CoreEvent {
+    /// Full shell state (sent after every change, throttled for blocked-count updates).
+    State {
+        tabs: Vec<TabView>,
+        active_tab: Option<TabId>,
+    },
     TabsUpdated {
         tabs: Vec<TabState>,
         active_tab: Option<TabId>,

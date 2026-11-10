@@ -1296,6 +1296,7 @@ dependencies = [
  "serde_json",
  "slate-blocking",
  "slate-core",
+ "slate-ui-bridge",
  "thiserror 2.0.21",
 ]
 
