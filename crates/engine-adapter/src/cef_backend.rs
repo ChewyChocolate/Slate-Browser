@@ -32,19 +32,19 @@ use std::time::{Duration, Instant};
 
 /// 10 real-world sites representing diverse daily-driver workloads:
 /// video streaming (direct video watch page so autoplay/video playback is tested symmetrically),
-/// office suite, tech news, encyclopedia, social feed, heavy media news, webmail,
-/// developer code hosting, banking, and newspaper.
+/// office suite (preview mode of shared document), tech news, encyclopedia, tech discussion feed,
+/// heavy media news, interactive web map application, developer code hosting, banking, and heavy digital media.
 pub const REAL_WORLD_SITES: [&str; 10] = [
     "https://www.youtube.com/watch?v=jNQXAC9IVRw",
-    "https://docs.google.com",
+    "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
     "https://news.ycombinator.com",
     "https://en.wikipedia.org/wiki/Rust_(programming_language)",
-    "https://www.reddit.com/r/linux/",
+    "https://slashdot.org",
     "https://www.bbc.com/news",
-    "https://mail.proton.me",
+    "https://www.openstreetmap.org",
     "https://github.com/rust-lang/rust",
     "https://www.chase.com",
-    "https://www.nytimes.com",
+    "https://www.theverge.com",
 ];
 
 pub const REAL_WORLD_SITE_SLUGS: [&str; 10] = [
@@ -52,12 +52,12 @@ pub const REAL_WORLD_SITE_SLUGS: [&str; 10] = [
     "02_google_docs",
     "03_hacker_news",
     "04_wikipedia",
-    "05_reddit",
+    "05_slashdot",
     "06_bbc_news",
-    "07_proton_mail",
+    "07_openstreetmap",
     "08_github",
     "09_chase",
-    "10_nytimes",
+    "10_theverge",
 ];
 
 /// Progressive Chromium/CEF command-line optimization levels for bloat reduction.
