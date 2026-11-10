@@ -1,0 +1,5 @@
+raw: {"cookie_decisions":[{"allowed":true,"kind":"save","request_url":"http://localhost:38203/top","top_url_used":""},{"allowed":true,"kind":"save","request_url":"http://127.0.0.1:38203/frame","top_url_used":""},{"allowed":true,"kind":"send","request_url":"http://localhost:38203/favicon.ico","top_url_used":"http://localhost:38203/top"},{"allowed":true,"kind":"send","request_url":"http://127.0.0.1:38203/pixel?1794314724499","top_url_used":"http://127.0.0.1:38203/frame"}],"server_requests":[{"cookie_header":"","host":"","path":"/"},{"cookie_header":"","host":"localhost:38203","path":"/top"},{"cookie_header":"","host":"127.0.0.1:38203","path":"/frame"},{"cookie_header":"fp=1","host":"localhost:38203","path":"/favicon.ico"},{"cookie_header":"tp=1","host":"127.0.0.1:38203","path":"/pixel?1794314724499"}],"test":"third_party_cookies"}
+FAIL:
+  - top-level site wrong: filter used '', expected host localhost
+  - third-party cookie save was ALLOWED
+  - server received the third-party cookie back on /pixel

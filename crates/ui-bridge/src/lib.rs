@@ -11,7 +11,7 @@ use thiserror::Error;
 pub const INTERNAL_UI_CSP: &str = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
 
 /// Allowed internal origin prefixes permitted to send privileged UI IPC commands.
-pub const ALLOWED_UI_ORIGINS: &[&str] = &["slate://ui", "slate://newtab", "app://slate-ui"];
+pub const ALLOWED_UI_ORIGINS: &[&str] = &["slate://ui"];
 
 #[derive(Debug, Error, PartialEq, Eq)]
 pub enum IpcError {
@@ -25,12 +25,32 @@ pub enum IpcError {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "cmd", rename_all = "snake_case")]
 pub enum UiCommand {
-    OpenTab { url: String, activate: bool },
-    FocusTab { id: TabId },
-    SuspendTab { id: TabId, scroll: ScrollPosition },
-    NavigateActive { url: String },
+    OpenTab {
+        url: String,
+        activate: bool,
+    },
+    FocusTab {
+        id: TabId,
+    },
+    SuspendTab {
+        id: TabId,
+        scroll: ScrollPosition,
+    },
+    NavigateActive {
+        url: String,
+    },
+    CloseTab {
+        id: TabId,
+    },
+    GoBack,
+    GoForward,
+    Reload,
+    /// Sent once by the shell page after it has loaded; core replies with a full state push.
+    ShellReady,
     ToggleCommandPalette,
-    OpenDevTools { id: TabId },
+    OpenDevTools {
+        id: TabId,
+    },
 }
 
 /// Events broadcast from the Rust core to the HTML/CSS/JS shell UI.

@@ -108,6 +108,7 @@ pub struct CefRunnerOptions {
     pub enable_security_updaters: bool,
     pub test_site_isolation: bool,
     pub no_blocking: bool,
+    pub test_third_party_cookies: bool,
 }
 
 impl CefRunnerOptions {
@@ -136,6 +137,7 @@ impl CefRunnerOptions {
         let mut enable_security_updaters = true;
         let mut test_site_isolation = false;
         let mut no_blocking = false;
+        let mut test_third_party_cookies = false;
 
         let mut args_iter = args.into_iter();
         while let Some(arg) = args_iter.next() {
@@ -232,6 +234,9 @@ impl CefRunnerOptions {
                 "--no-blocking" => {
                     no_blocking = true;
                 }
+                "--test-third-party-cookies" => {
+                    test_third_party_cookies = true;
+                }
                 _ => {}
             }
         }
@@ -261,6 +266,7 @@ impl CefRunnerOptions {
             enable_security_updaters,
             test_site_isolation,
             no_blocking,
+            test_third_party_cookies,
         }
     }
 }
@@ -607,6 +613,15 @@ fn cef_resource_type_str(rt: ResourceType) -> &'static str {
     }
 }
 
+/// One decision made by the cookie access filter, recorded for live tests.
+#[derive(Debug, Clone, Serialize)]
+struct CookieDecision {
+    kind: &'static str,
+    request_url: String,
+    top_url_used: String,
+    allowed: bool,
+}
+
 struct SharedSpikeState {
     start_instant: Instant,
     opts: CefRunnerOptions,
@@ -618,6 +633,8 @@ struct SharedSpikeState {
     request_context_intercepts: AtomicUsize,
     service_worker_blocked_requests: AtomicUsize,
     third_party_cookies_filtered: AtomicBool,
+    cookie_decisions: Mutex<Vec<CookieDecision>>,
+    cookie_server: Mutex<Option<crate::test_servers::CookieTestServer>>,
     document_start_injected: AtomicBool,
     youtube_video_playing: AtomicBool,
     screenshots_captured: AtomicUsize,
@@ -683,6 +700,51 @@ wrap_dev_tools_message_observer! {
     }
 }
 
+/// The top-level URL of the tab that issued a request: the main frame of the request's browser,
+/// never the (possibly third-party) frame that made the request.
+fn tab_top_level_url(browser: Option<&mut Browser>) -> Option<String> {
+    browser
+        .and_then(|b| b.main_frame())
+        .map(|mf| CefString::from(&mf.url()).to_string())
+        .filter(|u| u.starts_with("http://") || u.starts_with("https://"))
+}
+
+impl SharedSpikeState {
+    fn decide_cookie(
+        &self,
+        kind: &'static str,
+        browser: Option<&mut Browser>,
+        frame: Option<&mut Frame>,
+        request: Option<&mut Request>,
+    ) -> i32 {
+        let req_url = request
+            .map(|r| CefString::from(&r.url()).to_string())
+            .unwrap_or_default();
+        // Top-level site comes from the tab (main frame), not from the requesting frame.
+        let top_url = tab_top_level_url(browser).unwrap_or_else(|| {
+            frame
+                .map(|f| CefString::from(&f.url()).to_string())
+                .unwrap_or_default()
+        });
+        let allowed = self.pipeline.should_allow_cookie(&req_url, &top_url);
+        if !allowed {
+            self.third_party_cookies_filtered
+                .store(true, Ordering::Relaxed);
+        }
+        if let Ok(mut d) = self.cookie_decisions.lock() {
+            if d.len() < 500 {
+                d.push(CookieDecision {
+                    kind,
+                    request_url: req_url,
+                    top_url_used: top_url,
+                    allowed,
+                });
+            }
+        }
+        i32::from(allowed)
+    }
+}
+
 wrap_cookie_access_filter! {
     struct SlateCookieFilter {
         state: Arc<SharedSpikeState>,
@@ -691,45 +753,23 @@ wrap_cookie_access_filter! {
     impl CookieAccessFilter {
         fn can_send_cookie(
             &self,
-            _browser: Option<&mut Browser>,
+            browser: Option<&mut Browser>,
             frame: Option<&mut Frame>,
             request: Option<&mut Request>,
             _cookie: Option<&Cookie>,
         ) -> ::std::os::raw::c_int {
-            let req_url = request
-                .map(|r| CefString::from(&r.url()).to_string())
-                .unwrap_or_default();
-            let top_url = frame
-                .map(|f| CefString::from(&f.url()).to_string())
-                .unwrap_or_default();
-            if self.state.pipeline.should_allow_cookie(&req_url, &top_url) {
-                1
-            } else {
-                self.state.third_party_cookies_filtered.store(true, Ordering::Relaxed);
-                0
-            }
+            self.state.decide_cookie("send", browser, frame, request)
         }
 
         fn can_save_cookie(
             &self,
-            _browser: Option<&mut Browser>,
+            browser: Option<&mut Browser>,
             frame: Option<&mut Frame>,
             request: Option<&mut Request>,
             _response: Option<&mut Response>,
             _cookie: Option<&Cookie>,
         ) -> ::std::os::raw::c_int {
-            let req_url = request
-                .map(|r| CefString::from(&r.url()).to_string())
-                .unwrap_or_default();
-            let top_url = frame
-                .map(|f| CefString::from(&f.url()).to_string())
-                .unwrap_or_default();
-            if self.state.pipeline.should_allow_cookie(&req_url, &top_url) {
-                1
-            } else {
-                self.state.third_party_cookies_filtered.store(true, Ordering::Relaxed);
-                0
-            }
+            self.state.decide_cookie("save", browser, frame, request)
         }
     }
 }
@@ -1018,7 +1058,7 @@ wrap_task! {
                     .service_worker_blocked_requests
                     .load(Ordering::Relaxed),
                 document_start_injected: self.state.document_start_injected.load(Ordering::Relaxed),
-                third_party_cookies_blocked: true,
+                third_party_cookies_blocked: self.state.third_party_cookies_filtered.load(Ordering::Relaxed),
                 youtube_video_playing: self.state.youtube_video_playing.load(Ordering::Relaxed),
                 screenshots_captured: self.state.screenshots_captured.load(Ordering::Relaxed),
                 tab_suspended_and_restored: self.suspended_ok,
@@ -1078,6 +1118,25 @@ wrap_task! {
 
     impl Task {
         fn execute(&self) {
+            if self.state.opts.test_third_party_cookies {
+                let decisions = self.state.cookie_decisions.lock().unwrap().clone();
+                let server_requests = self
+                    .state
+                    .cookie_server
+                    .lock()
+                    .unwrap()
+                    .as_ref()
+                    .map(|s| s.requests())
+                    .unwrap_or_default();
+                let report = serde_json::json!({
+                    "test": "third_party_cookies",
+                    "cookie_decisions": decisions,
+                    "server_requests": server_requests,
+                });
+                println!("{}", serde_json::to_string(&report).unwrap());
+                self.state.close_all_and_quit();
+                return;
+            }
             if self.state.opts.test_site_isolation {
                 let (_, pss_kb, procs, breakdown) =
                     measure_process_tree_detailed(std::process::id());
@@ -1187,7 +1246,7 @@ wrap_task! {
                     .service_worker_blocked_requests
                     .load(Ordering::Relaxed),
                 document_start_injected: self.state.document_start_injected.load(Ordering::Relaxed),
-                third_party_cookies_blocked: true,
+                third_party_cookies_blocked: self.state.third_party_cookies_filtered.load(Ordering::Relaxed),
                 youtube_video_playing: self.state.youtube_video_playing.load(Ordering::Relaxed),
                 screenshots_captured: self.state.screenshots_captured.load(Ordering::Relaxed),
                 tab_suspended_and_restored: false,
@@ -1658,6 +1717,7 @@ wrap_window_delegate! {
                     || self.state.opts.deep_compat.is_some()
                     || self.state.opts.test_service_worker
                     || self.state.opts.test_site_isolation
+                    || self.state.opts.test_third_party_cookies
                 {
                     let mut task = QuitAndReportTask::new(Arc::clone(&self.state));
                     post_delayed_task(ThreadId::UI, Some(&mut task), 6000);
@@ -1714,7 +1774,13 @@ wrap_browser_process_handler! {
                 None
             };
 
+            if self.state.opts.test_third_party_cookies {
+                *self.state.cookie_server.lock().unwrap() =
+                    crate::test_servers::CookieTestServer::start();
+            }
+
             let server = if !self.state.opts.test_service_worker
+                && !self.state.opts.test_third_party_cookies
                 && !self.state.opts.real_sites
                 && self.state.opts.compat_probe.is_none()
                 && (self.state.opts.deep_compat.as_deref() == Some("codecs-drm")
@@ -1738,7 +1804,15 @@ wrap_browser_process_handler! {
             );
 
             for i in 0..self.state.opts.tabs {
-                let target_url = if !self.state.opts.urls.is_empty() {
+                let target_url = if self.state.opts.test_third_party_cookies {
+                    self.state
+                        .cookie_server
+                        .lock()
+                        .unwrap()
+                        .as_ref()
+                        .map(|s| s.top_url())
+                        .unwrap_or_else(|| "about:blank".to_string())
+                } else if !self.state.opts.urls.is_empty() {
                     self.state.opts.urls[i % self.state.opts.urls.len()].clone()
                 } else if let Some(ref sw_srv) = sw_server {
                     sw_srv.root_url()
@@ -1970,6 +2044,8 @@ pub fn run_with_options(opts: CefRunnerOptions) {
         request_context_intercepts: AtomicUsize::new(0),
         service_worker_blocked_requests: AtomicUsize::new(0),
         third_party_cookies_filtered: AtomicBool::new(false),
+        cookie_decisions: Mutex::new(Vec::new()),
+        cookie_server: Mutex::new(None),
         document_start_injected: AtomicBool::new(false),
         youtube_video_playing: AtomicBool::new(false),
         screenshots_captured: AtomicUsize::new(0),

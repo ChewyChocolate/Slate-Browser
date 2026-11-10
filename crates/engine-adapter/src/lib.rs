@@ -8,6 +8,7 @@
 
 #[allow(unsafe_code)]
 pub mod cef_backend;
+pub mod test_servers;
 
 use serde::{Deserialize, Serialize};
 use slate_core::{ScrollPosition, TabId};
@@ -241,7 +242,7 @@ mod tests {
             "crates/blocking/src/lib.rs",
             "crates/ui-bridge/src/lib.rs",
             "spikes/spike-cef/src/main.rs",
-            "spikes/spike-webkit/src/main.rs",
+            "crates/app/src/main.rs",
         ];
         for rel_path in crates_requiring_forbid {
             let content = std::fs::read_to_string(workspace_root.join(rel_path))

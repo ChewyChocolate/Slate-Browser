@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# LEGACY (Phase 0): this script needs the removed spikes/spike-webkit crate and can no longer run.
+# It is kept only as a record of how the Phase 0 numbers were produced. See docs/phase0-report.md.
+echo "bench_phase0.sh is legacy: spike-webkit was removed from the workspace." >&2; exit 1
 # Reproducible Phase 0 Benchmark & Compatibility Suite for Slate
 # Compares:
 #   - Spike A: Rust shell + CEF (slate-spike-cef)

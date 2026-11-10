@@ -1,0 +1,128 @@
+Stages: [1] fmt  [2] clippy  [3] cargo test  [4] cargo audit  [5] spike CEF smoke  [6] real app smoke  [7] site isolation  [8] filter cache  [9] fake-counter/fake-flag guard  [10] third-party cookie live test
+==> [1/10] Checking Rust formatting (cargo fmt --all -- --check)
+==> [2/10] Running Clippy with warnings as errors (cargo clippy --workspace --all-targets -- -D warnings)
+    Checking slate-blocking v0.1.0 (/home/earl/Desktop/Slate/crates/blocking)
+    Checking slate-core v0.1.0 (/home/earl/Desktop/Slate/crates/core)
+   Compiling cef-dll-sys v156.4.0+156.0.26
+    Checking slate-ui-bridge v0.1.0 (/home/earl/Desktop/Slate/crates/ui-bridge)
+    Checking cef v156.4.0+156.0.26
+    Checking slate-engine-adapter v0.1.0 (/home/earl/Desktop/Slate/crates/engine-adapter)
+    Checking slate-spike-cef v0.1.0 (/home/earl/Desktop/Slate/spikes/spike-cef)
+    Checking slate-app v0.1.0 (/home/earl/Desktop/Slate/crates/app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.22s
+==> [3/10] Running automated test suite (cargo test --workspace)
+   Compiling slate-ui-bridge v0.1.0 (/home/earl/Desktop/Slate/crates/ui-bridge)
+   Compiling cef-dll-sys v156.4.0+156.0.26
+   Compiling cef v156.4.0+156.0.26
+   Compiling slate-engine-adapter v0.1.0 (/home/earl/Desktop/Slate/crates/engine-adapter)
+   Compiling slate-spike-cef v0.1.0 (/home/earl/Desktop/Slate/spikes/spike-cef)
+   Compiling slate-app v0.1.0 (/home/earl/Desktop/Slate/crates/app)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.83s
+     Running unittests src/main.rs (target/debug/deps/slate-9d7b48dc86459f1b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_blocking-f7c57b640b3baa57)
+
+running 10 tests
+test tests::https_upgrade_with_safe_fallback_on_failure ... ok
+test tests::strips_tracking_parameters_while_preserving_functional_query_params ... ok
+test tests::blocks_known_ad_and_tracker_urls_while_allowing_normal_site_resources ... ok
+test tests::cosmetic_filtering_and_scriptlet_injection_work_per_site_and_generically ... ok
+test tests::every_configured_remote_filter_list_contributes_rules ... ok
+test tests::third_party_cookie_policy_distinguishes_registrable_domains ... ok
+test tests::failed_empty_or_malformed_download_never_overwrites_good_filters_dat ... ok
+test tests::filter_cache_rule_count_matches_configured_lists ... ok
+test tests::custom_filter_lists_and_binary_cache_roundtrip_work ... ok
+test tests::measure_filters_dat_size_and_warm_start ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_core-dc763378ff868c76)
+
+running 1 test
+test tests::tab_suspension_preserves_state_and_excludes_media_or_active_tabs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_engine_adapter-fcbda0b453f35f02)
+
+running 4 tests
+test tests::capability_reports_document_cef_and_webkit_tradeoffs ... ok
+test tests::unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter ... ok
+test test_servers::tests::cookie_server_serves_top_page_with_third_party_iframe ... ok
+test tests::service_worker_requests_are_evaluated_and_blocked_by_request_context_pipeline ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running unittests src/main.rs (target/debug/deps/slate_spike_cef-b3f8840227c8218e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_ui_bridge-1494ccb4753f328b)
+
+running 2 tests
+test tests::internal_csp_forbids_remote_code_and_unsafe_eval ... ok
+test tests::rejects_untrusted_web_origins_and_accepts_internal_ui_origin ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_blocking
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_engine_adapter
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_ui_bridge
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+==> [4/10] Running dependency security audit (cargo audit; FAILS if cargo-audit is missing)
+    Fetching advisory database from `https://github.com/RustSec/advisory-db.git`
+      Loaded 1430 security advisories (from /home/earl/.cargo/advisory-db)
+    Updating crates.io index
+    Scanning Cargo.lock for vulnerabilities (201 crate dependencies)
+==> [5/10] Running live CEF launch smoke test on the spike (slate-spike-cef --tabs 1 --exit-after-load)
+   Compiling slate-engine-adapter v0.1.0 (/home/earl/Desktop/Slate/crates/engine-adapter)
+   Compiling slate-spike-cef v0.1.0 (/home/earl/Desktop/Slate/spikes/spike-cef)
+    Finished `release` profile [optimized] target(s) in 4.33s
+    Smoke output: {"engine":"cef-156","opt_level":3,"tabs":1,"real_sites":false,"filter_cache_warm":true,"cold_start_ms":573,"rss_tree_kb":837428,"pss_tree_kb":356408,"process_count":8,"evaluated_requests":3,"blocked_requests":1,"request_context_intercepts":0,"service_worker_blocked_requests":0,"document_start_injected":true,"third_party_cookies_blocked":false,"youtube_video_playing":false,"screenshots_captured":0,"tab_suspended_and_restored":false,"suspended_tabs_count":0,"rss_after_suspend_kb":null,"pss_after_suspend_kb":null,"process_count_after_suspend":null,"process_breakdown":[{"pid":332623,"kind":"browser","pss_kb":158619,"rss_kb":272740},{"pid":332630,"kind":"zygote","pss_kb":18374,"rss_kb":73080},{"pid":332631,"kind":"zygote","pss_kb":14497,"rss_kb":73160},{"pid":332633,"kind":"zygote","pss_kb":4649,"rss_kb":20008},{"pid":332666,"kind":"gpu-process","pss_kb":50816,"rss_kb":137156},{"pid":332671,"kind":"utility:network","pss_kb":36658,"rss_kb":99600},{"pid":332688,"kind":"utility:storage","pss_kb":10120,"rss_kb":45484},{"pid":332703,"kind":"renderer","pss_kb":62675,"rss_kb":116200}],"process_breakdown_after_suspend":null}
+==> [6/10] Running live smoke test on the REAL app binary (target/release/slate --exit-after-load)
+   Compiling slate-ui-bridge v0.1.0 (/home/earl/Desktop/Slate/crates/ui-bridge)
+   Compiling slate-app v0.1.0 (/home/earl/Desktop/Slate/crates/app)
+    Finished `release` profile [optimized] target(s) in 2.05s
+    Real app exit code: 0
+    Real app output: {"engine":"cef-156","opt_level":3,"tabs":1,"real_sites":false,"filter_cache_warm":true,"cold_start_ms":493,"rss_tree_kb":839176,"pss_tree_kb":359205,"process_count":8,"evaluated_requests":3,"blocked_requests":0,"request_context_intercepts":0,"service_worker_blocked_requests":0,"document_start_injected":true,"third_party_cookies_blocked":false,"youtube_video_playing":false,"screenshots_captured":0,"tab_suspended_and_restored":false,"suspended_tabs_count":0,"rss_after_suspend_kb":null,"pss_after_suspend_kb":null,"process_count_after_suspend":null,"process_breakdown":[{"pid":332793,"kind":"browser","pss_kb":157452,"rss_kb":271800},{"pid":332800,"kind":"zygote","pss_kb":18458,"rss_kb":73296},{"pid":332801,"kind":"zygote","pss_kb":14461,"rss_kb":72976},{"pid":332803,"kind":"zygote","pss_kb":4655,"rss_kb":20000},{"pid":332834,"kind":"gpu-process","pss_kb":49732,"rss_kb":135112},{"pid":332839,"kind":"utility:network","pss_kb":36063,"rss_kb":98036},{"pid":332865,"kind":"utility:storage","pss_kb":9875,"rss_kb":44556},{"pid":332893,"kind":"renderer","pss_kb":68509,"rss_kb":123400}],"process_breakdown_after_suspend":null}
+==> [7/10] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)
+    Site isolation output: {"pss_tree_kb":595119,"renderer_pids":[333025,333045,333081],"renderer_process_count":3,"renderer_process_limit":null,"strict_one_process_per_site_preserved":true,"tabs_opened":2,"total_process_count":10}
+==> [8/10] Verifying filters.dat cache rule count matches configured lists
+    Filter cache verified: 250820 active rules from 8 lists (21851405 bytes)
+==> [9/10] Guarding against hardcoded/simulated tracker data and fake flags
+    shell.js contains no hardcoded counters
+    no hardcoded third_party_cookies_blocked literal
+==> [10/10] Live third-party cookie test (top-level site resolved from the tab; scripts/test_third_party_cookies.py)
+raw: {"cookie_decisions":[{"allowed":true,"kind":"save","request_url":"http://localhost:39695/top","top_url_used":""},{"allowed":false,"kind":"save","request_url":"http://127.0.0.1:39695/frame","top_url_used":"http://localhost:39695/top"},{"allowed":true,"kind":"send","request_url":"http://localhost:39695/favicon.ico","top_url_used":"http://localhost:39695/top"}],"server_requests":[{"cookie_header":"","host":"","path":"/"},{"cookie_header":"","host":"localhost:39695","path":"/top"},{"cookie_header":"","host":"127.0.0.1:39695","path":"/frame"},{"cookie_header":"fp=1","host":"localhost:39695","path":"/favicon.ico"},{"cookie_header":"","host":"127.0.0.1:39695","path":"/pixel?1794314991428"}],"test":"third_party_cookies"}
+PASS: third-party cookie judged against the tab's top-level site and refused; first-party allowed
+==> All checks passed!
+
+real	0m51.867s
+user	1m3.980s
+sys	0m11.238s

@@ -29,6 +29,19 @@ State now:
   The iframe viewport is still broken (frame-restricted sites fail) until the redesign is built.
 - NOT RUN this session: benchmarks (owner instruction), banking/YouTube/Google sign-in checks, M157 swap, codec work (steps 3–5 still pending).
 
+### Checkpoint A/B (2026-11-10, later session)
+- **A. WebKitGTK spike removed** (`spikes/spike-webkit` deleted, workspace + `Cargo.lock` updated; `scripts/bench_phase0.sh` marked LEGACY and exits 1).
+  `cargo audit` afterwards: 201 crates scanned, **0 vulnerabilities, 0 warnings** (raw: `docs/raw/cargo-audit-after-webkit-removal.txt`).
+- **B. Cookie bug reproduced, fixed, and guarded.**
+  - Bug: the cookie filter used the *requesting frame's* URL as the "top-level URL". With a `localhost` page embedding a `127.0.0.1` iframe, the filter saw an empty/iframe URL, **allowed** the third-party cookie, and the server received `tp=1` back on `/pixel`.
+    Raw failing run: `docs/raw/third-party-cookie-test-BEFORE-fix.txt`.
+  - Fix: top-level URL = main frame URL of the request's browser (`tab_top_level_url`). Raw passing run: `docs/raw/third-party-cookie-test-AFTER-fix.txt` (iframe cookie refused with `top_url_used=http://localhost:…/top`; server never saw `tp=1`).
+  - Test: `scripts/test_third_party_cookies.py` (check.sh stage 10) using `slate-spike-cef --test-third-party-cookies` and the loopback server in `crates/engine-adapter/src/test_servers.rs`.
+  - Known remaining gap: the very first request of a fresh tab (main-frame document) has no committed main-frame URL yet, so `top_url_used` is empty and the policy fails open (visible in the AFTER file: first-party `/top` save has `top_url_used=""`). That is harmless for first-party documents; a cross-site *subframe* of an uncommitted page is UNTESTED.
+- **Earlier benchmark claim about third-party cookies was INVALID.** `third_party_cookies_blocked` in the spike's JSON output was a hardcoded literal `true`
+  (since commits `99fffcc` / `6a00a67`), not measured. It appears as `true` 39 times in 17 files under `benchmarks/results/` (`grep -rho '"third_party_cookies_blocked": *[a-z]*' benchmarks`), and also in every smoke output until now.
+  It now reads the real filter state, and check.sh stage 9 fails if the literal returns. Any document citing that field as evidence is unsupported; the real evidence is the new stage-10 test.
+
 ### Rule for future sessions (a smaller/cheaper model may be used)
 Tests and design docs, not the model's memory, must carry the constraints. Therefore:
 1. Read `docs/shell-architecture.md` and this file first; do not start building before the owner picks an option.
