@@ -1,0 +1,126 @@
+Stages: [1] fmt  [2] clippy  [3] cargo test  [4] cargo audit  [5] spike CEF smoke  [6] real app smoke  [7] site isolation  [8] filter cache  [9] fake-counter guard
+==> [1/9] Checking Rust formatting (cargo fmt --all -- --check)
+==> [2/9] Running Clippy with warnings as errors (cargo clippy --workspace --all-targets -- -D warnings)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
+==> [3/9] Running automated test suite (cargo test --workspace)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running unittests src/main.rs (target/debug/deps/slate-95078410a815f680)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_blocking-2025fb6ab921dcff)
+
+running 10 tests
+test tests::every_configured_remote_filter_list_contributes_rules ... ok
+test tests::strips_tracking_parameters_while_preserving_functional_query_params ... ok
+test tests::https_upgrade_with_safe_fallback_on_failure ... ok
+test tests::blocks_known_ad_and_tracker_urls_while_allowing_normal_site_resources ... ok
+test tests::cosmetic_filtering_and_scriptlet_injection_work_per_site_and_generically ... ok
+test tests::failed_empty_or_malformed_download_never_overwrites_good_filters_dat ... ok
+test tests::third_party_cookie_policy_distinguishes_registrable_domains ... ok
+test tests::filter_cache_rule_count_matches_configured_lists ... ok
+test tests::custom_filter_lists_and_binary_cache_roundtrip_work ... ok
+test tests::measure_filters_dat_size_and_warm_start ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_core-7b1aa75eb36ae2d3)
+
+running 1 test
+test tests::tab_suspension_preserves_state_and_excludes_media_or_active_tabs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_engine_adapter-a304040df23d9e72)
+
+running 3 tests
+test tests::capability_reports_document_cef_and_webkit_tradeoffs ... ok
+test tests::unsafe_code_is_forbidden_in_all_crates_outside_engine_adapter ... ok
+test tests::service_worker_requests_are_evaluated_and_blocked_by_request_context_pipeline ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/main.rs (target/debug/deps/slate_spike_cef-f2e4f359fc932ee5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/slate_spike_webkit-659f7e6402ccc81f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/slate_ui_bridge-2c3d1e819f1e8e3e)
+
+running 2 tests
+test tests::internal_csp_forbids_remote_code_and_unsafe_eval ... ok
+test tests::rejects_untrusted_web_origins_and_accepts_internal_ui_origin ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_blocking
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_engine_adapter
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests slate_ui_bridge
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+==> [4/9] Running dependency security audit (cargo audit; FAILS if cargo-audit is missing)
+    Fetching advisory database from `https://github.com/RustSec/advisory-db.git`
+      Loaded 1430 security advisories (from /home/earl/.cargo/advisory-db)
+    Updating crates.io index
+    Scanning Cargo.lock for vulnerabilities (254 crate dependencies)
+Crate:     proc-macro-error
+Version:   1.0.4
+Warning:   unmaintained
+Title:     proc-macro-error is unmaintained
+Date:      2024-09-01
+ID:        RUSTSEC-2024-0370
+URL:       https://rustsec.org/advisories/RUSTSEC-2024-0370
+
+Crate:     glib
+Version:   0.18.5
+Warning:   unsound
+Title:     Unsoundness in `Iterator` and `DoubleEndedIterator` impls for `glib::VariantStrIter`
+Date:      2024-03-30
+ID:        RUSTSEC-2024-0429
+URL:       https://rustsec.org/advisories/RUSTSEC-2024-0429
+
+warning: 2 allowed warnings found
+==> [5/9] Running live CEF launch smoke test on the spike (slate-spike-cef --tabs 1 --exit-after-load)
+   Compiling slate-spike-cef v0.1.0 (/home/earl/Desktop/Slate/spikes/spike-cef)
+    Finished `release` profile [optimized] target(s) in 0.33s
+    Smoke output: {"engine":"cef-156","opt_level":3,"tabs":1,"real_sites":false,"filter_cache_warm":true,"cold_start_ms":547,"rss_tree_kb":841612,"pss_tree_kb":353763,"process_count":8,"evaluated_requests":3,"blocked_requests":1,"request_context_intercepts":0,"service_worker_blocked_requests":0,"document_start_injected":true,"third_party_cookies_blocked":true,"youtube_video_playing":false,"screenshots_captured":0,"tab_suspended_and_restored":false,"suspended_tabs_count":0,"rss_after_suspend_kb":null,"pss_after_suspend_kb":null,"process_count_after_suspend":null,"process_breakdown":[{"pid":327844,"kind":"browser","pss_kb":156831,"rss_kb":273808},{"pid":327851,"kind":"zygote","pss_kb":18295,"rss_kb":73252},{"pid":327852,"kind":"zygote","pss_kb":14327,"rss_kb":73048},{"pid":327854,"kind":"zygote","pss_kb":4717,"rss_kb":20576},{"pid":327888,"kind":"gpu-process","pss_kb":50289,"rss_kb":138572},{"pid":327893,"kind":"utility:network","pss_kb":36429,"rss_kb":99424},{"pid":327909,"kind":"utility:storage","pss_kb":10219,"rss_kb":46280},{"pid":327945,"kind":"renderer","pss_kb":62656,"rss_kb":116652}],"process_breakdown_after_suspend":null}
+==> [6/9] Running live smoke test on the REAL app binary (target/release/slate --exit-after-load)
+    Finished `release` profile [optimized] target(s) in 0.13s
+    Real app exit code: 0
+    Real app output: {"engine":"cef-156","opt_level":3,"tabs":1,"real_sites":false,"filter_cache_warm":true,"cold_start_ms":490,"rss_tree_kb":835136,"pss_tree_kb":353424,"process_count":8,"evaluated_requests":3,"blocked_requests":0,"request_context_intercepts":0,"service_worker_blocked_requests":0,"document_start_injected":true,"third_party_cookies_blocked":true,"youtube_video_playing":false,"screenshots_captured":0,"tab_suspended_and_restored":false,"suspended_tabs_count":0,"rss_after_suspend_kb":null,"pss_after_suspend_kb":null,"process_count_after_suspend":null,"process_breakdown":[{"pid":327988,"kind":"browser","pss_kb":153652,"rss_kb":267892},{"pid":327995,"kind":"zygote","pss_kb":18213,"rss_kb":72272},{"pid":327996,"kind":"zygote","pss_kb":14314,"rss_kb":72460},{"pid":327998,"kind":"zygote","pss_kb":4722,"rss_kb":20572},{"pid":328029,"kind":"gpu-process","pss_kb":48388,"rss_kb":135396},{"pid":328034,"kind":"utility:network","pss_kb":35992,"rss_kb":98288},{"pid":328054,"kind":"utility:storage","pss_kb":9929,"rss_kb":45304},{"pid":328092,"kind":"renderer","pss_kb":68214,"rss_kb":122952}],"process_breakdown_after_suspend":null}
+==> [7/9] Running live Site Isolation test (slate-spike-cef --test-site-isolation --tabs 2 --real-sites)
+    Site isolation output: {"pss_tree_kb":564743,"renderer_pids":[328235,328253,328278],"renderer_process_count":3,"renderer_process_limit":null,"strict_one_process_per_site_preserved":true,"tabs_opened":2,"total_process_count":10}
+==> [8/9] Verifying filters.dat cache rule count matches configured lists
+    Filter cache verified: 250820 active rules from 8 lists (21851405 bytes)
+==> [9/9] Guarding shell UI against hardcoded/simulated tracker data (crates/app/resources/ui)
+    shell.js contains no hardcoded counters
+==> All checks passed!
+rc=0

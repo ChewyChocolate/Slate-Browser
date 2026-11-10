@@ -15,13 +15,13 @@ session can be cited as an audit result.
 
 State now:
 - `cargo-audit 0.22.2` installed to `~/.cargo/bin` (`cargo install cargo-audit --locked`, build log in the session task log).
-- `cargo audit` result (raw output `/tmp/audit.out`, not committed): advisory DB 1430 advisories, 254 crate dependencies scanned,
+- `cargo audit` result (raw output `docs/raw/cargo-audit-2026-11-10.txt`): advisory DB 1430 advisories, 254 crate dependencies scanned,
   **0 vulnerabilities, 2 warnings**: `proc-macro-error 1.0.4` (RUSTSEC-2024-0370, unmaintained) and `glib 0.18.5`
   (RUSTSEC-2024-0429, unsound `VariantStrIter`). Both come only through `slate-spike-webkit` → `gtk`/`webkit2gtk`
   (`cargo tree -i`), i.e. the rejected WebKitGTK spike, not the CEF app. Not yet fixed or suppressed.
 - `scripts/check.sh` now has 9 numbered stages, listed at the top of its output, and **fails** if `cargo-audit` is missing.
   Stages: 1 fmt, 2 clippy, 3 cargo test, 4 cargo audit, 5 spike CEF smoke, 6 **real app smoke** (`target/release/slate --exit-after-load`,
-  asserts exit code 0 + JSON), 7 site isolation, 8 filter cache, 9 fake-counter guard. Full run: exit code 0 (`/tmp/check2.out`).
+  asserts exit code 0 + JSON), 7 site isolation, 8 filter cache, 9 fake-counter guard. Full run: exit code 0 (`docs/raw/check-sh-2026-11-10.txt`).
   Negative tests run by hand: stage 4 with no `cargo-audit` on PATH → exit 1; stage 9 with an injected `active.blocked = 38;` → exit 1.
 - Shell: fake counters removed (step 1, commit `658e74e`).
 - `docs/shell-architecture.md` written (design only, nothing built). **Waiting for the owner's choice** of Option 1/2/3, toolbar placement, and IPC.
