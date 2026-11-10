@@ -3,7 +3,6 @@
   'use strict';
 
   let nextTabId = 2;
-  let blockedCount = 0;
 
   // Real tabs state
   let tabs = [
@@ -13,7 +12,7 @@
       url: 'slate://newtab',
       active: true,
       icon: '🌐',
-      blocked: 0
+      blocked: null
     }
   ];
 
@@ -29,26 +28,14 @@
   const splashCard = document.getElementById('new-tab-splash');
 
   function getSiteIcon(url) {
-    if (!url || url.startsWith('slate://')) return '🌐';
-    if (url.includes('ycombinator.com')) return '📰';
-    if (url.includes('wikipedia.org')) return '📚';
-    if (url.includes('github.com')) return '💻';
-    if (url.includes('youtube.com')) return '▶️';
-    if (url.includes('openstreetmap.org')) return '🗺️';
-    if (url.includes('theverge.com')) return '⚡';
-    return '🔗';
+    return '🌐';
   }
 
+  // Title is just the hostname until the engine reports the real page title.
   function getSiteTitle(url) {
     if (!url || url.startsWith('slate://')) return 'New Tab';
     try {
-      const u = new URL(url);
-      let host = u.hostname.replace('www.', '');
-      if (host === 'news.ycombinator.com') return 'Hacker News';
-      if (host === 'en.wikipedia.org') return 'Wikipedia — Rust';
-      if (host === 'github.com') return 'GitHub';
-      if (host === 'youtube.com') return 'YouTube';
-      return host;
+      return new URL(url).hostname.replace(/^www\./, '');
     } catch (e) {
       return url;
     }
@@ -80,8 +67,9 @@
     });
 
     const active = tabs.find(t => t.active);
-    const activeBlocked = active ? active.blocked : 0;
-    globalBlocked.textContent = `${blockedCount} Trackers Blocked`;
+    // '-' means "no real data yet" (pipeline not wired to the UI).
+    const activeBlocked = active && active.blocked !== null ? active.blocked : '-';
+    globalBlocked.textContent = '- Trackers Blocked';
     omniboxBlocked.textContent = `🛡️ ${activeBlocked} Blocked`;
   }
 
@@ -115,20 +103,8 @@
     active.title = getSiteTitle(url);
     active.icon = getSiteIcon(url);
 
-    // Update real blocked trackers according to engine rules:
-    // (Simulating/reporting actual pipeline block count for the domain)
-    if (url.includes('theverge.com')) {
-      active.blocked = 38;
-    } else if (url.includes('youtube.com')) {
-      active.blocked = 14;
-    } else if (url.includes('wikipedia.org')) {
-      active.blocked = 3;
-    } else if (url.includes('ycombinator.com')) {
-      active.blocked = 1;
-    } else {
-      active.blocked = 2;
-    }
-    blockedCount += active.blocked;
+    // Blocked counts stay null until the real blocking pipeline reports them over IPC.
+    active.blocked = null;
 
     renderViewport(active);
     renderTabs();
@@ -163,7 +139,7 @@
       url: url,
       active: true,
       icon: getSiteIcon(url),
-      blocked: 0
+      blocked: null
     };
     tabs.push(tab);
     renderViewport(tab);
