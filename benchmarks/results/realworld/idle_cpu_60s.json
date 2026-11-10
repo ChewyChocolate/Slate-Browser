@@ -1,0 +1,30 @@
+{
+  "1_tab": {
+    "slate": {
+      "avg_cpu_pct": 61.75,
+      "dt_sec": 60.02,
+      "dticks": 3706,
+      "process_count": 8
+    },
+    "brave": {
+      "avg_cpu_pct": 85.17,
+      "dt_sec": 60.04,
+      "dticks": 5114,
+      "process_count": 12
+    }
+  },
+  "10_tab": {
+    "slate": {
+      "avg_cpu_pct": 121.52,
+      "dt_sec": 60.03,
+      "dticks": 7295,
+      "process_count": 17
+    },
+    "brave": {
+      "avg_cpu_pct": 176.8,
+      "dt_sec": 60.03,
+      "dticks": 10614,
+      "process_count": 21
+    }
+  }
+}

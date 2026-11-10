@@ -1,0 +1,160 @@
+{
+  "01_youtube": {
+    "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    "slate": {
+      "evaluated_requests": 75,
+      "blocked_requests": 14
+    },
+    "brave": {
+      "total_requests": 57,
+      "blocked_count": 3,
+      "blocked_sample": [
+        "https://static.doubleclick.net/instream/ad_status.js",
+        "https://www.youtube.com/api/stats/qoe?fmt=395&afmt=251&cpn=yODqS9NrYM8NZUfz&el=detailpage&ns=yt&fexp=v1%2C100673025%2C1884%2C-76670265%2C494888%2C14826322%2C11737789%2C31835%2C2821%2C124674%2C77203%2C65%2C13917%2C26504%2C9252%2C16509%2C23206%2C10364%2C25038%2C34393%2C46%2C8206%2C2625%2C1904%2C18126%2C15105%2C25059%2C4174%2C12720%2C17726%2C18706%2C26008%2C13016%2C16087%2C9404%2C23826%2C9500%2C26399%2C70279%2C20588%2C2364%2C1836%2C30113%2C6491%2C2690%2C7242%2C51773%2C1168%2C8130%2C1539%2C32782%2C4414%2C19327%2C26282%2C7727%2C9716%2C3614%2C26539%2C3843%2C18499%2C6470%2C24908%2C111%2C1180%2C33292%2C2419%2C15716%2C5704%2C6957%2C2128%2C4%2C21707%2C4594%2C7476%2C1804%2C760%2C455%2C511%2C1911%2C5327%2C2266%2C1929%2C2854%2C15702%2C7810%2C1369%2C8417%2C2264%2C6634%2C2787%2C634%2C1814%2C868%2C3402%2C164%2C287%2C4562%2C263%2C166%2C1514%2C124%2C4822%2C974%2C5652%2C1646%2C10675%2C148%2C4845%2C1678%2C884%2C4565%2C490%2C7778%2C3040%2C2160%2C207%2C3177%2C571%2C7334%2C3508%2C548%2C2347%2C259%2C2133%2C6272%2C272%2C1397%2C1599%2C28%2C774%2C5985&cl=1013419924&dai=unspecified&seq=1&docid=jNQXAC9IVRw&ei=rr7yaqOxAeqCpt8PsrXj4QY&event=streamingstats&plid=AAZf5n4LDFWjTl_x&cbr=Chrome&cbrver=157.0.0.0&c=WEB&cver=2.20261106.00.00&cplayer=UNIPLAYER&cos=X11&cplatform=DESKTOP&vps=0.000:N,0.127:B,0.249:N,0.743:N&cat=streaming,sabr&cmt=0.127:0.000,0.249:0.000,0.743:0.000&afs=0.735:251;CggKA2RyYxIBMQ::i:fl.-16.92;tl.-14;vg.0;nm.1;sms.2:CAEoAQ&vfs=0.743:395:395::a:sms.2:CAEoAQ&view=0.743:761:571&bwm=0.743:2399:0.645&bwe=0.743:103760&bat=0.743:1:1&vis=0.743:0&bh=0.743:0.000&qclc=ChB5T0RxUzlOcllNOE5aVWZ6EAE",
+        "https://googleads.g.doubleclick.net/pagead/id"
+      ],
+      "brave_pref_ads_blocked": 4
+    }
+  },
+  "02_google_docs": {
+    "url": "https://docs.google.com/document/d/1hXalsO6oixyfHXQIo9C6iozYBHcXmDL_/preview",
+    "slate": {
+      "evaluated_requests": 37,
+      "blocked_requests": 1
+    },
+    "brave": {
+      "total_requests": 24,
+      "blocked_count": 0,
+      "blocked_sample": [],
+      "brave_pref_ads_blocked": 0
+    }
+  },
+  "03_hacker_news": {
+    "url": "https://news.ycombinator.com",
+    "slate": {
+      "evaluated_requests": 7,
+      "blocked_requests": 0
+    },
+    "brave": {
+      "total_requests": 7,
+      "blocked_count": 0,
+      "blocked_sample": [],
+      "brave_pref_ads_blocked": 0
+    }
+  },
+  "04_wikipedia": {
+    "url": "https://en.wikipedia.org/wiki/Rust_(programming_language)",
+    "slate": {
+      "evaluated_requests": 43,
+      "blocked_requests": 1
+    },
+    "brave": {
+      "total_requests": 43,
+      "blocked_count": 0,
+      "blocked_sample": [],
+      "brave_pref_ads_blocked": 0
+    }
+  },
+  "05_slashdot": {
+    "url": "https://slashdot.org",
+    "slate": {
+      "evaluated_requests": 62,
+      "blocked_requests": 8
+    },
+    "brave": {
+      "total_requests": 54,
+      "blocked_count": 7,
+      "blocked_sample": [
+        "https://a.fsdn.com/sd/js/scripts/admanager.js?0ab6e7235c60a5c8",
+        "https://a.fsdn.com/sd/js/scripts/asg_embed.js?0ab6e7235c60a5c8",
+        "https://ssl.google-analytics.com/ga.js",
+        "https://analytics.slashdotmedia.com/sd.js",
+        "https://io.narrative.io/?companyId=2440&id=site_name:slashdot.org&id=url:/&rand=1794293501718"
+      ],
+      "brave_pref_ads_blocked": 7
+    }
+  },
+  "06_bbc_news": {
+    "url": "https://www.bbc.com/news",
+    "slate": {
+      "evaluated_requests": 126,
+      "blocked_requests": 25
+    },
+    "brave": {
+      "total_requests": 104,
+      "blocked_count": 11,
+      "blocked_sample": [
+        "https://cdn.privacy-mgmt.com/unified/wrapperMessagingWithoutDetection.js",
+        "https://cdn.cxense.com/ari.js",
+        "https://scripts.webcontentassessor.com/scripts/64ca3dfd44dd68a629e2e51a27e7ccd960974b5961e4ca2897139d14bf10be8b",
+        "https://securepubads.g.doubleclick.net/tag/js/gpt.js",
+        "https://cdn.permutive.app/e488cdb0-e7cb-4d91-9648-60d437d8e491-web.js"
+      ],
+      "brave_pref_ads_blocked": 11
+    }
+  },
+  "07_openstreetmap": {
+    "url": "https://www.openstreetmap.org",
+    "slate": {
+      "evaluated_requests": 44,
+      "blocked_requests": 1
+    },
+    "brave": {
+      "total_requests": 38,
+      "blocked_count": 0,
+      "blocked_sample": [],
+      "brave_pref_ads_blocked": 0
+    }
+  },
+  "08_github": {
+    "url": "https://github.com/rust-lang/rust",
+    "slate": {
+      "evaluated_requests": 155,
+      "blocked_requests": 7
+    },
+    "brave": {
+      "total_requests": 156,
+      "blocked_count": 0,
+      "blocked_sample": [],
+      "brave_pref_ads_blocked": 0
+    }
+  },
+  "09_chase": {
+    "url": "https://www.chase.com",
+    "slate": {
+      "evaluated_requests": 84,
+      "blocked_requests": 8
+    },
+    "brave": {
+      "total_requests": 90,
+      "blocked_count": 5,
+      "blocked_sample": [
+        "https://s2.go-mpulse.net/boomerang/9GMXG-P9JCU-47Q2G-PYE6D-MR9ML",
+        "https://s2.go-mpulse.net/boomerang/9GMXG-P9JCU-47Q2G-PYE6D-MR9ML",
+        "https://5g3kt0kjqhmo656v4biv2ahhtuqs2obqadoxxnz3f5d93dca682ceefbsac.d.aa.online-metrix.net/aho6_JYS60eIVWzQ?f951f7f8f2ec6c19=6MyLkSbX3OBvXQEyqCqO0mNy7V6fToHYAbmwKudt3fTHteYycjqwHYwKNKDrLUxktBYiZUCc-ZKm2plt5wJqJoYxzcQc9O1Kp9P9Bst8cM2bxOgzUJuTjwJMpzmRI6kMk03-z0X-t0Xj9DtsGlpMVjGR-xE33WKfPDQg4-G4tKN8_vQth-epi4t5pwl3VTztqhG4_k7Xw3aa0arOcAo_iC2-0k3Lyg",
+        "https://page-format.chase.com/fp/clear.png",
+        "https://h64.online-metrix.net/kPjbhW8O7hxmWxTW?1df1336064c890a9=wlVusRFz49fwvBwaWHjAINpDUqf7HjH3EgqvQ0knBLAJKEEE692fVmm1hQ1Nu4q2NDWDlcqiOGTWJxa4cZA-LD3zJwk9EQQaeFt_wH3RbtYgYsvQ-HwH790WaXnho5-g3r-N4WKvGZR4r2hktQcaS0VRTq4aW9bu1kfXuzidNz5gQZF8nfVvN7-VXRYY7_arjcvst8L5PjcNBwqEs6-u-ZuJGA"
+      ],
+      "brave_pref_ads_blocked": 4
+    }
+  },
+  "10_theverge": {
+    "url": "https://www.theverge.com",
+    "slate": {
+      "evaluated_requests": 226,
+      "blocked_requests": 12
+    },
+    "brave": {
+      "total_requests": 194,
+      "blocked_count": 17,
+      "blocked_sample": [
+        "https://securepubads.g.doubleclick.net/tag/js/gpt.js",
+        "https://c.amazon-adsystem.com/aax2/apstag.js",
+        "https://www.googletagservices.com/tag/js/gpt.js",
+        "https://pub.doubleverify.com/dvtag/21236410/DV464041/pub.js",
+        "https://cdn.bullwhip.cloud/sonar/vox-verge.umd.js"
+      ],
+      "brave_pref_ads_blocked": 17
+    }
+  }
+}
