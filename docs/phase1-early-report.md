@@ -2,11 +2,21 @@
 
 **Date**: 2026-11-10  
 **Target Platform**: Arch Linux (`x86_64`, kernel `7.2.14-arch1-1`, `rustc 1.99.1`)  
-**Status**: Completed & Verified
+**Status**: IN PROGRESS — Section 1 Benchmark Results Marked INVALID
+
+> [!WARNING]
+> **SECTION 1 BENCHMARK RESULTS ARE INVALID AND MUST NOT BE USED**
+> Visual and automated inspection of site screenshots revealed that several tested pages did not load real content:
+> - YouTube rendered a blank page (investigating blocking scriptlets/filters vs. layout)
+> - Google Docs showed a sign-in wall (`accounts.google.com`)
+> - Proton Mail remained stalled on a loading splash screen
+> - Reddit presented an automated bot/captcha challenge
+> All earlier 1/5/10-tab benchmark numbers in Section 1 and in `benchmarks/results/realworld/triplicate_runs.json` are invalid.
+> Automated per-site readiness gates (title, readyState, visible body text length, site-specific DOM selector, bot-wall/captcha check, network idle settle period, and video `currentTime` advancement) are being implemented in code to strictly gate measurements before any new benchmark data (Task 1b) is collected.
 
 ---
 
-## 1. Real-World 10-Site Benchmark (1, 5, 10 Tabs + Tab Sleeping vs. Brave)
+## 1. Real-World 10-Site Benchmark (INVALID — DO NOT USE)
 
 Reproducible via `./scripts/bench_realworld.sh` (raw JSON outputs in `benchmarks/results/realworld/`).
 
